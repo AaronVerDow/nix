@@ -188,7 +188,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({ position = "bottom", screen = s })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -482,7 +482,7 @@ clientbuttons = gears.table.join(
 root.keys(globalkeys)
 -- >>>
 
-beautiful.border_width = 3
+beautiful.border_width = 0
 
 -- <<< Rules
 -- Rules to apply to new clients (through the "manage" signal).
@@ -568,7 +568,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- >>>
 --
 
-beautiful.useless_gap = 5
+beautiful.useless_gap = 0
 
 awful.spawn.with_shell("wallpaper.sh")
 -- Add head for multiple monitors
