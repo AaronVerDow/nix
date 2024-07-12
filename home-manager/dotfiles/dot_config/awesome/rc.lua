@@ -582,7 +582,7 @@ awful.spawn.with_shell("xcompmgr")
 awful.spawn.with_shell("xsettingsd")
 awful.spawn.once("fusuma --daemon")
 awful.spawn.once("flashfocus -t 250 -l never")
-awful.spawn.once("volumeicon")
+awful.spawn.once("volumeicon") -- respawns
 awful.spawn.once("nm-applet")
 awful.spawn.once("copyq")
-awful.spawn.once("barrier")
+awful.spawn.once("barrier") -- respawns
