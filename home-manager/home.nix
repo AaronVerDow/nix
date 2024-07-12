@@ -90,13 +90,26 @@ in
   # Enable home-manager and git
   programs.home-manager.enable = true;
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome.gnome-themes-extra;
+    };
+  };
+
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
     enable = true;
     userName = "Aaron VerDow";
     userEmail = "aaron@verdow.com";
   };
-
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
