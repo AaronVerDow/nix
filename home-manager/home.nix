@@ -115,10 +115,13 @@ in
   systemd.user.startServices = "sd-switch";
 
   home.file.".bashrc".source = ./dotfiles/dot_bashrc;
+  # hacky solution until I find a proper home for this, typically goes in /etc/ so root is impacted as well
+  home.file.".bash.bashrc".source = ./dotfiles/dot_bash.bashrc;
   home.file.".config/awesome/rc.lua".source = ./dotfiles/dot_config/awesome/rc.lua;
   home.file.".config/fusuma/config.yml".source = ./dotfiles/dot_config/fusuma/config.yml;
   home.file.".config/neofetch/config".source = ./dotfiles/dot_config/neofetch/config;
   home.file.".config/rofi/config.rasi".source = ./dotfiles/dot_config/rofi/config.rasi;
+  home.file.".config/kitty/kitty.conf".source = ./dotfiles/dot_config/kitty/kitty.conf;
   home.file.".config/awesome/awesome-wm-widgets".source = awesomeWmWidgets;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

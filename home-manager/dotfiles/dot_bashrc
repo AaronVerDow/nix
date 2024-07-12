@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 # workaround for NixOS
-[ -f /etc/bash.bashrc ] && source /etc/bash.bashrc || source ~/.local/share/chezmoi/etc/bash.bashrc
+[ -f /etc/bash.bashrc ] && source /etc/bash.bashrc || source ~/.bash.bashrc
 
 PATH="$HOME/bin:$PATH:$HOME/.local/bin"
 [ -d $HOME/.toolbox/bin ] && export PATH=$PATH:$HOME/.toolbox/bin
