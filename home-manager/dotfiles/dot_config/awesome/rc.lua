@@ -537,6 +537,13 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true }
     },
 
+    { rule = { name = "Onboard" },
+      properties = {
+        focusable = false,
+        titlebars_enabled = false
+      }
+    },
+
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
