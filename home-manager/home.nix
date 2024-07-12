@@ -76,6 +76,7 @@ in
     kitty
     libreoffice
     blender
+    my_numworks
 
     # X customization
     rofi # pop up launcher
@@ -97,7 +98,7 @@ in
     networkmanagerapplet
     copyq
     xorg.xkill
-  ];
+  ]; #  ++ [ unstable.numworks-epsilon ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
