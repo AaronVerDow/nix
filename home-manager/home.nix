@@ -134,6 +134,7 @@ in
   home.file.".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
   home.file.".config/rofi/config.rasi".source = ./dotfiles/dot_config/rofi/config.rasi;
   home.file.".config/kitty/kitty.conf".source = ./dotfiles/dot_config/kitty/kitty.conf;
+  home.file.".config/volumeicon/volumeicon".source = ./dotfiles/dot_config/volumeicon/volumeicon;
   home.file.".config/awesome/awesome-wm-widgets".source = awesomeWmWidgets;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
