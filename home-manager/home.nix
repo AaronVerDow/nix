@@ -76,6 +76,8 @@ in
     rofi # pop up launcher
     nitrogen # set desktop background
     xcompmgr
+    arc-icon-theme # battery widget
+    acpi # battery widget
 
     # utilities
     scrot # screenshot utility
