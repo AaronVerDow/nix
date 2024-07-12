@@ -16,6 +16,10 @@ let
     rev = "df6bc4a260158fdc6e2678f1bb281f442d7887ac";
     sha256 = "sha256-IXV4YxG1hIq/LCurgbR1jEcwljRxxyVvwbEhrcJhlAk=";
   };
+  rofiConfig = builtins.fetchGit {
+    url = "https://github.com/adi1090x/rofi.git";
+    rev = "3a28753b0a8fb666f4bd0394ac4b0e785577afa2"; 
+  };
 in
 {
   # You can import other home-manager modules here
@@ -136,6 +140,15 @@ in
   home.file.".config/kitty/kitty.conf".source = ./dotfiles/dot_config/kitty/kitty.conf;
   home.file.".config/volumeicon/volumeicon".source = ./dotfiles/dot_config/volumeicon/volumeicon;
   home.file.".config/awesome/awesome-wm-widgets".source = awesomeWmWidgets;
+
+  home.activation.copyRofiConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p ~/.config/rofi
+    chmod +w -R ~/.config/rofi # this allows the next copy to function
+    ${pkgs.rsync}/bin/rsync -av --exclude 'config.rasi' ${rofiConfig}/files/ ~/.config/rofi/
+    chmod +w ~/.config/rofi # this allows the config from dotfiles to be written
+    mkdir -p ~/.local/share/fonts
+    cp -f ${rofiConfig}/fonts/* ~/.local/share/fonts/
+  '';
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
