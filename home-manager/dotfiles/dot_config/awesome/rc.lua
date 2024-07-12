@@ -578,9 +578,11 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 beautiful.useless_gap = 0
 
 awful.spawn.with_shell("wallpaper.sh")
--- Add head for multiple monitors
--- awful.spawn.with_shell("nitrogen --random ~/Pictures/mah_wallpapers/ --set-zoom-fill --head=1")
 awful.spawn.with_shell("xcompmgr")
 awful.spawn.with_shell("xsettingsd")
-awful.spawn.with_shell("fusuma --daemon")
--- xdg_menu --format awesome --root-menu /etc/xdg/menus/arch-applications.menu > ~/.config/awesome/archmenu.lua
+awful.spawn.once("fusuma --daemon")
+awful.spawn.once("flashfocus -t 250 -l never")
+awful.spawn.once("volumeicon")
+awful.spawn.once("nm-applet")
+awful.spawn.once("copyq")
+awful.spawn.once("barrier")

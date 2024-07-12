@@ -71,6 +71,7 @@ in
     gimp
     kitty
     libreoffice
+    blender
 
     # X customization
     rofi # pop up launcher
@@ -78,6 +79,7 @@ in
     xcompmgr
     arc-icon-theme # battery widget
     acpi # battery widget
+    ubuntu_font_family
 
     # utilities
     scrot # screenshot utility
@@ -85,6 +87,12 @@ in
     pavucontrol
     fusuma # touchscreen gestures
     xclip
+    barrier
+    volumeicon
+    flashfocus
+    networkmanagerapplet
+    copyq
+    xorg.xkill
   ];
 
   # Enable home-manager and git
