@@ -1,4 +1,4 @@
-{ stdenv, bundlerEnv, ruby }:
+{ stdenv, bundlerEnv, ruby, libinput }:
 let
   gems = bundlerEnv {
     name = "your-package";
@@ -8,7 +8,7 @@ let
 in stdenv.mkDerivation {
   name = "your-package";
   src = ./.;
-  buildInputs = [gems ruby];
+  buildInputs = [gems ruby libinput];
   installPhase = ''
     mkdir -p $out
     cp -r $src $out
