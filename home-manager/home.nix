@@ -98,6 +98,7 @@ in
     networkmanagerapplet
     copyq
     xorg.xkill
+    xrotate
     
   (writeShellScriptBin "my-script" ''
     DATE="3"
