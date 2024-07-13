@@ -109,6 +109,11 @@ in
     ${pkgs.nitrogen}/bin/nitrogen --set-zoom-fill ~/Pictures/wood.jpg
   '')
 
+  (writeShellScriptBin "my_touchrun" ''
+    ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-7.rasi
+  '')
+
+
   ]; #  ++ [ unstable.numworks-epsilon ];
 
   # Enable home-manager and git
