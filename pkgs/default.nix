@@ -4,4 +4,5 @@ pkgs: {
   # example = pkgs.callPackage ./example { };
   my_numworks = pkgs.callPackage ./my_numworks { };
   xrotate = pkgs.callPackage ./xrotate { };
+  my_fusuma = pkgs.callPackage ./my_fusuma { };
 }
