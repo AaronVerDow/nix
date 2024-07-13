@@ -1,10 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.writeShellApplication {
-  name = "my-shell-app";
-  runtimeInputs = with pkgs; [ bash ];
-  text = ''
-    #!/usr/bin/env bash
-    echo "Hello, world!"
-  '';
+  name = "xrotate";
+  runtimeInputs = with pkgs; [ bash xorg.xrandr xorg.xinput ];
+  script = ./xrotate.sh;
 }
