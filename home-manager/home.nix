@@ -105,6 +105,10 @@ in
     ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi
   '')
 
+  (writeShellScriptBin "my_wallpaper" ''
+    ${pkgs.nitrogen}/bin/nitrogen --set-zoom-fill ~/Pictures/wood.jpg
+  '')
+
   ]; #  ++ [ unstable.numworks-epsilon ];
 
   # Enable home-manager and git
@@ -142,7 +146,7 @@ in
 
   home.file.".bashrc".source = ./dotfiles/dot_bashrc;
   home.file.".config/awesome/rc.lua".source = ./dotfiles/dot_config/awesome/rc.lua;
-  home.file.".config/fusuma/config.yml".source = ./dotfiles/dot_config/fusuma/config.yml;
+  home.file.".config/touchegg/touchegg.conf".source = ./dotfiles/dot_config/touchegg/touchegg.conf;
   home.file.".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
   home.file.".config/rofi/config.rasi".source = ./dotfiles/dot_config/rofi/config.rasi;
   home.file.".config/kitty/kitty.conf".source = ./dotfiles/dot_config/kitty/kitty.conf;

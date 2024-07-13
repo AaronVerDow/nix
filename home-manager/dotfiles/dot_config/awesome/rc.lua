@@ -588,3 +588,4 @@ awful.spawn.once("volumeicon") -- respawns
 awful.spawn.once("nm-applet")
 awful.spawn.once("copyq")
 awful.spawn.once("barrier") -- respawns
+awful.spawn.with_shell("my_wallpaper")

@@ -81,3 +81,5 @@ elif [ "$1" == "ccw" ]; then
 else
 	rotate "$1"
 fi
+
+my_wallpaper
