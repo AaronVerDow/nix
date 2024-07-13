@@ -98,6 +98,12 @@ in
     networkmanagerapplet
     copyq
     xorg.xkill
+    
+  (writeShellScriptBin "my-script" ''
+    DATE="3"
+    ${pkgs.cowsay}/bin/cowsay Hello, world! Today is $DATE.
+  '')
+
   ]; #  ++ [ unstable.numworks-epsilon ];
 
   # Enable home-manager and git
@@ -150,6 +156,9 @@ in
     mkdir -p ~/.local/share/fonts
     cp -f ${rofiConfig}/fonts/* ~/.local/share/fonts/
   '';
+
+
+
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
