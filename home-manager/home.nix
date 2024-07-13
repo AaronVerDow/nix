@@ -90,7 +90,8 @@ in
     scrot # screenshot utility
     pcmanfm
     pavucontrol
-    fusuma # touchscreen gestures
+    touchegg # touchscreen gestures
+    onboard # onscreen keyboard
     xclip
     barrier
     volumeicon
@@ -100,9 +101,8 @@ in
     xorg.xkill
     xrotate
     
-  (writeShellScriptBin "my-script" ''
-    DATE="3"
-    ${pkgs.cowsay}/bin/cowsay Hello, world! Today is $DATE.
+  (writeShellScriptBin "my_run" ''
+    ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi
   '')
 
   ]; #  ++ [ unstable.numworks-epsilon ];

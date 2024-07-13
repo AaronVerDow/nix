@@ -337,7 +337,7 @@ globalkeys = gears.table.join(
 
     -- Prompt
     -- awful.key({ modkey },            "r",     function () awful.util.spawn("rofi showrofi -modi drun,run,window -show drun") end,
-    awful.key({ modkey },            "r",     function () awful.util.spawn(" rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi") end,
+    awful.key({ modkey },            "r",     function () awful.util.spawn("my_run") end,
               {description = "run prompt", group = "launcher"}),
     awful.key({ modkey },            "p",     function () awful.util.spawn(" rofi -show run -theme ~/.config/rofi/launchers/type-1/style-5.rasi") end,
               {description = "run shell prompt", group = "launcher"}),
@@ -580,7 +580,9 @@ beautiful.useless_gap = 0
 awful.spawn.with_shell("wallpaper.sh")
 awful.spawn.with_shell("xcompmgr")
 awful.spawn.with_shell("xsettingsd")
-awful.spawn.once("fusuma --daemon")
+awful.spawn.once("touchegg --daemon")
+awful.spawn.once("touchegg --client")
+awful.spawn.once("onboard")
 awful.spawn.once("flashfocus -t 250 -l never")
 awful.spawn.once("volumeicon") -- respawns
 awful.spawn.once("nm-applet")
