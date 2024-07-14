@@ -16,6 +16,16 @@ let
     rev = "df6bc4a260158fdc6e2678f1bb281f442d7887ac";
     sha256 = "sha256-IXV4YxG1hIq/LCurgbR1jEcwljRxxyVvwbEhrcJhlAk=";
   };
+  # awesomeFreedesktop = pkgs.fetchFromGitHub {
+    # owner = "lcpz";
+    # repo = "awesome-freedesktop";
+    # rev = "c82ad2960c5f0c84e765df68554c266ea7e9464d";
+    # sha256 = "sha256-IXV4YxG1hIq/LCurgbR1jEcwljRxxyVvwbEhrcJhlAk=";
+  # };
+  awesomeFreedesktop = builtins.fetchGit {
+    url = "https://github.com/lcpz/awesome-freedesktop.git";
+    rev = "c82ad2960c5f0c84e765df68554c266ea7e9464d";
+  };
   rofiConfig = builtins.fetchGit {
     url = "https://github.com/adi1090x/rofi.git";
     rev = "3a28753b0a8fb666f4bd0394ac4b0e785577afa2"; 
@@ -32,6 +42,7 @@ in
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    ./firefox.nix
   ];
 
   nixpkgs = {
@@ -77,6 +88,7 @@ in
     libreoffice
     blender
     my_numworks
+    xournalpp
 
     # X customization
     rofi # pop up launcher
@@ -110,7 +122,8 @@ in
   '')
 
   (writeShellScriptBin "my_touchrun" ''
-    ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-7.rasi
+    # need to add this to dotfiles still
+    ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/touchscreen/touch.rasi
   '')
 
   (writeShellScriptBin "calculator_toggle" ''
@@ -160,6 +173,7 @@ in
   home.file.".config/kitty/kitty.conf".source = ./dotfiles/dot_config/kitty/kitty.conf;
   home.file.".config/volumeicon/volumeicon".source = ./dotfiles/dot_config/volumeicon/volumeicon;
   home.file.".config/awesome/awesome-wm-widgets".source = awesomeWmWidgets;
+  home.file.".config/awesome/freedesktop".source = awesomeFreedesktop;
 
   home.activation.copyRofiConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
     mkdir -p ~/.config/rofi

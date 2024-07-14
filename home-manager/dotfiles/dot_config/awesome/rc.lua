@@ -30,7 +30,8 @@ local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 -- Load Debian menu entries
 -- local debian = require("debian.menu")
 -- xdg_menu = require("archmenu")
-local has_fdo, freedesktop = pcall(require, "freedesktop")
+-- local has_fdo, freedesktop = pcall(require, "freedesktop")
+local freedesktop = require("freedesktop")
 
 --    Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -105,6 +106,17 @@ myawesomemenu = {
 }
 
 local menu_terminal = { "open terminal", terminal }
+
+local mymainmenu = awful.menu({
+    items = {
+        { "hotkeys", function() return false, hotkeys_popup.show_help end },
+        { "manual", terminal .. " -e man awesome" },
+        { "edit config", editor_cmd .. " " .. awesome.conffile },
+        { "restart", awesome.restart },
+        { "quit", function() awesome.quit() end },
+        { "Applications", freedesktop.menu.build() }
+    }
+})
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
@@ -519,6 +531,7 @@ awful.rules.rules = {
           "Sxiv",
           -- "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
+	  "rofi",
           "veromix"
           -- "xtightvncviewer"
 	},
@@ -545,6 +558,15 @@ awful.rules.rules = {
         focusable = false,
         titlebars_enabled = false
       }
+    },
+
+    {
+            rule = { class = "epsilon" },
+        properties = {
+            floating = true,
+            titlebars_enabled = true,
+	    ontop = true
+        }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
