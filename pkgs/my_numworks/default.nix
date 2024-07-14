@@ -61,7 +61,8 @@ stdenv.mkDerivation rec {
   };
 
   postInstall = ''
-    install -Dm644 ./numworks.png $out/share/icons/hicolor/48x48/apps/numworks.png
+    # not working currently, cannot find numworks.png
+    # install -Dm644 $src/numworks.png $out/share/icons/hicolor/48x48/apps/numworks.png
   '';
 
   desktopItems = [
