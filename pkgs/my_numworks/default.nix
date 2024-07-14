@@ -10,6 +10,8 @@
 , gcc-arm-embedded
 , pkg-config
 , python3Packages
+, makeDesktopItem
+, copyDesktopItems
 }:
 
 stdenv.mkDerivation rec {
@@ -33,6 +35,7 @@ stdenv.mkDerivation rec {
     imagemagick
     gcc-arm-embedded
     python3Packages.lz4
+    copyDesktopItems
   ];
 
   makeFlags = [
@@ -56,4 +59,19 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ erikbackman ];
     platforms = [ "x86_64-linux" ];
   };
+
+  postInstall = ''
+    install -Dm644 ./numworks.png $out/share/icons/hicolor/48x48/apps/numworks.png
+  '';
+
+  desktopItems = [
+   (makeDesktopItem {
+      name = "Epsilon";
+      exec = "epsilon";
+      icon = "accessories-calculator";
+      desktopName = "Epsilon Calculator";
+      comment = "A powerful calculator";
+      categories = [ "Utility" ];
+    })
+    ];
 }
