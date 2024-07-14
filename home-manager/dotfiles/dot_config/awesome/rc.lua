@@ -345,6 +345,9 @@ globalkeys = gears.table.join(
     awful.key({ modkey },            "b",     function () awful.util.spawn("firefox") end,
               {description = "firefox", group = "launcher"}),
 
+    awful.key({ modkey },            "c",     function () awful.util.spawn("calculator_toggle") end,
+              {description = "calculator", group = "launcher"}),
+
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run {
@@ -584,8 +587,8 @@ awful.spawn.once("touchegg --daemon")
 awful.spawn.once("touchegg --client")
 awful.spawn.once("onboard")
 awful.spawn.once("flashfocus -t 250 -l never")
-awful.spawn.once("volumeicon") -- respawns
+awful.spawn.with_shell("pgrep volumeicon || volumeicon") -- respawns
 awful.spawn.once("nm-applet")
 awful.spawn.once("copyq")
-awful.spawn.once("barrier") -- respawns
+awful.spawn.with_shell("pgrep barrier || barrier") -- respawns
 awful.spawn.with_shell("my_wallpaper")
