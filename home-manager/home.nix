@@ -113,6 +113,9 @@ in
     ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-2/style-7.rasi
   '')
 
+  (writeShellScriptBin "calculator_toggle" ''
+	pgrep epsilon && pkill epsilon || ${pkgs.my_numworks}/bin/epsilon
+  '')
 
   ]; #  ++ [ unstable.numworks-epsilon ];
 
