@@ -117,6 +117,7 @@
 	lolcat
 	direnv
 	fd
+	killall
       ];
     };
   };
