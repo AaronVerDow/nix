@@ -133,6 +133,7 @@
     };
   };
 
+  services.touchegg.enable = true;
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.cups-brother-hll2340dw ];
 

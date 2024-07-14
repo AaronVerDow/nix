@@ -583,8 +583,7 @@ beautiful.useless_gap = 0
 awful.spawn.with_shell("wallpaper.sh")
 awful.spawn.with_shell("xcompmgr")
 awful.spawn.with_shell("xsettingsd")
-awful.spawn.once("touchegg --daemon")
-awful.spawn.once("touchegg --client")
+awful.spawn.with_shell("pgrep -f 'touchegg --client' || touchegg --client")
 awful.spawn.once("onboard")
 awful.spawn.once("flashfocus -t 250 -l never")
 awful.spawn.with_shell("pgrep volumeicon || volumeicon") -- respawns
