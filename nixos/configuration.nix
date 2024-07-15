@@ -122,6 +122,12 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    nix-output-monitor # nom upgrades nix with prettier output
+    nvd # diff derevations
+    nh # uses packages above for os builds
+  ];
+
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/Chicago";
@@ -157,6 +163,7 @@
 
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox
+    FLAKE = "/home/averdow/git/nix"; # used by nix helper
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
