@@ -38,6 +38,9 @@
     style = "adwaita-dark";
   };
 
+  stylix.enable = true;
+  stylix.image = ./wallpapers/wood.jpg;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 

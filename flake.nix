@@ -12,12 +12,15 @@
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    stylix.url = "github:danth/stylix";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    stylix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -55,7 +58,7 @@
       ipad = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          # > Our main nixos configuration file <
+	  stylix.nixosModules.stylix
           ./nixos/configuration.nix
         ];
       };
