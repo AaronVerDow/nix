@@ -32,7 +32,6 @@
     };
   };
 
-  # stylix?
   qt = {
     enable = true;
     platformTheme = "gnome";
@@ -42,6 +41,21 @@
   stylix.enable = true;
   stylix.image = ./wallpapers/wood.jpg;
   stylix.polarity = "dark";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/colors.yaml";
+  stylix.fonts = {
+    sansSerif = {
+      package = pkgs.ubuntu_font_family;
+      name = "Ubuntu";
+    };
+
+    monospace = {
+      package = pkgs.ubuntu_font_family;
+      name = "UbuntuMono";
+    };
+  };
+  # doesn't do anything?
+  stylix.cursor.package = pkgs.bibata-cursors-translucent;
+  stylix.cursor.name = "Bibata Spirit";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

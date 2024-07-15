@@ -163,6 +163,10 @@ in
   # Remove firefox border, not working after stylix
   gtk = {
     enable = true;
+    cursorTheme = {
+    	package = pkgs.bibata-cursors-translucent;
+	name = "Bibata Spirit";
+    };
     gtk3.extraCss = ''
       .window-frame {
           box-shadow: 0 0 0 0;
