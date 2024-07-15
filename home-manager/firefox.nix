@@ -1,3 +1,4 @@
+# TODO: define profile and copy mozilla dotfiles
 { config, pkgs, ... }:
   # https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265
   let
@@ -54,8 +55,6 @@
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
             installation_mode = "force_installed";
           };
-	  # https://github.com/Nishantdd/miniFox
-	  # files are not yet included
         };
   
         /* ---- PREFERENCES ---- */
@@ -80,11 +79,12 @@
           "browser.newtabpage.activity-stream.system.showSponsored" = lock-false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
 
+          # Used for CSS
 	  # https://github.com/Nishantdd/miniFox
-	  # "toolkit.legacyUserProfileCustomizations.stylesheets" = lock-true;
-	  # "layers.acceleration.force-enabled" = lock-true;
-	  # "gfx.webrender.all" = lock-true;
-	  # "svg.context-properties.content.enabled" = lock-true;
+	  "toolkit.legacyUserProfileCustomizations.stylesheets" = lock-true;
+	  "layers.acceleration.force-enabled" = lock-true;
+	  "gfx.webrender.all" = lock-true;
+	  "svg.context-properties.content.enabled" = lock-true;
         };
       };
     };
