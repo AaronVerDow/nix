@@ -32,6 +32,7 @@
     };
   };
 
+  # stylix?
   qt = {
     enable = true;
     platformTheme = "gnome";
@@ -40,6 +41,7 @@
 
   stylix.enable = true;
   stylix.image = ./wallpapers/wood.jpg;
+  stylix.polarity = "dark";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
