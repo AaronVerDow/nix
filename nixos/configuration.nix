@@ -55,7 +55,7 @@
   };
   # doesn't do anything?
   stylix.cursor.package = pkgs.bibata-cursors-translucent;
-  stylix.cursor.name = "Bibata Spirit";
+  stylix.cursor.name = "Bibata_Spirit";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
