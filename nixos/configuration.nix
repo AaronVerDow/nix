@@ -38,25 +38,6 @@
     style = "adwaita-dark";
   };
 
-  stylix.enable = true;
-  stylix.image = ./wallpapers/wood.jpg;
-  stylix.polarity = "dark";
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/colors.yaml";
-  stylix.fonts = {
-    sansSerif = {
-      package = pkgs.ubuntu_font_family;
-      name = "Ubuntu";
-    };
-
-    monospace = {
-      package = pkgs.ubuntu_font_family;
-      name = "UbuntuMono";
-    };
-  };
-  # doesn't do anything?
-  stylix.cursor.package = pkgs.bibata-cursors-translucent;
-  stylix.cursor.name = "Bibata_Spirit";
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -180,6 +161,11 @@
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
+
+  hardware.opengl.enable = true;
+  # services.xserver.videoDrivers = ["nvidia"];
+  # hardware.nvidia.modesetting.enable = true;
+  services.xserver.videoDrivers = ["amdgpu"];
 
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox

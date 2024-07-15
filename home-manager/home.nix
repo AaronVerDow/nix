@@ -130,39 +130,24 @@ in
 	pgrep epsilon && pkill epsilon || ${pkgs.my_numworks}/bin/epsilon
   '')
 
-  (writeShellScriptBin "switch" ''
-	rm ~/.config/gtk-3.0/gtk.css; nh os switch && x_hacks
-  '')
-
-  (writeShellScriptBin "x_hacks" ''
-    # remove border from firefox, gets overwritten by stylix
-    file=~/.config/gtk-3.0/gtk.css
-    src=$( readlink $file )
-    [ -z "$src" ] && exit
-    rm $file 
-    cp $src $file
-    chmod +w $file 
-    cat << EOF >> $file
-    .window-frame {
-      box-shadow: 0 0 0 0;
-      margin: 0;
-    }
-    window decoration {
-      margin: 0;
-      padding: 0;
-      border: none;
-    }
-    EOF
-  '')
-
   ]; #  ++ [ unstable.numworks-epsilon ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
   gtk = {
     enable = true;
-    # Remove firefox border, not working after stylix
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome.gnome-themes-extra;
+    };
+    # firefox uses GTK3 and may have an extra border
     gtk3.extraCss = ''
       .window-frame {
           box-shadow: 0 0 0 0;
@@ -176,6 +161,8 @@ in
     '';
   };
 
+  
+
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
     enable = true;
@@ -185,6 +172,7 @@ in
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
+
 
   # hacky solution until I find a proper home for this, typically goes in /etc/ so root is impacted as well
   home.file.".bash.bashrc".source = ./dotfiles/dot_bash.bashrc;
