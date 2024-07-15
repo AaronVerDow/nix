@@ -79,7 +79,6 @@ in
   # programs.neovim.enable = true;
   home.packages = with pkgs; [ 
     # gui programs
-    firefox
     discord
     openscad
     inkscape
@@ -100,6 +99,7 @@ in
 
     # utilities
     scrot # screenshot utility
+    xfce.xfce4-screenshooter
     pcmanfm
     pavucontrol
     touchegg # touchscreen gestures
@@ -147,7 +147,21 @@ in
       name = "Adwaita-dark";
       package = pkgs.gnome.gnome-themes-extra;
     };
+    # firefox uses GTK3 and may have an extra border
+    gtk3.extraCss = ''
+      .window-frame {
+          box-shadow: 0 0 0 0;
+          margin: 0;
+      }
+      window decoration {
+          margin: 0;
+          padding: 0;
+          border: none;
+      }
+    ''
   };
+
+  
 
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
