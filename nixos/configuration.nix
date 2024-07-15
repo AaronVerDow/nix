@@ -107,17 +107,18 @@
         "dialout"
       ];
       packages = with pkgs; [
-	neofetch
-	neovim
-	vimpager
-	btop
-	git
-	ranger
-	tldr
-	lolcat
-	direnv
-	fd
-	killall
+        neofetch
+        neovim
+        vimpager
+        btop
+        git
+        ranger
+        tldr
+        lolcat
+        direnv
+        fd
+        killall
+        unzip
       ];
     };
   };
@@ -171,6 +172,8 @@
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox
     FLAKE = "/home/averdow/git/nix"; # used by nix helper
+    MANPAGER="nvim +Man!";
+    MANWIDTH=999;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
