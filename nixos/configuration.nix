@@ -131,6 +131,7 @@
     nix-output-monitor # nom upgrades nix with prettier output
     nvd # diff derevations
     nh # uses packages above for os builds
+    liboping
   ];
 
   networking.networkmanager.enable = true;
