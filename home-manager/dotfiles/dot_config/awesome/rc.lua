@@ -532,16 +532,12 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- >>>
 
-awful.spawn.with_shell("wallpaper.sh")
-awful.spawn.with_shell("xcompmgr")
-awful.spawn.with_shell("xsettingsd")
--- this isn't working for some reason: awful.spawn.with_shell('pgrep -f "touchegg --client" || touchegg --client')
--- this respawns on restart but works at least:
-awful.spawn.once("touchegg --client")
-awful.spawn.once("onboard")
-awful.spawn.once("flashfocus -t 250 -l never")
+awful.spawn("my_wallpaper")
+awful.spawn("xcompmgr")
+awful.spawn.single_instance("flashfocus -t 250 -l never")
+awful.spawn.single_instance("nm-applet")
+awful.spawn.single_instance("copyq")
+awful.spawn.with_shell("pgrep -a touchegg | grep client || touchegg --client")
 awful.spawn.with_shell("pgrep volumeicon || volumeicon")
-awful.spawn.once("nm-applet")
-awful.spawn.once("copyq")
 awful.spawn.with_shell("pgrep barrier || barrier")
-awful.spawn.with_shell("my_wallpaper")
+awful.spawn.with_shell("pgrep onboard || onboard")
