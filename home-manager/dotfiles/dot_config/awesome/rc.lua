@@ -12,26 +12,11 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
-local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 -- https://github.com/streetturtle/awesome-wm-widgets/tree/master/battery-widget
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
--- doesn't work without amixer?
-local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
--- busted?
--- local audio_widget = require("awesome-pulseaudio-widget")
-
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
--- require("awful.hotkeys_popup.keys")
-
--- Load Debian menu entries
--- local debian = require("debian.menu")
--- xdg_menu = require("archmenu")
--- local has_fdo, freedesktop = pcall(require, "freedesktop")
-local freedesktop = require("freedesktop")
 
 --    Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -96,33 +81,6 @@ awful.layout.layouts = {
     						-- awful.layout.suit.corner.se,
 }
 -- >>>
-
--- <<< Menu
--- Create a launcher widget and a main menu
-myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
-}
-
-local menu_terminal = { "open terminal", terminal }
-
-local mymainmenu = awful.menu({
-    items = {
-        { "hotkeys", function() return false, hotkeys_popup.show_help end },
-        { "manual", terminal .. " -e man awesome" },
-        { "edit config", editor_cmd .. " " .. awesome.conffile },
-        { "restart", awesome.restart },
-        { "quit", function() awesome.quit() end },
-        { "Applications", freedesktop.menu.build() }
-    }
-})
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
-
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- <<< Wibar
 -- Create a textclock widget
@@ -207,19 +165,15 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
             s.mytaglist,
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            -- mykeyboardlayout,
             wibox.widget.systray(),
 	    cpu_widget(),
 	    battery_widget({ path_to_icons = "/home/averdow/.local/state/nix/profiles/profile/share/icons/Arc/status/symbolic/" }),
-	    volume_widget(),
-	    -- audio_widget(),
             mytextclock,
             s.mylayoutbox,
         },
@@ -278,8 +232,6 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
