@@ -64,21 +64,21 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
-    						-- awful.layout.suit.tile.left,
+    -- awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
-    						-- awful.layout.suit.tile.top,
+    -- awful.layout.suit.tile.top,
     -- awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
-    						-- awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
-    						-- awful.layout.suit.max,
-    						-- awful.layout.suit.max.fullscreen,
-    						-- awful.layout.suit.magnifier,
+    -- awful.layout.suit.max,
+    -- awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
     awful.layout.suit.floating,
-    						-- awful.layout.suit.corner.ne,
-    						-- awful.layout.suit.corner.sw,
-    						-- awful.layout.suit.corner.se,
+    -- awful.layout.suit.corner.ne,
+    -- awful.layout.suit.corner.sw,
+    -- awful.layout.suit.corner.se,
 }
 -- >>>
 
@@ -89,44 +89,43 @@ mytextclock = awful.widget.textclock(" %b %d %l:%M %P ", 15)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-
-                    awful.button({ }, 1, function(t) t:view_only() end),
-                    awful.button({ modkey }, 1, function(t)
-                                              if client.focus then
-                                                  client.focus:move_to_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, function(t)
-                                              if client.focus then
-                                                  client.focus:toggle_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-                )
+    awful.button({ }, 1, function(t) t:view_only() end),
+    awful.button({ modkey }, 1, function(t)
+        if client.focus then
+            client.focus:move_to_tag(t)
+        end
+    end),
+    awful.button({ }, 3, awful.tag.viewtoggle),
+    awful.button({ modkey }, 3, function(t)
+        if client.focus then
+            client.focus:toggle_tag(t)
+        end
+    end),
+    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+)
 
 local tasklist_buttons = gears.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  c:emit_signal(
-                                                      "request::activate",
-                                                      "tasklist",
-                                                      {raise = true}
-                                                  )
-                                              end
-                                          end),
-                     awful.button({ }, 3, function()
-                                              awful.menu.client_list({ theme = { width = 250 } })
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                          end))
+    awful.button({ }, 1, function (c)
+        if c == client.focus then
+            c.minimized = true
+        else
+            c:emit_signal(
+                "request::activate",
+                "tasklist",
+                {raise = true}
+            )
+        end
+    end),
+    awful.button({ }, 3, function()
+        awful.menu.client_list({ theme = { width = 250 } })
+    end),
+    awful.button({ }, 4, function ()
+        awful.client.focus.byidx(1)
+    end),
+    awful.button({ }, 5, function ()
+        awful.client.focus.byidx(-1)
+    end))
 
 awful.screen.connect_for_each_screen(function(s)
 
@@ -143,6 +142,7 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
@@ -165,6 +165,7 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
+            s.mylayoutbox,
             s.mytaglist,
             s.mypromptbox,
         },
@@ -172,10 +173,9 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-	    cpu_widget(),
-	    battery_widget({ path_to_icons = "/home/averdow/.local/state/nix/profiles/profile/share/icons/Arc/status/symbolic/" }),
+            cpu_widget(),
+            battery_widget({ path_to_icons = "/home/averdow/.local/state/nix/profiles/profile/share/icons/Arc/status/symbolic/" }),
             mytextclock,
-            s.mylayoutbox,
         },
     }
 end)
@@ -196,7 +196,7 @@ globalkeys = gears.table.join(
     awful.key({ }, "XF86MonBrightnessUp", function ()
         awful.util.spawn("xbacklight -inc 15") end),
 
-	   -- Multimedia
+    -- Multimedia
    awful.key({ }, "XF86AudioRaiseVolume", function ()
        awful.util.spawn("pactl set-sink-volume 0 +5%", false) end),
    awful.key({ }, "XF86AudioLowerVolume", function ()
@@ -219,7 +219,7 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
- 
+
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -300,9 +300,9 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    -- awful.key({ modkey },            "r",     function () awful.util.spawn("rofi showrofi -modi drun,run,window -show drun") end,
     awful.key({ modkey },            "r",     function () awful.util.spawn("my_run") end,
               {description = "run prompt", group = "launcher"}),
+
     awful.key({ modkey },            "p",     function () awful.util.spawn(" rofi -show run -theme ~/.config/rofi/launchers/type-1/style-5.rasi") end,
               {description = "run shell prompt", group = "launcher"}),
 
@@ -311,17 +311,6 @@ globalkeys = gears.table.join(
 
     awful.key({ modkey },            "c",     function () awful.util.spawn("calculator_toggle") end,
               {description = "calculator", group = "launcher"}),
-
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run {
-                    prompt       = "Run Lua code: ",
-                    textbox      = awful.screen.focused().mypromptbox.widget,
-                    exe_callback = awful.util.eval,
-                    history_path = awful.util.get_cache_dir() .. "/history_eval"
-                  }
-              end,
-              {description = "lua execute prompt", group = "awesome"}),
 
     awful.key({ modkey, "Shift",  }, "t",
               function ()
@@ -450,6 +439,7 @@ root.keys(globalkeys)
 -- >>>
 
 beautiful.border_width = 0
+beautiful.useless_gap = 0
 
 -- <<< Rules
 -- Rules to apply to new clients (through the "manage" signal).
@@ -475,18 +465,14 @@ awful.rules.rules = {
           "pinentry",
         },
         class = {
-          -- "Arandr",
-          -- "Blueman-manager",
           "Gpick",
           "Kruler",
           "MessageWin",  -- kalarm.
           "Sxiv",
-          -- "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
-	  "rofi",
+          "rofi",
           "veromix"
-          -- "xtightvncviewer"
-	},
+        },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
@@ -512,18 +498,13 @@ awful.rules.rules = {
       }
     },
 
-    {
-            rule = { class = "epsilon" },
+    { rule = { class = "epsilon" },
         properties = {
             floating = true,
             titlebars_enabled = true,
-	    ontop = true
+            ontop = true
         }
     },
-
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
 }
 -- >>>
 
@@ -550,21 +531,17 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- >>>
---
-
-beautiful.useless_gap = 0
 
 awful.spawn.with_shell("wallpaper.sh")
 awful.spawn.with_shell("xcompmgr")
 awful.spawn.with_shell("xsettingsd")
--- this isn't working for some reason
--- awful.spawn.with_shell('pgrep -f "touchegg --client" || touchegg --client')
--- this respawns on restart but works at least
+-- this isn't working for some reason: awful.spawn.with_shell('pgrep -f "touchegg --client" || touchegg --client')
+-- this respawns on restart but works at least:
 awful.spawn.once("touchegg --client")
 awful.spawn.once("onboard")
 awful.spawn.once("flashfocus -t 250 -l never")
-awful.spawn.with_shell("pgrep volumeicon || volumeicon") -- respawns
+awful.spawn.with_shell("pgrep volumeicon || volumeicon")
 awful.spawn.once("nm-applet")
 awful.spawn.once("copyq")
-awful.spawn.with_shell("pgrep barrier || barrier") -- respawns
+awful.spawn.with_shell("pgrep barrier || barrier")
 awful.spawn.with_shell("my_wallpaper")
