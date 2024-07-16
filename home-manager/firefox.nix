@@ -79,6 +79,9 @@
           "browser.newtabpage.activity-stream.system.showSponsored" = lock-false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
 
+          # disable pinch zoom on touchsreen, too sensitive and causes chaos
+          apz.allow_zooming = lock-false;
+
           # Used for CSS
 	  # https://github.com/Nishantdd/miniFox
 	  "toolkit.legacyUserProfileCustomizations.stylesheets" = lock-true;
