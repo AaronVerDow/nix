@@ -565,6 +565,9 @@ end)
 
 beautiful.titlebar_bg_focus  = gears.color.transparent
 beautiful.titlebar_bg_normal = gears.color.transparent
+beautiful.titlebar_fg_focus  = gears.color.transparent
+beautiful.titlebar_fg_normal = gears.color.transparent
+
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
