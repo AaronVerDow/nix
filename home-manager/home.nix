@@ -100,6 +100,11 @@ in
       pgrep epsilon && pkill epsilon || ${pkgs.my_numworks}/bin/epsilon
     '')
 
+    (writeShellScriptBin "onboard_toggle" ''
+      dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
+    '')
+
+
   ];
 
   programs.home-manager.enable = true;

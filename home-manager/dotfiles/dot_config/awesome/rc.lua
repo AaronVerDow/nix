@@ -314,6 +314,8 @@ globalkeys = gears.table.join(
 
     awful.key({ },                   "#201",     function () awful.util.spawn("calculator_toggle") end,
               {description = "calculator", group = "launcher"}),
+    awful.key({ },                   "#202",     function () awful.util.spawn("onboard_toggle") end,
+              {description = "onscreen keyboard", group = "launcher"}),
 
     awful.key({ modkey, "Shift",  }, "t",
               function ()
