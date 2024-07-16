@@ -563,6 +563,22 @@ tag.connect_signal("property::layout", function(t)
     end
 end)
 
+-- attempt at adding borders that would allow resizing while in tablet mode
+-- borders can be added but resizing does not work
+-- beautiful.border_width=5
+-- -- add border
+-- -- No borders if only one tiled client
+-- -- https://www.reddit.com/r/awesomewm/comments/box4jk/my_functional_dynamic_border_gap_and_titlebar/
+-- screen.connect_signal("arrange", function(s)
+--     for _, c in pairs(s.clients) do
+--         if #s.tiled_clients == 1 and c.floating == false and c.first_tag.layout.name ~= "floating" then
+--             c.border_width = 0
+--         elseif #s.tiled_clients > 1 or c.first_tag.layout.name == "floating" then
+--             c.border_width = beautiful.border_width
+--         end
+--     end
+-- end)
+
 beautiful.titlebar_bg_focus  = gears.color.transparent
 beautiful.titlebar_bg_normal = gears.color.transparent
 beautiful.titlebar_fg_focus  = gears.color.transparent
