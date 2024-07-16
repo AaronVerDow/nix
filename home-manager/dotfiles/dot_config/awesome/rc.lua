@@ -538,7 +538,9 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 client.connect_signal("property::floating", function(c)
     if c.floating then
-        awful.titlebar.show(c)
+        if not cname == "Onboard" then
+            awful.titlebar.show(c)
+        end
     else
         awful.titlebar.hide(c)
     end
@@ -546,7 +548,9 @@ end)
 
 client.connect_signal("manage", function(c)
     if c.floating or c.first_tag.layout.name == "floating" then
-        awful.titlebar.show(c)
+        if not cname == "Onboard" then
+            awful.titlebar.show(c)
+        end
     else
         awful.titlebar.hide(c)
     end
@@ -556,7 +560,9 @@ tag.connect_signal("property::layout", function(t)
     local clients = t:clients()
     for k,c in pairs(clients) do
         if c.floating or c.first_tag.layout.name == "floating" then
-            awful.titlebar.show(c)
+            if not cname == "Onboard" then
+                awful.titlebar.show(c)
+            end
         else
             awful.titlebar.hide(c)
         end
