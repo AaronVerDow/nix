@@ -265,14 +265,14 @@ globalkeys = gears.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, "Control" }, "r", awesome.restart,
+    awful.key({ modkey, "Control" }, "r",     awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit,
+    awful.key({ modkey, "Shift"   }, "q",     awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
-    awful.key({ modkey,           }, "Right",     function () awful.tag.incmwfact( 0.05)          end,
+    awful.key({ modkey,           }, "Right", function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
-    awful.key({ modkey,           }, "Left",     function () awful.tag.incmwfact(-0.05)          end,
+    awful.key({ modkey,           }, "Left",  function () awful.tag.incmwfact(-0.05)          end,
               {description = "decrease master width factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
               {description = "increase the number of master clients", group = "layout"}),
@@ -310,6 +310,9 @@ globalkeys = gears.table.join(
               {description = "firefox", group = "launcher"}),
 
     awful.key({ modkey },            "c",     function () awful.util.spawn("calculator_toggle") end,
+              {description = "calculator", group = "launcher"}),
+
+    awful.key({ },                   "#201",     function () awful.util.spawn("calculator_toggle") end,
               {description = "calculator", group = "launcher"}),
 
     awful.key({ modkey, "Shift",  }, "t",
