@@ -57,7 +57,7 @@ in
     libreoffice
     blender
     my_numworks
-    xournalpp
+    drawing
 
     # X customization
     rofi # pop up launcher
