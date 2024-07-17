@@ -109,6 +109,7 @@
       packages = with pkgs; [
         neofetch
         neovim
+        gcc # makes neovim plugins happy
         vimpager
         btop
         git
