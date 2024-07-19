@@ -62,6 +62,13 @@
           ./nixos/configuration.nix
         ];
       };
+      gonix = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./nixos/gonix/host.nix
+        ];
+      };
+
     };
 
     # Standalone home-manager configuration entrypoint
