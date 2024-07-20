@@ -54,7 +54,6 @@ in
     inkscape
     gimp
     kitty
-    libreoffice
     blender
     my_numworks
     drawing
@@ -81,8 +80,9 @@ in
     networkmanagerapplet
     copyq
     xorg.xkill
-    xrotate
-    via
+    xrotate # custom rotation package
+    via # configure QMK keyboards
+    evince # read PDF files
 
     (writeShellScriptBin "my_run" ''
       ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi
