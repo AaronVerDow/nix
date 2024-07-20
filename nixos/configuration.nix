@@ -157,9 +157,6 @@
   services.blueman.enable = true;
 
   hardware.opengl.enable = true;
-  # services.xserver.videoDrivers = ["nvidia"];
-  # hardware.nvidia.modesetting.enable = true;
-  services.xserver.videoDrivers = ["amdgpu"];
 
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox
