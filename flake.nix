@@ -58,8 +58,7 @@
       ipad = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-	  stylix.nixosModules.stylix
-          ./nixos/configuration.nix
+          ./nixos/ipad/host.nix
         ];
       };
       gonix = nixpkgs.lib.nixosSystem {
@@ -68,7 +67,6 @@
           ./nixos/gonix/host.nix
         ];
       };
-
     };
 
     # Standalone home-manager configuration entrypoint
