@@ -89,7 +89,10 @@ in
     '')
 
     (writeShellScriptBin "my_wallpaper" ''
-      ${pkgs.nitrogen}/bin/nitrogen --set-zoom-fill ~/Pictures/wood.jpg
+      dir=~/git/wallpapers
+      ${pkgs.nitrogen}/bin/nitrogen --random $dir --set-zoom-fill --head=0
+      ${pkgs.nitrogen}/bin/nitrogen --random $dir --set-zoom-fill --head=1 || true
+      ${pkgs.nitrogen}/bin/nitrogen --random $dir --set-zoom-fill --head=2 || true
     '')
 
     (writeShellScriptBin "my_touchrun" ''
