@@ -127,6 +127,10 @@ in
       name = "Adwaita-dark";
       package = pkgs.gnome.gnome-themes-extra;
     };
+    cursorTheme = {
+      package = pkgs.volantes-cursors;
+      name = "volantes_cursors";
+    };
     # firefox uses GTK3 and may have an extra border
     gtk3.extraCss = ''
       .window-frame {
