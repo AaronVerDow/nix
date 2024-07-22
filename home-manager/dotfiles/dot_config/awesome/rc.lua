@@ -638,7 +638,7 @@ end)
 
 -- >>>
 
-awful.spawn("my_wallpaper")
+awful.spawn("set_wallpaper")
 awful.spawn("xcompmgr")
 awful.spawn.single_instance("flashfocus -t 250 -l never")
 awful.spawn.single_instance("nm-applet")

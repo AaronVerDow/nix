@@ -88,11 +88,15 @@ in
       ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi
     '')
 
-    (writeShellScriptBin "my_wallpaper" ''
-      dir=~/git/wallpapers
-      ${pkgs.nitrogen}/bin/nitrogen --random $dir --set-zoom-fill --head=0
-      ${pkgs.nitrogen}/bin/nitrogen --random $dir --set-zoom-fill --head=1 || true
-      ${pkgs.nitrogen}/bin/nitrogen --random $dir --set-zoom-fill --head=2 || true
+    (writeShellScriptBin "set_wallpaper" ''
+      ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=0
+      ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=1 || true
+      ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=2 || true
+    '')
+
+    (writeShellScriptBin "wallpaper" ''
+      ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper
+      set_wallpaper
     '')
 
     (writeShellScriptBin "my_touchrun" ''
