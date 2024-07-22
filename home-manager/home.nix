@@ -125,15 +125,19 @@ in
     };
   };
 
+
+  home.pointerCursor = {
+    package = pkgs.volantes-cursors;
+    name = "volantes_cursors";
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
   gtk = {
     enable = true;
     theme = {
       name = "Adwaita-dark";
       package = pkgs.gnome.gnome-themes-extra;
-    };
-    cursorTheme = {
-      package = pkgs.volantes-cursors;
-      name = "volantes_cursors";
     };
     # firefox uses GTK3 and may have an extra border
     gtk3.extraCss = ''
