@@ -503,7 +503,7 @@ awful.rules.rules = {
       }
     },
 
-    -- doesn't work 
+    -- doesn't work ?
     { rule = { class = "epsilon" },
         properties = {
             floating = true,
@@ -511,6 +511,15 @@ awful.rules.rules = {
             ontop = true
         }
     },
+    
+    { rule = { class = "Onboard" },
+        properties = {
+            floating = true,
+            titlebars_enabled = true,
+            ontop = true
+        }
+    },
+
 }
 -- >>>
 
