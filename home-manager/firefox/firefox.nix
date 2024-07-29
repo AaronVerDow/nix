@@ -20,9 +20,9 @@
       # languagePacks = [ "en-US" ];
 
       profiles = {
-        home_manager = {
-          name = "home_manager";
-          default = true;
+        my_profile = {
+          name = "my_profile";
+          isDefault = true;
           userChrome = userChrome;
           userContent = userContent;
         };
