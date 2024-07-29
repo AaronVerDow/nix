@@ -20,15 +20,11 @@
       # languagePacks = [ "en-US" ];
 
       profiles = {
-        my_profile = {
-          name = "my_profile";
-          isDefault = true;
+        home_manager = {
+          name = "home_manager";
+          default = true;
           userChrome = userChrome;
           userContent = userContent;
-          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-            privacy-badger
-            ublock-origin
-          ];
         };
       };
 
@@ -58,19 +54,19 @@
         # Check about:support for extension/add-on ID strings.
         # Valid strings for installation_mode are "allowed", "blocked",
         # "force_installed" and "normal_installed".
-        # ExtensionSettings = {
-        # "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
+        ExtensionSettings = {
+          "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
           # uBlock Origin:
-        # "uBlock0@raymondhill.net" = {
-            # install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-            # installation_mode = "force_installed";
-        # };
-        # # Privacy Badger:
-        # "jid1-MnnxcxisBPnSXQ@jetpack" = {
-            # install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
-            # installation_mode = "force_installed";
-        # };
-        # };
+          "uBlock0@raymondhill.net" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+            installation_mode = "force_installed";
+          };
+          # Privacy Badger:
+          "jid1-MnnxcxisBPnSXQ@jetpack" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
+            installation_mode = "force_installed";
+          };
+        };
   
         /* ---- PREFERENCES ---- */
         # Check about:config for options.
