@@ -10,12 +10,23 @@
       Value = true;
       Status = "locked";
     };
+    userChrome = builtins.readFile ./userChrome.css;
+    userContent = builtins.readFile ./userContent.css;
   in
 {
   programs = {
     firefox = {
       enable = true;
       # languagePacks = [ "en-US" ];
+
+      profiles = {
+        home_manager = {
+          name = "home_manager";
+          default = true;
+          userChrome = userChrome;
+          userContent = userContent;
+        };
+      };
 
       /* ---- POLICIES ---- */
       # Check about:policies#documentation for options.
@@ -83,11 +94,11 @@
           apz.allow_zooming = lock-false;
 
           # Used for CSS
-	  # https://github.com/Nishantdd/miniFox
-	  "toolkit.legacyUserProfileCustomizations.stylesheets" = lock-true;
-	  "layers.acceleration.force-enabled" = lock-true;
-	  "gfx.webrender.all" = lock-true;
-	  "svg.context-properties.content.enabled" = lock-true;
+	      # https://github.com/Nishantdd/miniFox
+	      "toolkit.legacyUserProfileCustomizations.stylesheets" = lock-true;
+	      "layers.acceleration.force-enabled" = lock-true;
+	      "gfx.webrender.all" = lock-true;
+	      "svg.context-properties.content.enabled" = lock-true;
         };
       };
     };

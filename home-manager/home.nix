@@ -28,7 +28,7 @@ in
 {
   imports = [
     ./nvim.nix
-    ./firefox.nix
+    ./firefox/firefox.nix
   ];
 
   nixpkgs = {
