@@ -28,6 +28,7 @@ in
 {
   imports = [
     ./nvim.nix
+    ./dconf/onboard.nix
     ./firefox/firefox.nix
   ];
 
