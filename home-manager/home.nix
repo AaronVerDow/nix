@@ -175,6 +175,7 @@ in
   home.file.".config/rofi/config.rasi".source = ./dotfiles/dot_config/rofi/config.rasi;
   home.file.".config/kitty/kitty.conf".source = ./dotfiles/dot_config/kitty/kitty.conf;
   home.file.".config/volumeicon/volumeicon".source = ./dotfiles/dot_config/volumeicon/volumeicon;
+  home.file.".local/share/onboard/layouts/full.onboard".source = ./dotfiles/dot_local/share/onboard/layouts/full.onboard;
   home.file.".config/awesome/awesome-wm-widgets".source = awesomeWmWidgets;
 
   home.activation.copyRofiConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
