@@ -7,6 +7,4 @@
   * Onscreen keyboard
 
 # Todo
-* Battery icon missing
 * add new nvim configs
-* Onboard settings and themes
