@@ -4,7 +4,6 @@
     [
       ./hardware-configuration.nix
       ../../common/configuration.nix
-      inputs.home-manager.nixosModules.home-manager
     ];
   networking.hostName = "smartboard";
   services.xserver.videoDrivers = ["nvidia"];

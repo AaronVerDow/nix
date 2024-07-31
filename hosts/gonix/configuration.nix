@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:    
+{ inputs, outputs, ... }:
 {
   imports =
     [
@@ -6,4 +6,11 @@
       ../../common/configuration.nix
     ];
   networking.hostName = "gonix";
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    users = {
+      averdow = import ./home.nix;
+    };
+  };
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:    
+{ inputs, outputs, ... }:
 {
   imports =
     [
@@ -7,4 +7,11 @@
     ];
   networking.hostName = "ipad";
   services.xserver.videoDrivers = ["amdgpu"];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    users = {
+      averdow = import ./home.nix;
+    };
+  };
 }
