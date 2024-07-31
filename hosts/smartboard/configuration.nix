@@ -8,6 +8,13 @@
   networking.hostName = "smartboard";
   services.xserver.videoDrivers = ["nvidia"];
 
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "averdow";
+
+  # bug?  https://github.com/NixOS/nixpkgs/issues/103746
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+
   services.udev.packages = with pkgs; [
     sudo
   ];
