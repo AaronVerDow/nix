@@ -55,19 +55,19 @@
       ipad = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          ./nixos/ipad/host.nix
+          ./hosts/ipad/configuration.nix
         ];
       };
       gonix = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          ./nixos/gonix/host.nix
+          ./hosts/gonix/configuration.nix
         ];
       };
       smartboard = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          ./nixos/smartboard/host.nix
+          ./hosts/smartboard/configuration.nix
         ];
       };
     };

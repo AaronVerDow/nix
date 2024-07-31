@@ -3,7 +3,7 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../configuration.nix
+      ../../common/configuration.nix
       inputs.home-manager.nixosModules.home-manager
     ];
   networking.hostName = "smartboard";
