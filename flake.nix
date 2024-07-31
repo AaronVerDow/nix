@@ -64,6 +64,12 @@
           ./nixos/gonix/host.nix
         ];
       };
+      smartboard = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./nixos/smartboard/host.nix
+        ];
+      };
     };
 
     # Standalone home-manager configuration entrypoint
