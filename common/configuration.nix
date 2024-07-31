@@ -112,6 +112,9 @@
 
   networking.networkmanager.enable = true;
 
+  # allow access for barrier
+  networking.firewall.allowedTCPPorts = [ 24800 ];
+
   time.timeZone = "America/Chicago";
 
   services.openssh = {
