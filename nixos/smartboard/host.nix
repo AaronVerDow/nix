@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:    
+{ inputs, outputs, config, pkgs, ... }:    
 {
   imports =
     [
       ./hardware-configuration.nix
       ../configuration.nix
+      inputs.home-manager.nixosModules.home-manager
     ];
   networking.hostName = "smartboard";
   services.xserver.videoDrivers = ["nvidia"];
@@ -31,4 +32,11 @@
   in ''
     SUBSYSTEM=="usb", ATTR{idVendor}=="0b8c", ATTR{idProduct}=="00a1", ACTION=="add", RUN+="${pkgs.sudo}/bin/sudo -u averdow ${hdmiReset}/bin/hdmiReset"
   '';
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    users = {
+      averdow = import ./home.nix;
+    };
+  };
 }

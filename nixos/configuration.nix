@@ -13,13 +13,6 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  home-manager = {
-    extraSpecialArgs = { inherit inputs outputs; };
-    users = {
-      averdow = import ../home-manager/home.nix;
-    };
-  };
-
   qt = {
     enable = true;
     platformTheme = "gnome";
