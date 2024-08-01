@@ -94,11 +94,20 @@
           apz.allow_zooming = lock-false;
 
           # Used for CSS
-	      # https://github.com/Nishantdd/miniFox
-	      "toolkit.legacyUserProfileCustomizations.stylesheets" = lock-true;
-	      "layers.acceleration.force-enabled" = lock-true;
-	      "gfx.webrender.all" = lock-true;
-	      "svg.context-properties.content.enabled" = lock-true;
+          # https://github.com/Nishantdd/miniFox
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = lock-true;
+          "layers.acceleration.force-enabled" = lock-true;
+          "gfx.webrender.all" = lock-true;
+          "svg.context-properties.content.enabled" = lock-true;
+
+          # more for transparency
+          # https://github.com/Filip-Sutkowy/blurclean-firefox-theme
+          "gfx.webrender.enable" = lock-true;
+          "layout.css.backdrop-filter.enabled" = lock-true;
+
+          # allows new tab page to be transparent but may break some websites
+          # add background to userContent.css to fix individual sites
+          "browser.tabs.allow_transparent_browser" = lock-true;
         };
       };
     };
