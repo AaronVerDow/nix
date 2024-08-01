@@ -191,3 +191,9 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
   min-height: var(--tab-min-height) !important;
   max-height: var(--tab-min-height) !important;
 }
+
+/* Removes gaps around search bar */
+/* Just a guess, could have side effects */
+toolbarspring {
+  display: none;
+}
