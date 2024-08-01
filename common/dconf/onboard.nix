@@ -29,7 +29,7 @@ with lib.hm.gvariant;
 
     "org/onboard/theme-settings" = {
       background-gradient = 0.0;
-      color-scheme = "/nix/store/n8xrnjp68xb15f041w06kb5l5gwp8jil-onboard-1.4.1/share/onboard/themes/Charcoal.colors";
+      color-scheme = "$HOME/.nix-profile/share/onboard/themes/Charcoal.colors";
       key-fill-gradient = 8.0;
       key-gradient-direction = 12.0;
       key-label-font = "";
@@ -53,7 +53,7 @@ with lib.hm.gvariant;
       docking-shrink-workarea = false;
       enable-inactive-transparency = false;
       inactive-transparency = 70.0;
-      inactive-transparency-delay = 10.000000000000009;
+      inactive-transparency-delay = 10.0;
       transparency = 0.0;
       transparent-background = false;
     };
