@@ -175,3 +175,19 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
 #unified-extensions-button > .toolbarbutton-icon {
     width: 0 !important;
 }
+
+
+/* ROOT - VARS */
+*|*:root {
+  /* match awesomewm wibar */
+ --tab-min-height:      20px !important; /* adjust */
+ --tab-min-width:       60px !important; /* adjust */
+}
+
+/* TABS: height */
+#tabbrowser-tabs,
+#tabbrowser-tabs > #tabbrowser-arrowscrollbox,
+.tabbrowser-tabs .tabbrowser-tab {
+  min-height: var(--tab-min-height) !important;
+  max-height: var(--tab-min-height) !important;
+}
