@@ -5,6 +5,6 @@ let
 in
 pkgs.writeShellApplication {
   name = "xrotate";
-  runtimeInputs = with pkgs; [ bash xorg.xrandr xorg.xinput ];
+  runtimeInputs = with pkgs; [ bash xorg.xrandr xorg.xinput awesome ];
   text = scriptContent;
 }

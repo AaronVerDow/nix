@@ -54,18 +54,20 @@ rotate() {
     fi
 
     xrandr --output "$XDISPLAY" --rotate "$rotation"
+    # restart awesome so wibar can move
+    echo 'awesome.restart()' | awesome-client
     while read -r device; do
         # hacks to use touchpad on back of pc while folded up in tablet mode
         if echo "$device" | grep -qi "touchpad"; then
             if [ "$rotation" == "left" ]; then
-                mirrored_left "$device"
+                mirrored_left "$device" || true
                 continue
             elif [ "$rotation" == "right" ]; then
-                mirrored_right "$device"
+                mirrored_right "$device" || true
                 continue
             fi
         fi
-        $rotation "$device"
+        $rotation "$device" || true
     done <<< "$DEVICES"
 }
 

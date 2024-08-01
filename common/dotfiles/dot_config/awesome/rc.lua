@@ -157,8 +157,11 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons
     }
 
-    -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    if s.geometry.width >= s.geometry.height then
+        s.mywibox = awful.wibar({ position = "bottom", screen = s })
+    else
+        s.mywibox = awful.wibar({ position = "top", screen = s })
+    end
 
     -- Add widgets to the wibox
     s.mywibox:setup {
