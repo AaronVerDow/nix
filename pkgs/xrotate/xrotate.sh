@@ -103,10 +103,28 @@ cw_left() {
     rotate normal
 }
 
+flip_normal() {
+    rotate inverted
+}
+
+flip_right() {
+    rotate left
+}
+
+flip_inverted() {
+    rotate normal
+}
+
+flip_left() {
+    rotate right
+}
+
 if [ "$1" == "cw" ]; then
     "cw_$current"
 elif [ "$1" == "ccw" ]; then
     "ccw_$current"
+elif [ "$1" == "flip" ]; then
+    "flip_$current"
 else
     rotate "$1"
 fi
