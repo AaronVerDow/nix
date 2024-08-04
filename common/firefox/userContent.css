@@ -7,7 +7,7 @@
   }
 }
 
-@-moz-document domain(wgu.edu) {
+@-moz-document regexp("http.*") {
   body {
     background-color: white !important;
   }
