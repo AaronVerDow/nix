@@ -9,6 +9,6 @@
 
 @-moz-document regexp("http.*") {
   body {
-    background-color: white !important;
+    background-color: white;
   }
 }
