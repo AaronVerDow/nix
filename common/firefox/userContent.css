@@ -12,3 +12,9 @@
     background-color: white;
   }
 }
+
+@-moz-document domain("reddit.com") {
+  body {
+    background-color: transparent;
+  }
+}
