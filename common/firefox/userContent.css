@@ -1,20 +1,11 @@
 @-moz-document url("about:home"), url("about:newtab") {
   body {
-    background-color: transparent !important;
-    background-image: none !important;
     background: transparent !important;
-    --tabpanel-background-color: transparent !important;
   }
 }
 
-@-moz-document regexp("http.*") {
+@-moz-document domain("wgu.edu") {
   body {
     background-color: white;
-  }
-}
-
-@-moz-document domain("reddit.com") {
-  body {
-    background-color: transparent;
   }
 }
