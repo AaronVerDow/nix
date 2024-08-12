@@ -9,3 +9,9 @@
     background-color: white;
   }
 }
+
+@-moz-document domain("udemy.com") {
+  body {
+    background-color: white;
+  }
+}
