@@ -88,6 +88,7 @@
       packages = with pkgs; [
         neofetch
         neovim
+        nodejs # for neovim
         gcc # makes neovim plugins happy
         vimpager
         btop
