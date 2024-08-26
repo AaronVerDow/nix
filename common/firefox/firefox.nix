@@ -107,7 +107,7 @@
 
           # allows new tab page to be transparent but may break some websites
           # add background to userContent.css to fix individual sites
-          "browser.tabs.allow_transparent_browser" = lock-true;
+          # "browser.tabs.allow_transparent_browser" = lock-true;
         };
       };
     };
