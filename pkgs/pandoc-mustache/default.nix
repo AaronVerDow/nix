@@ -1,16 +1,38 @@
-{ pkgs ? import <nixpkgs> { } }:
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  pyparsing,
+  pytestCheckHook,
+  pythonOlder,
+}:
 
-pkgs.python310Packages.buildPythonPackage rec {
-  pname = "pandoc-mustache";
-  version = "latest";
+buildPythonPackage rec {
+  pname = "python-mustache";
+  version = "0.1.0";
+  format = "setuptools";
 
-  src = pkgs.lib.cleanSource ./pandoc-mustache;
+  disabled = pythonOlder "3.7";
 
-  nativeBuildInputs = [ pkgs.python310Packages.setuptools ];
+  src = fetchFromGitHub {
+    owner = "michaelstepner";
+    repo = "${pname}";
+    rev = "refs/tags/v${version}";
+    hash = "sha256-YMkLSx7L2srLINZa6Ec0rPoxE2SdMv6CnI4BpHgHuzM=";
+  };
 
-  meta = with pkgs.lib; {
-    description = "Pandoc filter that allows the use of Mustache templates.";
-    license = licenses.mit;
-    maintainers = with maintainers; [ yourname ];
+  propagatedBuildInputs = [ pyparsing ];
+
+  nativeCheckInputs = [ pytestCheckHook ];
+
+  pythonImportsCheck = [ "pandoc-mustache" ];
+
+  meta = with lib; {
+    description = "Pandoc Mustache Filter";
+    homepage = "https://github.com/michaelstepner/pandoc-mustache";
+    license = with licenses; [
+      lgpl3Only # or
+      bsd3
+    ];
   };
 }
