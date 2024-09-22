@@ -1,0 +1,15 @@
+fg_color = #000000000000
+use_transbg = false
+wall_picture = /home/averdow/.mlterm/paper.jpg
+fontsize = 25
+use_anti_alias = true
+use_variable_column_width = true
+type_engine = xft
+line_space = 0
+screen_width_ratio = 40
+bel_mode = none
+brightness = 80
+contrast = 100
+col_size_of_width_a = 1
+scrollbar_mode = none
+scrollbar_view_name = athena
