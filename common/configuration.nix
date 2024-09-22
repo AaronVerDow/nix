@@ -109,6 +109,7 @@
     nvd # diff derevations
     nh # uses packages above for os builds
     liboping
+    kitty
   ];
 
   networking.networkmanager = {
@@ -142,6 +143,7 @@
 
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.windowManager.awesome.enable = true;
+  programs.hyprland.enable = true;
 
   services.flatpak.enable = true;
   xdg.portal = {

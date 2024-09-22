@@ -48,6 +48,9 @@ in
     homeDirectory = "/home/averdow";
   };
 
+  # allow fonts to be used from package list
+  fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [ 
     # gui programs
     discord
@@ -59,6 +62,12 @@ in
     my_numworks
     drawing
 
+    mlterm
+    merriweather
+    libre-baskerville
+    courier-prime
+    libertine
+
     # X customization
     rofi # pop up launcher
     nitrogen # set desktop background
@@ -66,6 +75,7 @@ in
     arc-icon-theme # battery widget
     acpi # battery widget
     ubuntu_font_family
+    hyprpaper
 
     # utilities
     scrot # screenshot utility
