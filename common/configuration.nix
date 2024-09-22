@@ -111,7 +111,10 @@
     liboping
   ];
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    wifi.powersave = false; # helps with barrier and mouse jumps?
+  };
 
   # allow access for barrier
   networking.firewall.allowedTCPPorts = [ 24800 ];
