@@ -45,14 +45,13 @@ which fdfind &> /dev/null && alias fd='fdfind --type f' || alias fd='fd --type f
 LAST_REPO=""
 cd() {
     builtin cd "$@";
-    git rev-parse 2>/dev/null;
-
-    if [ $? -eq 0 ]; then
+    if git rev-parse 2>/dev/null; then
         if [ "$LAST_REPO" != $(basename $(git rev-parse --show-toplevel)) ]; then
-        onefetch
-        LAST_REPO=$(basename $(git rev-parse --show-toplevel))
+            onefetch
+            LAST_REPO=$(basename $(git rev-parse --show-toplevel))
         fi
     fi
+    ls
 }
 
 export NIX_SHELL_PRESERVE_PROMPT=1
@@ -156,10 +155,6 @@ alias ,,,,,,,,,,='echo "$OLDPWD" | grep -q "^$PWD/" && cd "$( echo "$OLDPWD" | s
 # fi
 
 alias sqlcat='nvimpager -c -- -c "set syntax=sql"'
-
-function cd {
-    builtin cd "$@" && ls
-}
 
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 

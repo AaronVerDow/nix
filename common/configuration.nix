@@ -100,6 +100,7 @@
         fd
         killall
         unzip
+        onefetch
       ];
     };
   };
