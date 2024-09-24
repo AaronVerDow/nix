@@ -70,6 +70,16 @@
     gc.options = "--delete-older-than +5";
   };
 
+  security.sudo.extraRules = [
+    {
+      users = ["averdow"];
+      commands = [ {
+        command = "${pkgs.liboping}/bin/noping";
+        options = ["NOPASSWD"];
+      } ];
+    }
+  ];
+
   users.users = {
     averdow = {
       initialPassword = "correcthorsebatterystaple";
