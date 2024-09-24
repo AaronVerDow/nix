@@ -123,6 +123,11 @@ in
       dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
     '')
 
+    (writeShellScriptBin "my_ping" ''
+      gateway=$( ip route | grep default | awk '{ print $3}' )
+      sudo ${pkgs.liboping}/bin/noping $gateway modem public
+    '')
+
     (writeShellScriptBin "pkg" ''
       nom shell nixpkgs#$1
     '')
