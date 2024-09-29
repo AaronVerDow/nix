@@ -30,6 +30,7 @@ in
     ./nvim.nix
     ./dconf/onboard.nix
     ./firefox/firefox.nix
+    ./prose/prose.nix
   ];
 
   nixpkgs = {
