@@ -96,6 +96,7 @@ in
     via # configure QMK keyboards
     evince # read PDF files
     wavemon
+    arandr
 
     (writeShellScriptBin "my_run" ''
       ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi
