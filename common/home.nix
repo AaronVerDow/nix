@@ -72,13 +72,13 @@ in
     # X customization
     rofi # pop up launcher
     nitrogen # set desktop background
-    xcompmgr
     arc-icon-theme # battery widget
     acpi # battery widget
     ubuntu_font_family
     hyprpaper
 
     # utilities
+    picom-pijulius
     scrot # screenshot utility
     xfce.xfce4-screenshooter
     pcmanfm
@@ -182,11 +182,13 @@ in
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
+
   # hacky solution until I find a proper home for this, typically goes in /etc/ so root is impacted as well
   home.file.".bash.bashrc".source = ./dotfiles/dot_bash.bashrc;
   # should be in /etc/DIR_COLORS ?
   home.file.".dir_colors".source = ./dotfiles/dot_dir_colors;
   home.file.".bashrc".source = ./dotfiles/dot_bashrc;
+  home.file.".config/picom/picom.conf".source = ./dotfiles/dot_config/picom/picom.conf;
   home.file.".config/awesome/rc.lua".source = ./dotfiles/dot_config/awesome/rc.lua;
   home.file.".config/touchegg/touchegg.conf".source = ./dotfiles/dot_config/touchegg/touchegg.conf;
   home.file.".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
