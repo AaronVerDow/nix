@@ -75,7 +75,6 @@ in
     arc-icon-theme # battery widget
     acpi # battery widget
     ubuntu_font_family
-    hyprpaper
 
     # utilities
     picom-pijulius
