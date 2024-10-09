@@ -62,6 +62,7 @@ in
     blender
     my_numworks
     drawing
+    onlyoffice-bin
 
     mlterm
     merriweather
@@ -97,6 +98,7 @@ in
     evince # read PDF files
     wavemon
     arandr
+    texliveFull
 
     (writeShellScriptBin "my_run" ''
       ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi
