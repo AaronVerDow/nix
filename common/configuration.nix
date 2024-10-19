@@ -19,6 +19,7 @@
     style = "adwaita-dark";
   };
 
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -58,6 +59,10 @@
       # Workaround for https://github.com/NixOS/nix/issues/9574
       nix-path = config.nix.nixPath;
       auto-optimise-store = true;
+      trusted-users = [
+        "root"
+        "averdow"
+      ];
     };
     # Opinionated: disable channels
     channel.enable = false;
