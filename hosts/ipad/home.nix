@@ -11,7 +11,7 @@
     '')
 
     (writeShellScriptBin "desk" ''
-      xrandr --output eDP --auto --below DisplayPort-1 --output DisplayPort-1 --mode 3440x1440
+      xrandr --output eDP --auto --below DisplayPort-0 --output DisplayPort-1 --mode 3440x1440
       set_wallpaper
     '')
 
