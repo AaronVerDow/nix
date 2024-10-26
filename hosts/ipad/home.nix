@@ -16,7 +16,7 @@
     '')
 
     (writeShellScriptBin "undock" ''
-      xrandr --output eDP --auto --output DisplayPort-1 --off
+      xrandr --output eDP --auto --output DisplayPort-0 --off
       set_wallpaper
     '')
 
