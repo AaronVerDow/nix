@@ -26,13 +26,13 @@
       ];
       text = ''
         export DISPLAY=:0
-        until xrandr | grep "HDMI-0 connected"; do
+        until output=$( xrandr | grep 'HDMI-. connected' | grep -o 'HDMI-.' ); do
             sleep 1
         done
         sleep 3
-        xrandr --output HDMI-0 --off
+        xrandr --output "$output" --off
         sleep 1
-        xrandr --output HDMI-0 --auto
+        xrandr --output "$output" --auto
       '';
     };
   in ''
