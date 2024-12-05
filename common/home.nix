@@ -63,6 +63,7 @@ in
     my_numworks
     drawing
     onlyoffice-bin
+    jetbrains.idea-ultimate
 
     mlterm
     merriweather
