@@ -158,7 +158,7 @@ in
     enable = true;
     theme = {
       name = "Adwaita-dark";
-      package = pkgs.gnome.gnome-themes-extra;
+      package = pkgs.gnome-themes-extra;
     };
     # firefox uses GTK3 and may have an extra border
     gtk3.extraCss = ''

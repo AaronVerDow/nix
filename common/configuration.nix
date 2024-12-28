@@ -164,6 +164,7 @@
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
   };
 
   services.pipewire = {
@@ -178,7 +179,7 @@
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox
