@@ -83,7 +83,7 @@ in
     scrot # screenshot utility
     xfce.xfce4-screenshooter
     pcmanfm
-    pavucontrol
+    pwvucontrol
     touchegg # touchscreen gestures
     onboard # onscreen keyboard
     xclip
