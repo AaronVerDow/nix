@@ -33,16 +33,6 @@ vim.opt.smartcase = true
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
-require 'nvim-treesitter.configs'.setup {
-        highlight = {
-            enable = false,
-            additional_vim_regex_highlighting = false, -- disable standard vim highlighting
-        },
-        indent = {
-            enable = true,
-        },
-}
-
 -- https://github.com/HiPhish/rainbow-delimiters.nvim/issues/2
 -- ChatGPT suggested the delay and it worked.
 vim.api.nvim_create_autocmd("BufEnter", {
