@@ -94,7 +94,6 @@ in
     copyq
     xorg.xkill
     xrotate # custom rotation package
-    via # configure QMK keyboards
     evince # read PDF files
     wavemon
     arandr
