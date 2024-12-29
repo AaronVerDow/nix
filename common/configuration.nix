@@ -126,6 +126,7 @@
     nh # uses packages above for os builds
     liboping
     kitty
+    via
   ];
 
   networking.networkmanager = {
@@ -178,8 +179,8 @@
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
-
   hardware.graphics.enable = true;
+  hardware.keyboard.qmk.enable = true;
 
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox
