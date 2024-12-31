@@ -126,7 +126,6 @@
     nh # uses packages above for os builds
     liboping
     kitty
-    via
   ];
 
   networking.networkmanager = {
@@ -190,8 +189,15 @@
   };
 
   services.udev.packages = with pkgs; [
-    via
+    unstable.via
   ];
+  # Keychron isn't currenlty included by via
+  services.udev.extraRules = ''
+    # K9 Pro
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0290", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+    # K7 Pro
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0270", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+  '';
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

@@ -64,6 +64,9 @@ in
     drawing
     onlyoffice-bin
     jetbrains.idea-ultimate
+    unstable.via
+    unzip
+    usbutils
 
     mlterm
     merriweather
