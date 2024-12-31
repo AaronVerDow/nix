@@ -10,22 +10,29 @@
 	coc-nvim
 	rainbow-delimiters-nvim
 	nvim-treesitter
+	gitsigns-nvim
+	lualine-nvim
+	vim-humanoid-colorscheme
+	transparent-nvim
 
 	# prose
-	goyo-vim
-	vim-pencil
-	limelight-vim # highlight current editing block
-	vim-markdown
+	goyo-vim	# minimal interface
+	vim-pencil	# better word wrap
+	limelight-vim	# highlight current editing block
+	vim-markdown	# rough markdown preview
 
 	# shell
 	coc-sh
-	vim-shellcheck
 	nvim-treesitter-parsers.bash
+	vim-shellcheck
+
+
     ];
     extraLuaConfig = ''
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.termguicolors = true
 
 -- Make line numbers default
 -- vim.opt.number = true
@@ -44,8 +51,13 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end,
 })
 
+require('gitsigns').setup()
+require('lualine').setup()
+
     '';
     extraConfig = ''
+colorscheme humanoid
+
 function! s:goyo_enter()
   set linebreak
   set spell spelllang=en_us
