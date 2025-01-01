@@ -2,6 +2,8 @@
 {
   home.packages = with pkgs; [ 
     shellcheck
+    typescript
+    nodejs
   ];
   programs.neovim = {
     enable = true;
@@ -26,6 +28,9 @@
 	nvim-treesitter-parsers.bash
 	vim-shellcheck
 
+	# typescript
+	typescript-tools-nvim
+	plenary-nvim # required for typescript-tools
 
     ];
     extraLuaConfig = ''
@@ -53,6 +58,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 require('gitsigns').setup()
 require('lualine').setup()
+require("typescript-tools").setup {}
+require('transparent').setup({})
 
     '';
     extraConfig = ''
