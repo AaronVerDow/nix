@@ -32,6 +32,10 @@
 	typescript-tools-nvim
 	plenary-nvim # required for typescript-tools
 
+	# lazy java setup
+	coc-java
+	nvim-treesitter-parsers.java
+
     ];
     extraLuaConfig = ''
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
