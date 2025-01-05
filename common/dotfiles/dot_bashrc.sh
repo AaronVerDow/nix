@@ -6,7 +6,11 @@
 [[ $- != *i* ]] && return
 
 # Global bashrc workaround for NixOS
-[ -f /etc/bash.bashrc ] && source /etc/bash.bashrc || source ~/.bash.bashrc
+if [ -f /etc/bash.bashrc ]; then
+    source /etc/bash.bashrc
+else
+    source ~/.bash.bashrc
+fi
 
 PATH="$HOME/bin:$PATH:$HOME/.local/bin"
 
@@ -21,7 +25,8 @@ alias halt='sudo /sbin/shutdown -h now'
 alias yolo='git push'
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias xclip='xclip -sel clip'
-which fdfind &> /dev/null && alias fd='fdfind --type f' || alias fd='fd --type f'
+alias fd='fd --type f'
+which fdfind &> /dev/null && alias fd='fdfind --type f' 
 
 # running vi against a directory will cd into it
 vi() {
@@ -104,42 +109,33 @@ LESS_TERMCAP_so=$'\E[38;5;246m' \
 LESS_TERMCAP_ue=$'\E[0m' \
 LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
+
 # Organizing notes
-_n()
-{
-    HOSTNAMES=`ls ~/notes`
-    local cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $(compgen -W "$HOSTNAMES" -- $cur) )
-}
-complete -F _n n
-
-_ni()
-{
-    HOSTNAMES=`ls ~/notes`
-    local cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $(compgen -W "$HOSTNAMES" -- $cur) )
-}
-complete -F _ni ni
-
-_nls()
-{
-    HOSTNAMES=`ls ~/notes`
-    local cur=${COMP_WORDS[COMP_CWORD]}
-    COMPREPLY=( $(compgen -W "$HOSTNAMES" -- $cur) )
-}
-complete -F _nls nls
-
+export NOTES_DIRECTORY=~/notes
 n() {
-	cat ~/notes/"$*"
+	cat "$NOTES_DIRECTORY/$*"
 }
 
 ni() {
-	$EDITOR ~/notes/"$*"
+	$EDITOR "$NOTES_DIRECTORY/$*"
 }
 
 nls() {
-	ls -c ~/notes/ | grep "$*"
+	ls -ctr "$NOTES_DIRECTORY" | grep "$*"
 }
+
+_notes_autocomplete() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+
+    local files
+    files=$(find "$NOTES_DIRECTORY" -mindepth 1 -maxdepth 1 -type f -exec basename {} \; | while IFS= read -r line; do printf '%q\n' "$line"; done)
+
+    mapfile -t COMPREPLY < <( compgen -W "$files" -- "$cur" )
+}
+
+complete -F _notes_autocomplete n
+complete -F _notes_autocomplete ni
+complete -F _notes_autocomplete nls
 
 # Temporary downloads directory
 mkdir -p /tmp/averdow/.downloads &> /dev/null
