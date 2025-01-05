@@ -55,6 +55,45 @@ cd() {
     ls
 }
 
+cat() {
+    # Do nothing if piped
+    if [[ ! -t 1 ]]; then
+        command cat "$@"
+        return $?
+    fi
+
+    # Define categories
+    images=0
+    markdown=0
+
+    for file in "$@"; do
+        if echo "$file" | grep -Eiq '\.(png|jpg|svg)$'; then
+            ((images++))
+            continue
+        fi
+
+        if echo "$file" | grep -Eiq '\.(md|rmd)$'; then
+            ((markdown++))
+            continue
+        fi
+        
+        command cat "$@"
+        return $?
+    done
+
+    total=$((images+markdown))
+
+    if [ $images -gt 0 ] && [ $images -eq $total ]; then
+        kitten icat "$@"
+        return $?
+    fi
+
+    if [ $markdown -gt 0 ] && [ $markdown -eq $total ]; then
+        mdcat "$@"
+        return $?
+    fi
+}
+
 export NIX_SHELL_PRESERVE_PROMPT=1
 
 export LESS_TERMCAP_mb=$'\E[01;31m' \
