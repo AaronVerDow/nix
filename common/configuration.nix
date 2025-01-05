@@ -138,6 +138,12 @@
 
   time.timeZone = "America/Chicago";
 
+  # Added for WGU D288 final
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+  };
+
   services.openssh = {
     enable = true;
     settings = {
