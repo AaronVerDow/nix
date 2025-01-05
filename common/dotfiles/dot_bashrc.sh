@@ -5,56 +5,56 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# workaround for NixOS
+# Global bashrc workaround for NixOS
 [ -f /etc/bash.bashrc ] && source /etc/bash.bashrc || source ~/.bash.bashrc
 
 PATH="$HOME/bin:$PATH:$HOME/.local/bin"
-[ -d $HOME/.toolbox/bin ] && export PATH=$PATH:$HOME/.toolbox/bin
 
-# export GTK_IM_MODULE=ibus
-# export QT4_IM_MODULE=xim
-# export QT_IM_MODULE=xim
-# export XMODIFIERS=@im=ibus
-
+export NIX_SHELL_PRESERVE_PROMPT=1
 export NIXPKGS_ALLOW_UNFREE=1
 export EDITOR=nvim
 
 alias ip='ip -c'
-vi() {
-    if [[ -d ${!#} ]]; then
-	echo "Use cd!" | lolcat -a -d 24
-        cd "$@"
-    else
-        path=$( readlink -f "$1" )
-        if chezmoi source-path "$path" &> /dev/null; then
-            echo "Editing chezmoi file" | lolcat -a -d 24
-            chezmoi edit --apply "$path"
-        else
-            command nvim "$@"
-        fi
-    fi
-}
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias halt='sudo /sbin/shutdown -h now'
 alias yolo='git push'
-export LESS='-R --use-color -Dd+r$Du+b'
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias xclip='xclip -sel clip'
 which fdfind &> /dev/null && alias fd='fdfind --type f' || alias fd='fd --type f'
 
-LAST_REPO=""
+# running vi against a directory will cd into it
+vi() {
+    if [[ -d ${!#} ]]; then
+	echo "Use cd!" | lolcat -a -d 24
+        cd "$@" || return $?
+    fi
+
+    command nvim "$@"
+}
+
 cd() {
-    builtin cd "$@";
-    if git rev-parse 2>/dev/null; then
-        if [ "$LAST_REPO" != $(basename $(git rev-parse --show-toplevel)) ]; then
+    builtin cd "$@" || return $?
+
+    # Is this in a git repo?
+    local git_root
+    if git_root=$(git rev-parse --show-toplevel 2> /dev/null); then
+
+        # Only track the name to avoid symlink issues
+        local git_name
+        git_name=$(basename "$git_root")
+
+        # Only show for new repos
+        if [ "${ONEFETCH_LAST_REPO:-}" != "$git_name" ]; then
             onefetch
-            LAST_REPO=$(basename $(git rev-parse --show-toplevel))
+            export ONEFETCH_LAST_REPO=$git_name
         fi
     fi
+
     ls
 }
 
+alias sqlcat='nvimpager -c -- -c "set syntax=sql"'
 cat() {
     # Do nothing if piped
     if [[ ! -t 1 ]]; then
@@ -94,8 +94,8 @@ cat() {
     fi
 }
 
-export NIX_SHELL_PRESERVE_PROMPT=1
-
+# Forgot what this does, should probably replace less anyways
+export LESS='-R --use-color -Dd+r$Du+b'
 export LESS_TERMCAP_mb=$'\E[01;31m' \
 LESS_TERMCAP_md=$'\E[01;38;5;74m' \
 LESS_TERMCAP_me=$'\E[0m' \
@@ -104,14 +104,7 @@ LESS_TERMCAP_so=$'\E[38;5;246m' \
 LESS_TERMCAP_ue=$'\E[0m' \
 LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
-# nf=$HOME/.cache/neofetch
-if [ -n "$PS1" ]; then
-    # [ -f "$nf" ] && /bin/cat "$nf"
-    # nohup neofetch > "$nf" 2> /dev/null &
-    neofetch --config ~/.config/neofetch/config
-fi
-
-
+# Organizing notes
 _n()
 {
     HOSTNAMES=`ls ~/notes`
@@ -148,6 +141,16 @@ nls() {
 	ls -c ~/notes/ | grep "$*"
 }
 
+# Temporary downloads directory
+mkdir -p /tmp/averdow/.downloads &> /dev/null
+[ -L "$HOME/tmp" ] || ln -s /tmp/averdow $HOME/tmp
+[ -e "$HOME/Downloads" ] || ln -s $HOME/tmp/.downloads $HOME/Downloads # Downloads must be manually removed to get setup
+
+# Keep more history
+HISTFILESIZE=1000000
+HISTSIZE=1000000
+export HISTTIMEFORMAT=""
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'history 1 >> ~/.eternal'
 hist(){
 	echo "$@" | grep -q . && history | grep "$@" || history
 }
@@ -156,19 +159,6 @@ eternal() {
     cat $HOME/.eternal | sed 's/^ *[0-9]* *//' | egrep -v '^(hist |eternal)' | egrep -a $@
 }
 
-mkdir -p /tmp/averdow/.downloads &> /dev/null
-[ -L "$HOME/tmp" ] || ln -s /tmp/averdow $HOME/tmp
-[ -e "$HOME/Downloads" ] || ln -s $HOME/tmp/.downloads $HOME/Downloads # Downloads must be manually removed to get setup
-
-HISTFILESIZE=1000000
-HISTSIZE=1000000
-
-export HISTTIMEFORMAT=""
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'history 1 >> ~/.eternal'
-
-# BEGIN_KITTY_SHELL_INTEGRATION
-if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; then source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; fi
-# END_KITTY_SHELL_INTEGRATION
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -189,23 +179,25 @@ alias ,,,,,,,,='echo "$OLDPWD" | grep -q "^$PWD/" && cd "$( echo "$OLDPWD" | sed
 alias ,,,,,,,,,='echo "$OLDPWD" | grep -q "^$PWD/" && cd "$( echo "$OLDPWD" | sed "s#^$PWD##" | cut -d '/' -f -9 | sed 's#^/##' )"'
 alias ,,,,,,,,,,='echo "$OLDPWD" | grep -q "^$PWD/" && cd "$( echo "$OLDPWD" | sed "s#^$PWD##" | cut -d '/' -f -10 | sed 's#^/##' )"'
 
-# if command -v vimcat &> /dev/null; then
-	# alias ccat=$( which cat )
-	# alias cat=vimcat
-# fi
+if [ -n "$PS1" ]; then
+    neofetch --config ~/.config/neofetch/config
+fi
 
-alias sqlcat='nvimpager -c -- -c "set syntax=sql"'
-
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+# BEGIN_KITTY_SHELL_INTEGRATION
+if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; then source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; fi
+# END_KITTY_SHELL_INTEGRATION
 
 eval "$(direnv hook bash)"
 
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
 if [ -d "$HOME/.nvm" ]; then
-	export NVM_DIR="$HOME/.nvm"
-	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-	[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
+
 [ -d "$HOME/.rbenv/bin" ] && export PATH="$HOME/.rbenv/bin:$PATH"
 which rbenv &> /dev/null && eval "$(rbenv init -)" || true
-[ -f "$HOME/.bashrc.work" ] && source "$HOME/.bashrc.work"
+
 true
