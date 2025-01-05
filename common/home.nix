@@ -190,10 +190,10 @@ in
 
 
   # hacky solution until I find a proper home for this, typically goes in /etc/ so root is impacted as well
-  home.file.".bash.bashrc".source = ./dotfiles/dot_bash.bashrc;
+  home.file.".bash.bashrc".source = ./dotfiles/dot_bash.bashrc.sh;
   # should be in /etc/DIR_COLORS ?
-  home.file.".dir_colors".source = ./dotfiles/dot_dir_colors;
-  home.file.".bashrc".source = ./dotfiles/dot_bashrc;
+  home.file.".dir_colors".source = ./dotfiles/dot_dir_colors.sh;
+  home.file.".bashrc".source = ./dotfiles/dot_bashrc.sh;
   home.file.".config/picom/picom.conf".source = ./dotfiles/dot_config/picom/picom.conf;
   home.file.".config/awesome/rc.lua".source = ./dotfiles/dot_config/awesome/rc.lua;
   home.file.".config/touchegg/touchegg.conf".source = ./dotfiles/dot_config/touchegg/touchegg.conf;
