@@ -113,15 +113,19 @@ LESS_TERMCAP_us=$'\E[04;38;5;146m'
 # Organizing notes
 export NOTES_DIRECTORY=~/notes
 n() {
-	cat "$NOTES_DIRECTORY/$*"
+    cat "$NOTES_DIRECTORY/$*"
 }
 
 ni() {
-	$EDITOR "$NOTES_DIRECTORY/$*"
+    if [ -z "$1" ]; then
+        nls "$@"
+    else
+        $EDITOR "$NOTES_DIRECTORY/$*"
+    fi
 }
 
 nls() {
-	ls -ctr "$NOTES_DIRECTORY" | grep "$*"
+    ls -ctr "$NOTES_DIRECTORY" | grep "$*"
 }
 
 _notes_autocomplete() {
