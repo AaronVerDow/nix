@@ -112,16 +112,29 @@ LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
 # Organizing notes
 export NOTES_DIRECTORY=~/notes
+
 n() {
-    cat "$NOTES_DIRECTORY/$*"
+    if [ -z "$1" ]; then
+        nls "$@"
+        return
+    fi
+
+    local file
+    file="$NOTES_DIRECTORY/$*"
+
+    if [ -e "$file" ]; then
+        cat "$file"
+    else
+        touch "$file"
+    fi
 }
 
 ni() {
     if [ -z "$1" ]; then
         nls "$@"
-    else
-        $EDITOR "$NOTES_DIRECTORY/$*"
+        return
     fi
+    $EDITOR "$NOTES_DIRECTORY/$*"
 }
 
 nls() {
