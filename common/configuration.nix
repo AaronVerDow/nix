@@ -125,7 +125,6 @@
     nvd # diff derevations
     nh # uses packages above for os builds
     liboping
-    kitty
   ];
 
   networking.networkmanager = {
