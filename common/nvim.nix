@@ -124,20 +124,11 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
   home.file.".config/nvim/coc-settings.json" = {
     text = ''
       {
-        "java.jdt.ls.vmargs": "-Xms1g -Xmx2G",
-        "java.home": "${pkgs.jdk}/lib/openjdk",
+        "java.jdt.ls.java.home": "${pkgs.jdk}/lib/openjdk",
         "java.configuration.updateBuildConfiguration": "automatic",
-	"java.trace.server": "verbose",
         "java.import.gradle.enabled": true,
         "java.import.maven.enabled": true
       }
     '';
-  };
-
-  # This isn't working, setting manually for now
-  # Still not certain these are the correct paths
-  home.sessionVariables = {
-    JAVA_HOME = "${pkgs.jdk}/lib/openjdk";
-    JDK_HOME = "${pkgs.jdk}/lib/openjdk";
   };
 }
