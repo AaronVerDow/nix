@@ -48,7 +48,7 @@ graph() {
 }
 
 title() {
-    grep -m 1 '^# ' "$1" | sed -s 's/^# //'
+    grep -m 1 '^# ' "$1" | sed -s 's/^# //' || echo ""
 }
 
 thousands() {
