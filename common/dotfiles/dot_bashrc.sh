@@ -36,6 +36,9 @@ vi() {
     fi
 
     command nvim "$@"
+    local return_value=$?
+    wcgraph
+    return $return_value
 }
 
 cd() {
@@ -54,6 +57,9 @@ cd() {
             onefetch
             export ONEFETCH_LAST_REPO=$git_name
         fi
+
+        # wordcount graph for writing
+        wcgraph && echo ""
     fi
 
     ls

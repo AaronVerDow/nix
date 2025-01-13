@@ -55,8 +55,14 @@ thousands() {
     sed ':a;s/\B[0-9]\{3\}\>/,&/;ta'
 }
 
+is_valid() {
+    ls ./*.Rmd &> /dev/null || return 1
+    git rev-parse --is-inside-work-tree &> /dev/null || return 1
+}
+
+is_valid || exit 0
+
 # Pipes make subshells.  Using this method so parse can gather data.
-#
 tmp=$( mktemp )
 parse > "$tmp"
 # format displays as integer with commas for thousands
