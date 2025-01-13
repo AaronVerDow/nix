@@ -5,7 +5,12 @@ let
 in
 {
     home.packages = with pkgs; [
-        mlterm
+        mlterm # variable width terminal
+        R
+        rPackages.bookdown
+        pandoc
+        texliveFull
+
 
         (writeShellApplication {
             name = "wcgraph";
