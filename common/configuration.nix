@@ -125,6 +125,7 @@
     nvd # diff derevations
     nh # uses packages above for os builds
     liboping
+    gdu
   ];
 
   networking.networkmanager = {

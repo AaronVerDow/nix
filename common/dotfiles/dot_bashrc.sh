@@ -18,6 +18,10 @@ export NIX_SHELL_PRESERVE_PROMPT=1
 export NIXPKGS_ALLOW_UNFREE=1
 export EDITOR=nvim
 
+instead_use() {
+    echo "Use $1!" | lolcat -a -d 24
+}
+
 alias ip='ip -c'
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
@@ -26,12 +30,13 @@ alias yolo='git push'
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias xclip='xclip -sel clip'
 alias fd='fd --type f'
+alias ncdu='instead_use gdu'
 which fdfind &> /dev/null && alias fd='fdfind --type f' 
 
 # running vi against a directory will cd into it
 vi() {
     if [[ -d ${!#} ]]; then
-	echo "Use cd!" | lolcat -a -d 24
+        instead_use cd
         cd "$@" || return $?
     fi
 
