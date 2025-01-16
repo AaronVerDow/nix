@@ -3,7 +3,7 @@ uncommitted=0
 parse_line() {
     file=$2
     num=$1
-    echo "$file" | grep -q '^_' && return
+    echo "$file" | grep -q '/_' && return
     title=$( title "$file" )
     echo "$title" | grep -q '(PART)' && return # ignore parts
     [ -z "$title" ] && return
@@ -40,13 +40,6 @@ parse() {
     done < <( wc --total=never -w ./*.Rmd )
 }
 
-graph() {
-    wc -w ./*.Rmd --total=never | awk '{ print $2 " " $1 }' | termgraph --color blue
-    
-    echo -n "Total: "
-    wc -w ./*.Rmd --total=only
-}
-
 title() {
     grep -m 1 '^# ' "$1" | sed -s 's/^# //' || echo ""
 }
@@ -68,10 +61,10 @@ parse > "$tmp"
 # format displays as integer with commas for thousands
 termgraph --color {red,blue,green} --stacked --format "{:,.0f}" "$tmp"
 echo ""
-echo -n "Uncommitted: "
-echo $uncommitted | thousands
+if [ "$uncommitted" -gt 0 ]; then
+    echo -n "Uncommitted: "
+    echo $uncommitted | thousands
+fi
 echo -n "      Total: "
-wc -w ./*.Rmd --total=only | thousands
+find ./ -maxdepth 1 -name '*.Rmd' -not -path './_*' -exec cat {} + | wc -w | thousands
 rm "$tmp"
-
-# graph # | lolcat -F 0.2 -t
