@@ -7,6 +7,7 @@ let
     R-with-my-packages = rWrapper.override{ packages = with rPackages; [ 
         bookdown
         stringr
+        tidyverse
     ]; };
 in
 {
