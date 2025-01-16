@@ -4,7 +4,10 @@ with pkgs;
 let
     wordCountContent = builtins.readFile ./wcgraph.sh;
     bookdownContent = builtins.readFile ./bookdown.sh;
-    R-with-my-packages = rWrapper.override{ packages = with rPackages; [ bookdown ]; };
+    R-with-my-packages = rWrapper.override{ packages = with rPackages; [ 
+        bookdown
+        stringr
+    ]; };
 in
 {
     home.packages = with pkgs; [
