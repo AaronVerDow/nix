@@ -18,6 +18,7 @@
 	lualine-nvim
 	vim-humanoid-colorscheme
 	transparent-nvim
+	neoscroll-nvim
 
 	# prose
 	goyo-vim	# minimal interface
@@ -37,7 +38,6 @@
 	# lazy java setup
 	coc-java
 	nvim-treesitter-parsers.java
-
     ];
     extraLuaConfig = ''
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
@@ -72,6 +72,7 @@ require('transparent').setup({})
 colorscheme humanoid
 
 function! s:goyo_enter()
+  lua require('lualine').hide()
   set linebreak
   set spell spelllang=en_us
   Pencil
@@ -80,12 +81,26 @@ function! s:goyo_enter()
   let b:quitting_bang = 0
   autocmd QuitPre <buffer> let b:quitting = 1
   cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+
+  set conceallevel=0 "do not hide quotes in markdown
+  set mouse=
+  call coc#rpc#stop()
+  set noshowmode " hide --INSERT-- at bottom
+
+  augroup cmdline
+    autocmd!
+    autocmd CmdlineLeave : lua vim.defer_fn(function() vim.cmd('echo ""') end, 5000)
+  augroup END
+
 endfunction
 
 function! s:goyo_leave()
+  lua require('lualine').hide({unhide=true})
   set nolinebreak
   set nospell
   NoPencil
+  CocStart
+  set showmode
 
   " Quit Vim if this is the only remaining buffer
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
