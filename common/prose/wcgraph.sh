@@ -50,6 +50,7 @@ thousands() {
 
 is_valid() {
     ls ./*.Rmd &> /dev/null || return 1
+    [ -f ./index.Rmd ] || return 1 # used with bookdown
     git rev-parse --is-inside-work-tree &> /dev/null || return 1
 }
 
