@@ -44,9 +44,7 @@ parse() {
 title() {
     grep -m 1 '^# ' "$1" | sed -s 's/^# //' || echo ""
 }
-
-thousands() {
-    sed ':a;s/\B[0-9]\{3\}\>/,&/;ta'
+thousands() { sed ':a;s/\B[0-9]\{3\}\>/,&/;ta'
 }
 
 is_valid() {
@@ -55,12 +53,8 @@ is_valid() {
     git rev-parse --is-inside-work-tree &> /dev/null || return 1
 }
 
-centered_bold() {
-    string="$*"
-    bold_string=$(printf "\033[1m%s\033[0m" "$string")  # Properly format the bold text
-    terminal_width=$(tput cols)
-    padding=$(( (terminal_width - ${#string}) / 2 ))
-    printf "%*s%s\n" $padding "" "$bold_string"
+bold() {
+    printf "\033[1m%s\033[0m" "$*"
 }
 
 book_title() {
@@ -72,7 +66,7 @@ is_valid || exit 0
 # Pipes make subshells.  Using this method so parse can gather data.
 tmp=$( mktemp )
 parse > "$tmp"
-centered_bold "$( book_title )"
+bold "$( book_title )"
 # format displays as integer with commas for thousands
 termgraph --width $width --color {red,blue,green} --stacked --format "{:,.0f}" "$tmp"
 echo ""
