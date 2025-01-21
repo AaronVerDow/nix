@@ -23,6 +23,7 @@ in
             name = "wcgraph";
             runtimeInputs = with pkgs; [ 
                 python312Packages.termgraph 
+                yq
             ];
             text = wordCountContent;
         })
