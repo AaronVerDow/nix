@@ -1,3 +1,4 @@
+width=40 # default of 50
 uncommitted=0
 
 parse_line() {
@@ -22,7 +23,7 @@ parse_line() {
 diff_words() {
     delim=$1
     file=$2
-    git diff --word-diff=porcelain origin/main "$file" | grep -e "'^'$delim'[^'$delim']'" | wc -w || true
+    git diff --word-diff=porcelain origin/main "$file" | grep -e "^${delim}[^$delim]" | wc -w || true
 }
 
 added() {
@@ -54,13 +55,26 @@ is_valid() {
     git rev-parse --is-inside-work-tree &> /dev/null || return 1
 }
 
+centered_bold() {
+    string="$*"
+    bold_string=$(printf "\033[1m%s\033[0m" "$string")  # Properly format the bold text
+    terminal_width=$(tput cols)
+    padding=$(( (terminal_width - ${#string}) / 2 ))
+    printf "%*s%s\n" $padding "" "$bold_string"
+}
+
+book_title() {
+    grep '^title' index.Rmd | yq '.title' -r
+}
+
 is_valid || exit 0
 
 # Pipes make subshells.  Using this method so parse can gather data.
 tmp=$( mktemp )
 parse > "$tmp"
+centered_bold "$( book_title )"
 # format displays as integer with commas for thousands
-termgraph --color {red,blue,green} --stacked --format "{:,.0f}" "$tmp"
+termgraph --width $width --color {red,blue,green} --stacked --format "{:,.0f}" "$tmp"
 echo ""
 if [ "$uncommitted" -gt 0 ]; then
     echo -n "Uncommitted: "
