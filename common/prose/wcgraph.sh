@@ -4,7 +4,8 @@ uncommitted=0
 parse_line() {
     file=$2
     num=$1
-    echo "$file" | grep -q '/_' && return
+    echo "$file" | grep -q '/_' && return # auto generated bookdown files
+    echo "$file" | grep -q '/zzz' && return # used for appendix
     title=$( title "$file" )
     echo "$title" | grep -q '(PART)' && return # ignore parts
     [ -z "$title" ] && return
