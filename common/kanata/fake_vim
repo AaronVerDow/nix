@@ -23,10 +23,10 @@ lctl      lmet   lalt             spc                  ralt        rmet         
 (deflayer vimnav
 
 -             -     -   -     -             -     -    -     -          -    -    -    -
--       -      -    -      -      -       -     -      -     -      -      -      -    -       
+-       -      -    -      end    -       -     -      -     -      home   -      -    -       
 -       -      -    -      -      -       -     -      -     -      -      -      -    -          
-caps    -      -    -      -      -       lft   down   up    rght   -      -           -        
--       -      -    -      -      -       -     -      -     -      -                  -         -
+caps    end    -    -      -      -       lft   down   up    rght   -      -           -        
+-       -      del  -      -      -       -     -      -     -      -                  -         -
 -       -      -             -                                      -      -           -       - - -
 
 )
