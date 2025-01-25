@@ -11,11 +11,11 @@ lctl      lmet   lalt             spc                  ralt        rmet         
 
 (deflayer default
 
-esc            f1   f2   f3   f4               f5    f6    f7    f8          f9   f10  f11   f12
+esc             f1   f2   f3   f4               f5    f6    f7    f8          f9   f10  f11   f12
 grv       1      2    3      4       5       6     7      8     9      0       -      =     bspc       
-tab       q      w    e      r       t       y     u      i     o      p       [      ]        \          
+tab       @chiq  w    e      r       t       y     u      i     o      @chip   [      ]        \          
 @cw       a      s    d      f       g       h     j      k     l      @vimnav '           enter        
-lsft      z      x    c      v       b       n     m      ,     .      /                    rsft               up
+lsft      @chiz  x    c      v       b       n     @chim  ,     .      /                    rsft               up
 lctl      lmet   lalt             spc                  ralt        rmet                     rctl          lft down rght
 
 )
@@ -31,8 +31,44 @@ caps    end    -       -      -      -       lft   down   up    rght   -      - 
 
 )
 
+(deflayer catmode 
+
+XX              XX     XX      XX     XX             XX     XX    XX     XX          XX    XX    XX    XX
+XX       XX      XX     XX      XX    XX       XX     XX      XX     XX      XX   XX      XX    XX       
+XX       @choq   XX     XX      XX      XX       XX     XX      XX     XX      @chop      XX      XX    XX          
+XX       XX      XX     XX      XX      XX       XX   XX   XX    XX   XX      XX           XX        
+XX       @choz   XX     XX      XX      XX  XX     @chom      XX     XX      XX                  XX         XX
+XX       XX      XX             XX                                      XX      XX           XX       XX XX XX
+
+)
+
+
 
 (defalias
     cw (caps-word 2000)
     vimnav  (tap-hold-press 200 200 ; (layer-toggle vimnav))
+    catmode_enable (layer-switch catmode)
+    catmode_disable (layer-switch default)
+
+    chiq (chord catmode_on q)
+    chiz (chord catmode_on z)
+    chim (chord catmode_on m)
+    chip (chord catmode_on p)
+
+    choq (chord catmode_off q)
+    choz (chord catmode_off z)
+    chom (chord catmode_off m)
+    chop (chord catmode_off p)
+)
+
+(defchords catmode_on 500
+  (q) q
+  (z) z
+  (m) m
+  (p) p
+  (q z m p) @catmode_enable
+)
+
+(defchords catmode_off 500
+  (q z m p) @catmode_disable
 )
