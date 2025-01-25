@@ -12,6 +12,7 @@ Detection
 
   * Bluetooth or wifi scan?
       * `nmcli -f SSID,SIGNAL device wifi list`
+      * ESP32 beacons?
       * LE not supported by all laptops
       * Add underpowered blackhole 2.4Ghz SSID to corner of house?
   * Put a docking station behind the charger cord?
