@@ -37,7 +37,8 @@ which fdfind &> /dev/null && alias fd='fdfind --type f'
 vi() {
     if [[ -d ${!#} ]]; then
         instead_use cd
-        cd "$@" || return $?
+        cd "$@"
+        return $?
     fi
 
     command nvim "$@"
