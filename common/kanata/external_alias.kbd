@@ -1,0 +1,4 @@
+(defalias
+    chiq q
+    chip p
+)

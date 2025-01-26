@@ -1,7 +1,8 @@
 { inputs, outputs, ... }:
 let
-  disableKeyboard = builtins.readFile ../../common/kanata/disable_keyboard.kbd;
-  kanataConfig = builtins.readFile ../../common/kanata/fake_vim;
+  internalAlias = builtins.readFile ../../common/kanata/internal_alias.kbd;
+  externalAlias = builtins.readFile ../../common/kanata/external_alias.kbd;
+  kanataConfig = builtins.readFile ../../common/kanata/monolith.kbd;
 in
 {
   imports =
@@ -14,19 +15,21 @@ in
   services.kanata = {
     enable = true;
     keyboards = {
-      disable_keyboard = {
+      external = {
         devices = [
-          # Replace the paths below with the appropriate device paths for your setup.
-          # Use `ls /dev/input/by-path/` to find your keyboard devices.
+          "/dev/input/by-id/usb-Keychron_Keychron_K9_Pro-event-kbd"
+          "/dev/input/by-id/usb-Keychron_Keychron_K9_Pro-if02-event-kbd"
+        ];
+        extraDefCfg = "process-unmapped-keys yes";
+        config = kanataConfig + externalAlias;
+      };
+      internal = {
+        devices = [
           "/dev/input/by-path/pci-0000:00:14.0-usb-0:3:1.0-event-kbd"
           "/dev/input/by-path/pci-0000:00:14.0-usbv2-0:3:1.0-event-kbd"
         ];
         extraDefCfg = "process-unmapped-keys yes";
-        config = disableKeyboard;
-      };
-      internalKeyboard = {
-        extraDefCfg = "process-unmapped-keys yes";
-        config = kanataConfig;
+        config = kanataConfig + internalAlias;
       };
     };
   };

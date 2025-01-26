@@ -1,0 +1,66 @@
+(defsrc
+
+esc            f1   f2   f3   f4             f5    f6    f7    f8          f9   f10  f11   f12                      
+grv       1      2    3      4      5       6     7      8     9      0       -      =    bspc                      nlk   kp/   kp*   kp-
+tab       q      w    e      r      t       y     u      i     o      p       [      ]       \                      kp7   kp8   kp9   kp+
+caps      a      s    d      f      g       h     j      k     l      ;       '          enter                      kp4   kp5   kp6
+lsft      z      x    c      v      b       n     m      ,     .      /                   rsft           up         kp1   kp2   kp3   kprt
+lctl      lmet   lalt             spc                  ralt        rmet                   rctl      lft down rght   kp0         kp. 
+
+)
+
+(deflayer default
+
+esc             f1   f2   f3   f4               f5    f6    f7    f8          f9   f10  f11   f12
+grv       1      2    3      4       5       6     7      8     9      0       -      =     bspc                          nlk   kp/   kp*   kp-
+tab       @chiq  w    e      r       t       y     u      i     o      @chip   [      ]        \                          kp7   kp8   kp9   kp+
+@cw       a      s    d      f       g       h     j      k     l      @vimnav '           enter                          kp4   kp5   kp6
+@chlsft   z      x    c      v       b       n     m      ,     .      /                    @chrsft            up         kp1   kp2   kp3   kprt
+lctl      lmet   lalt             spc                  ralt        rmet                     rctl          lft down rght   kp0         kp.
+
+)
+
+(deflayer vimnav
+
+-             -       -      -     -             -     -    -     -          -    -    -    -
+-       -      -       -      end    -       -     -      -     -      home   -      -    -              -   -   -   -
+-       -      C-right -      -      -       -     -      -     -      -      -      -    -              -   -   -   -
+caps    end    -       -      -      -       lft   down   up    rght   -      -           -              -   -   -
+-       -      del     -      -      C-left  -     -      -     -      -                  -         -    -   -   -   -
+-       -      -             -                                      -      -           -       - - -     -         -
+
+)
+
+(deflayer catmode 
+
+XX              XX     XX      XX     XX             XX     XX    XX     XX          XX    XX    XX    XX
+XX       XX      XX     XX      XX    XX       XX     XX      XX     XX      XX   XX      XX    XX              XX   XX   XX   XX
+XX       @choq   XX     XX      XX      XX       XX     XX      XX     XX      @chop      XX      XX    XX      XX   XX   XX   XX
+XX       XX      XX     XX      XX      XX       XX   XX   XX    XX   XX      XX           XX                   XX   XX   XX
+XX       XX   XX     XX      XX      XX  XX      XX      XX     XX      XX                  XX         XX       XX   XX   XX   XX
+XX       XX      XX             XX                                      XX      XX           XX       XX XX XX  XX         XX
+
+)
+
+(defalias
+    cw (caps-word 2000)
+    vimnav  (tap-hold-press 200 200 ; (layer-toggle vimnav))
+    catmode_enable (layer-switch catmode)
+    catmode_disable (layer-switch default)
+
+    chlsft (chord capsword_chord lsft)
+    chrsft (chord capsword_chord rsft)
+
+    choq (chord catmode_off q)
+    chop (chord catmode_off p)
+)
+
+(defchords capsword_chord 500
+  (lsft) lsft
+  (rsft) rsft
+  (lsft rsft) (caps-word 2000)
+)
+
+(defchords catmode_off 500
+  (q p) @catmode_disable
+)

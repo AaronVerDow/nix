@@ -1,0 +1,10 @@
+(defalias
+    chiq (chord catmode_on q)
+    chip (chord catmode_on p)
+)
+
+(defchords catmode_on 500
+  (q) q
+  (p) p
+  (q p) @catmode_enable
+)
