@@ -16,10 +16,6 @@ let
     rev = "df6bc4a260158fdc6e2678f1bb281f442d7887ac";
     sha256 = "sha256-IXV4YxG1hIq/LCurgbR1jEcwljRxxyVvwbEhrcJhlAk=";
   };
-  awesomeFreedesktop = builtins.fetchGit {
-    url = "https://github.com/lcpz/awesome-freedesktop.git";
-    rev = "c82ad2960c5f0c84e765df68554c266ea7e9464d";
-  };
   rofiConfig = builtins.fetchGit {
     url = "https://github.com/adi1090x/rofi.git";
     rev = "3a28753b0a8fb666f4bd0394ac4b0e785577afa2"; 
