@@ -11,12 +11,14 @@
     '')
 
     (writeShellScriptBin "desk" ''
-      xrandr --output eDP --auto --below DisplayPort-7 --output DisplayPort-7 --mode 3440x1440
+      mon=$(xrandr | grep '\bconnected' | grep -m 1 -v primary | awk '{print $1}')
+      xrandr --output eDP --auto --below "$mon" --output "$mon" --mode 3440x1440
       set_wallpaper
     '')
 
     (writeShellScriptBin "undock" ''
-      xrandr --output eDP --auto --output DisplayPort-7 --off
+      mon=$(xrandr | grep '\bconnected' | grep -m 1 -v primary | awk '{print $1}')
+      xrandr --output eDP --auto --output "$mon" --off
       set_wallpaper
     '')
 
