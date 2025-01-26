@@ -15,7 +15,7 @@ esc             f1   f2   f3   f4               f5    f6    f7    f8          f9
 grv       1      2    3      4       5       6     7      8     9      0       -      =     bspc                          nlk   kp/   kp*   kp-
 tab       @chiq  w    e      r       t       y     u      i     o      @chip   [      ]        \                          kp7   kp8   kp9   kp+
 @cw       a      s    d      f       g       h     j      k     l      @vimnav '           enter                          kp4   kp5   kp6
-lsft      z      x    c      v       b       n     m      ,     .      /                    rsft               up         kp1   kp2   kp3   kprt
+@chlsft   z      x    c      v       b       n     m      ,     .      /                    @chrsft            up         kp1   kp2   kp3   kprt
 lctl      lmet   lalt             spc                  ralt        rmet                     rctl          lft down rght   kp0         kp.
 
 )
@@ -50,11 +50,20 @@ XX       XX      XX             XX                                      XX      
     catmode_enable (layer-switch catmode)
     catmode_disable (layer-switch default)
 
+    chlsft (chord capsword_chord lsft)
+    chrsft (chord capsword_chord rsft)
+
     chiq (chord catmode_on q)
     chip (chord catmode_on p)
 
     choq (chord catmode_off q)
     chop (chord catmode_off p)
+)
+
+(defchords capsword_chord 500
+  (lsft) lsft
+  (rsft) rsft
+  (lsft rsft) (caps-word 2000)
 )
 
 (defchords catmode_on 500
