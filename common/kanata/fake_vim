@@ -23,22 +23,22 @@ lctl      lmet   lalt             spc                  ralt        rmet         
 (deflayer vimnav
 
 -             -       -      -     -             -     -    -     -          -    -    -    -
--       -      -       -      end    -       -     -      -     -      home   -      -    -              nlk   kp/   kp*   kp-
--       -      C-right -      -      -       -     -      -     -      -      -      -    -              kp7   kp8   kp9   kp+
-caps    end    -       -      -      -       lft   down   up    rght   -      -           -              kp4   kp5   kp6
--       -      del     -      -      C-left  -     -      -     -      -                  -         -    kp1   kp2   kp3   kprt
--       -      -             -                                      -      -           -       - - -     kp0         kp.
+-       -      -       -      end    -       -     -      -     -      home   -      -    -              -   -   -   -
+-       -      C-right -      -      -       -     -      -     -      -      -      -    -              -   -   -   -
+caps    end    -       -      -      -       lft   down   up    rght   -      -           -              -   -   -
+-       -      del     -      -      C-left  -     -      -     -      -                  -         -    -   -   -   -
+-       -      -             -                                      -      -           -       - - -     -         -
 
 )
 
 (deflayer catmode 
 
 XX              XX     XX      XX     XX             XX     XX    XX     XX          XX    XX    XX    XX
-XX       XX      XX     XX      XX    XX       XX     XX      XX     XX      XX   XX      XX    XX              nlk   kp/   kp*   kp-
-XX       @choq   XX     XX      XX      XX       XX     XX      XX     XX      @chop      XX      XX    XX      kp7   kp8   kp9   kp+
-XX       XX      XX     XX      XX      XX       XX   XX   XX    XX   XX      XX           XX                   kp4   kp5   kp6
-XX       XX   XX     XX      XX      XX  XX      XX      XX     XX      XX                  XX         XX       kp1   kp2   kp3   kprt
-XX       XX      XX             XX                                      XX      XX           XX       XX XX XX  kp0         kp.
+XX       XX      XX     XX      XX    XX       XX     XX      XX     XX      XX   XX      XX    XX              XX   XX   XX   XX
+XX       @choq   XX     XX      XX      XX       XX     XX      XX     XX      @chop      XX      XX    XX      XX   XX   XX   XX
+XX       XX      XX     XX      XX      XX       XX   XX   XX    XX   XX      XX           XX                   XX   XX   XX
+XX       XX   XX     XX      XX      XX  XX      XX      XX     XX      XX                  XX         XX       XX   XX   XX   XX
+XX       XX      XX             XX                                      XX      XX           XX       XX XX XX  XX         XX
 
 )
 
