@@ -71,6 +71,10 @@ cd() {
     ls
 }
 
+commit() {
+    git commit -m "$*"
+}
+
 alias sqlcat='nvimpager -c -- -c "set syntax=sql"'
 cat() {
     # Do nothing if piped
