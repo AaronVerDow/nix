@@ -37,7 +37,7 @@ which fdfind &> /dev/null && alias fd='fdfind --type f'
 vi() {
     if [[ -d ${!#} ]]; then
         instead_use cd
-        cd "$@"
+        cd "$@" || return $? # extra return keeps shellcheck happy
         return $?
     fi
 
