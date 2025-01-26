@@ -65,7 +65,7 @@ cd() {
         fi
 
         # wordcount graph for writing
-        wcgraph && echo ""
+        wcgraph
     fi
 
     ls
