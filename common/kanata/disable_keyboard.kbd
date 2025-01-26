@@ -1,0 +1,53 @@
+(defsrc
+
+esc            f1   f2   f3   f4             f5    f6    f7    f8          f9   f10  f11   f12                      
+grv       1      2    3      4      5       6     7      8     9      0       -      =    bspc                      nlk   kp/   kp*   kp-
+tab       q      w    e      r      t       y     u      i     o      p       [      ]       \                      kp7   kp8   kp9   kp+
+caps      a      s    d      f      g       h     j      k     l      ;       '          enter                      kp4   kp5   kp6
+lsft      z      x    c      v      b       n     m      ,     .      /                   rsft           up         kp1   kp2   kp3   kprt
+lctl      lmet   lalt             spc                  ralt        rmet                   rctl      lft down rght   kp0         kp. 
+
+)
+
+(deflayer default
+
+esc            f1   f2   f3   f4             f5    f6    f7    f8          f9   f10  f11   f12                      
+grv       1      2    3      4      5       6     7      8     9      0       -      =    bspc                      nlk   kp/   kp*   kp-
+tab       @chiq  w    e      r      t       y     u      i     o      @chip   [      ]       \                      kp7   kp8   kp9   kp+
+caps      a      s    d      f      g       h     j      k     l      ;       '          enter                      kp4   kp5   kp6
+lsft      z      x    c      v      b       n     m      ,     .      /                   rsft           up         kp1   kp2   kp3   kprt
+lctl      lmet   lalt             spc                  ralt        rmet                   rctl      lft down rght   kp0         kp. 
+
+)
+
+(deflayer disabled 
+
+XX              XX     XX      XX     XX             XX     XX    XX     XX          XX    XX    XX    XX
+XX       XX      XX     XX      XX    XX       XX     XX      XX     XX      XX   XX      XX    XX              XX   XX   XX   XX
+XX       @choq   XX     XX      XX      XX       XX     XX      XX     XX      @chop      XX      XX    XX      XX   XX   XX   XX
+XX       XX      XX     XX      XX      XX       XX   XX   XX    XX   XX      XX           XX                   XX   XX   XX
+XX       XX   XX     XX      XX      XX  XX      XX      XX     XX      XX                  XX         XX       XX   XX   XX   XX
+XX       XX      XX             XX                                      XX      XX           XX       XX XX XX  XX         XX
+
+)
+
+(defalias
+    catmode_enable (layer-switch catmode)
+    catmode_disable (layer-switch default)
+
+    chiq (chord catmode_on q)
+    chip (chord catmode_on p)
+
+    choq (chord catmode_off q)
+    chop (chord catmode_off p)
+)
+
+(defchords catmode_on 500
+  (q) q
+  (p) p
+  (q p) (layer-switch disabled)
+)
+
+(defchords catmode_off 500
+  (q p) (layer-switch default)
+)
