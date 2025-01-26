@@ -6,6 +6,7 @@
     nodejs
     jdk
     jdt-language-server
+    nixd
   ];
   programs.neovim = {
     enable = true;
@@ -19,6 +20,9 @@
 	vim-humanoid-colorscheme
 	transparent-nvim
 	cinnamon-nvim # smooth scroll
+
+        # nix
+        nvim-treesitter-parsers.nix
 
 	# prose
 	goyo-vim	# minimal interface
@@ -187,6 +191,12 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
   home.file.".config/nvim/coc-settings.json" = {
     text = ''
       {
+        "languageserver": {
+            "nix": {
+                "command": "nixd",
+                "filetypes": ["nix"]
+            }
+        }
         "java.jdt.ls.java.home": "${pkgs.jdk}/lib/openjdk",
         "java.configuration.updateBuildConfiguration": "automatic",
         "java.import.gradle.enabled": true,
