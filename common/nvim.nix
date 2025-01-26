@@ -183,6 +183,8 @@ function LoadLvimrc()
     endfor
 endfunction
 
+let g:vim_markdown_folding_disabled = 1
+
 " Enter key for auto completion
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
     '';
