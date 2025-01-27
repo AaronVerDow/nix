@@ -23,10 +23,8 @@ instead_use() {
 }
 
 alias ip='ip -c'
-alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias halt='sudo /sbin/shutdown -h now'
-alias yolo='git push'
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 alias xclip='xclip -sel clip'
 alias fd='fd --type f'
@@ -71,8 +69,19 @@ cd() {
     ls
 }
 
+alias status='git status'
+alias push='git push'
+alias pull='git pull'
 commit() {
     git commit -m "$*"
+}
+
+diff() {
+    if [ -z "$1" ]; then
+        git diff
+    else
+        diff --color=auto "$@"
+    fi
 }
 
 alias sqlcat='nvimpager -c -- -c "set syntax=sql"'
