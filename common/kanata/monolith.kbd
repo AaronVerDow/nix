@@ -17,12 +17,12 @@
 )
 
 (deflayer vimnav
-  -    -    -    -    -    -    -    -    -    -    -    -    -
-  -    -    -    -    end  -    -    -    -    -    home -    -    -                   -    -    -    -
-  -    -    @viw -    -    -    -    -    -    -    -    -    -    -                   -    -    -    -
-  caps end  -    -    -    -    lft  down up   rght -    -    -                        -    -    -
-  -    -    del  -    -    @vib -    -    -    -    -              -         -         -    -    -    -
-  -    -    -              -                   -    -              -    -    -    -    -         -
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    end  _    _    _    _    _    home _    _    _                   _    _    _    _
+  _    _    @viw _    _    _    _    _    _    _    _    _    _    _                   _    _    _    _
+  caps end  _    _    _    _    lft  down up   rght _    _    _                        _    _    _
+  _    _    del  _    _    @vib _    _    _    _    _              _         _         _    _    _    _
+  _    _    _              _                   _    _              _    _    _    _    _         _
 )
 
 (deflayer disabled
