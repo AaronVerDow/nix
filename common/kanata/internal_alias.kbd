@@ -1,10 +1,10 @@
 (defalias
-    chiq (chord catmode_on q)
-    chip (chord catmode_on p)
+  diq (chord disable_chord q)
+  dip (chord disable_chord p)
 )
 
-(defchords catmode_on 500
+(defchords disable_chord 500
   (q) q
   (p) p
-  (q p) @catmode_enable
+  (q p) (layer-switch disabled)
 )

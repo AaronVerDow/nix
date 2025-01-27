@@ -2,6 +2,11 @@
 
 This is currently a work in progress.
 
+Paste this in vim for highlighted columns:
+```
+lua vim.opt.colorcolumn="2,7,12,17,22,27,32,37,42,47,52,57,62,67,72,77,82,87,92,97,102"
+```
+
 Discussions:
 * [Disable built in keyboard when external connects?](https://github.com/jtroo/kanata/discussions/763)
 
