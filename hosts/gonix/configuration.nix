@@ -20,7 +20,10 @@ in
           "/dev/input/by-id/usb-Keychron_Keychron_K9_Pro-event-kbd"
           "/dev/input/by-id/usb-Keychron_Keychron_K9_Pro-if02-event-kbd"
         ];
-        extraDefCfg = "process-unmapped-keys yes";
+        extraDefCfg = ''
+          process-unmapped-keys yes
+          log-layer-changes no
+        '';
         config = kanataConfig + externalAlias;
       };
       internal = {
@@ -28,7 +31,10 @@ in
           "/dev/input/by-path/pci-0000:00:14.0-usb-0:3:1.0-event-kbd"
           "/dev/input/by-path/pci-0000:00:14.0-usbv2-0:3:1.0-event-kbd"
         ];
-        extraDefCfg = "process-unmapped-keys yes";
+        extraDefCfg = ''
+          process-unmapped-keys yes
+          log-layer-changes no
+        '';
         config = kanataConfig + internalAlias;
       };
     };
