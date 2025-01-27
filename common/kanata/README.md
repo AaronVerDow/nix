@@ -27,3 +27,7 @@ Issues:
 * Cannot find device ID for bluetooth boards.
 * Lenovo IdeaPad doesn't seem capable of a four character chord?
 * Missing keycode for stop button
+
+Pages to copy from:
+* [Kanata vim-style config](https://github.com/Sairyss/.dotfiles/tree/master/.config/kanata)
+* [More pure Kanata vim config](https://github.com/jtroo/kanata/discussions/1482)
