@@ -15,6 +15,7 @@ in
   services.kanata = {
     enable = true;
     keyboards = {
+/*
       external = {
         devices = [
           "/dev/input/by-id/usb-Keychron_Keychron_K9_Pro-event-kbd"
@@ -26,6 +27,7 @@ in
         '';
         config = kanataConfig + externalAlias;
       };
+*/
       internal = {
         devices = [
           "/dev/input/by-path/pci-0000:00:14.0-usb-0:3:1.0-event-kbd"
