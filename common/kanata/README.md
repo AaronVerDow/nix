@@ -1,5 +1,10 @@
 # Kanata Config
 
+This is currently a work in progress.
+
+Discussions:
+* [Disable built in keyboard when external connects?](https://github.com/jtroo/kanata/discussions/763)
+
 Features:
 * Split config that enables disabling an internal laptop keyboard while still controlling an external bluetooth board.
   * This allows placing the bluetooth keyboard over the internal one.  Internal keyboard is toggled with a chord press.
