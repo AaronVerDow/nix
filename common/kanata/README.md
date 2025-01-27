@@ -16,7 +16,6 @@ Files:
 * `internal_alias.kbd` - defines chord that disables internal keyboard
 * `external_alias.kbd` - assigns keys that are part of the chord to their original functions
 * [`configuration.nix`](../../hosts/gonix/configuration.nix) - example configuration.nix that uses the files above
-* `fake_vim` - legacy file; keeping this so I have something stable to work with
 
 Issues:
 * Config files are being concatenated in configuration.nix

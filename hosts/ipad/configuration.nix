@@ -1,6 +1,8 @@
 { inputs, outputs, ... }:
 let
-  kanataConfig = builtins.readFile ../../common/kanata/fake_vim;
+  internalAlias = builtins.readFile ../../common/kanata/internal_alias.kbd;
+  externalAlias = builtins.readFile ../../common/kanata/external_alias.kbd;
+  kanataConfig = builtins.readFile ../../common/kanata/monolith.kbd;
 in
 {
   imports =
@@ -25,7 +27,7 @@ in
           "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
         ];
         extraDefCfg = "process-unmapped-keys yes";
-        config = kanataConfig;
+        config = kanataConfig + internalAlias;
       };
     };
   };
