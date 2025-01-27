@@ -21,3 +21,4 @@ Issues:
   * Currently I am manually including external keyboards.
 * Cannot find device ID for bluetooth boards.
 * Lenovo IdeaPad doesn't seem capable of a four character chord?
+* Missing keycode for stop button
