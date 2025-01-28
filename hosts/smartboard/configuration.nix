@@ -7,6 +7,9 @@
     ];
   networking.hostName = "smartboard";
   services.xserver.videoDrivers = ["nvidia"];
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_470;
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.nvidia.acceptLicense = true;
 
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "averdow";
