@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 let
   # this doesn't work
+  /*
   treesitter-kanata = pkgs.vimUtils.buildVimPlugin {
     name = "treesitter-kanata";
     src = pkgs.fetchFromGitHub {
@@ -10,6 +11,7 @@ let
       hash = "sha256-t7+Q7c7vql21WEouDyT/zy6diW8+JPsoajmQ3oIKoDg=";
     };
   };
+  */
 in
 {
   home.packages = with pkgs; [ 
@@ -55,7 +57,7 @@ in
 	coc-java
 	nvim-treesitter-parsers.java
 
-        treesitter-kanata
+    # treesitter-kanata
     ];
     extraLuaConfig = ''
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
