@@ -1,4 +1,16 @@
 { config, pkgs, ... }:
+let
+  # this doesn't work
+  treesitter-kanata = pkgs.vimUtils.buildVimPlugin {
+    name = "treesitter-kanata";
+    src = pkgs.fetchFromGitHub {
+      owner = "AaronVerDow";
+      repo = "nvim-treesitter-kanata";
+      rev = "41f738677cdf99d9bfa6b02c3f432e178548a510";
+      hash = "sha256-t7+Q7c7vql21WEouDyT/zy6diW8+JPsoajmQ3oIKoDg=";
+    };
+  };
+in
 {
   home.packages = with pkgs; [ 
     shellcheck
@@ -42,6 +54,8 @@
 	# lazy java setup
 	coc-java
 	nvim-treesitter-parsers.java
+
+        treesitter-kanata
     ];
     extraLuaConfig = ''
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
