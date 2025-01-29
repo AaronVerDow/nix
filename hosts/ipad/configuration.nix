@@ -25,6 +25,7 @@ in
       internalKeyboard = {
         devices = [
           "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
+          "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse"
         ];
         extraDefCfg = "process-unmapped-keys yes";
         config = kanataConfig + internalAlias;
