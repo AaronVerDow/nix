@@ -41,16 +41,19 @@ stdenv.mkDerivation {
     zig
   ];
 
-  installPhase = ''
-    runHook preInstall
-
+  buildPhase = ''
+    cd $src
     sed -i 's/mupdf-third/mupdf/g' build.zig
 
     zig build --fetch
     zig build --release=fast
+  '';
+
+  installPhase = ''
+    runHook preInstall
 
     mkdir -p $out/bin
-    cp -r ./zig-out/bin/fancy-cat $out/bin/
+    cp $src/zig-out/bin/fancy-cat $out/bin/
 
     runHook postInstall
   '';
