@@ -23,10 +23,10 @@ stdenv.mkDerivation {
     owner = "freref";
     repo = "fancy-cat";
     rev = "6a651ae9f3700c1b176734ddf1dd369d82cb6fbc";
-    hash = "sha256-E2WaXTn8+Ky9kdZxvQmEt63Ggo6Ns0fZ0Za+rQGIMSg=";
+    hash = "sha256-rEdCxHoG7nQE0ejkpbp4flOK5qYHPKB5yrtFQqCjM6k=";
   };
 
-  nativeBuildInputs = [ pkg-config ];
+  nativeBuildInputs = [ pkg-config zig ];
 
   buildInputs = [
     mupdf
@@ -38,7 +38,6 @@ stdenv.mkDerivation {
     gumbo
     mujs
     zlib
-    zig
   ];
 
   buildPhase = ''
@@ -65,5 +64,4 @@ stdenv.mkDerivation {
     maintainers = with maintainers; [ averdow ];
     platforms = [ "x86_64-linux" ];
   };
-
 }
