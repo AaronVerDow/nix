@@ -41,9 +41,17 @@ stdenv.mkDerivation {
   ];
 
   buildPhase = ''
-    cd $src
+    # Copy the source to a writable directory
+    cp -r $src $TMPDIR/source
+    cd $TMPDIR/source
+
+    # Set Zig's cache directory to a writable location
+    export ZIG_GLOBAL_CACHE_DIR=$TMPDIR/zig-cache
+
+    # Run sed on the copied files
     sed -i 's/mupdf-third/mupdf/g' build.zig
 
+    # Build the project
     zig build --fetch
     zig build --release=fast
   '';
@@ -52,7 +60,7 @@ stdenv.mkDerivation {
     runHook preInstall
 
     mkdir -p $out/bin
-    cp $src/zig-out/bin/fancy-cat $out/bin/
+    cp $TMPDIR/source/zig-out/bin/fancy-cat $out/bin/
 
     runHook postInstall
   '';
