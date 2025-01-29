@@ -200,6 +200,9 @@ in
   home.file.".local/share/onboard/layouts/full.onboard".source = ./dotfiles/dot_local/share/onboard/layouts/full.onboard;
   home.file.".config/awesome/awesome-wm-widgets".source = awesomeWmWidgets;
 
+  # this was manually compiled, to get rid of this finish ../pkg/fancy_cat/
+  home.file.".local/bin/fancy-cat".source = ./dotfiles/dot_local/bin/fancy-cat;
+
   home.activation.copyRofiConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
     mkdir -p ~/.config/rofi
     chmod +w -R ~/.config/rofi # this allows the next copy to function
