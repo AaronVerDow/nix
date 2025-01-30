@@ -16,30 +16,23 @@ in
   services.kanata = {
     enable = true;
     keyboards = {
-/*
-      external = {
-        devices = [
-          "/dev/input/by-id/usb-Keychron_Keychron_K9_Pro-event-kbd"
-          "/dev/input/by-id/usb-Keychron_Keychron_K9_Pro-if02-event-kbd"
-        ];
+      internalKeyboard = {
         extraDefCfg = ''
           process-unmapped-keys yes
-          log-layer-changes no
-        '';
-        config = kanataConfig + externalAlias;
-      };
-*/
-      internal = {
-        devices = [
-          "/dev/input/by-path/pci-0000:00:14.0-usb-0:3:1.0-event-kbd"
-          "/dev/input/by-path/pci-0000:00:14.0-usbv2-0:3:1.0-event-kbd"
-          "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse"
-        ];
-        extraDefCfg = ''
-          process-unmapped-keys yes
-          log-layer-changes no
+          linux-dev-names-include (
+            "ELAN Touchpad and Keyboard"
+          )
         '';
         config = kanataConfig + internalAlias;
+      };
+      externalKeyboard = {
+        extraDefCfg = ''
+          process-unmapped-keys yes
+          linux-dev-names-exclude (
+            "ELAN Touchpad and Keyboard"
+          )
+        '';
+        config = kanataConfig + externalAlias;
       };
     };
   };
