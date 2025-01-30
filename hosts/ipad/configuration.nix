@@ -24,12 +24,22 @@ in
     enable = true;
     keyboards = {
       internalKeyboard = {
-        devices = [
-          "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
-          "/dev/input/by-id/usb-Logitech_USB_Receiver-if02-event-mouse"
-        ];
-        extraDefCfg = "process-unmapped-keys yes";
+        extraDefCfg = ''
+          process-unmapped-keys yes
+          linux-dev-names-include (
+            "AT Translated Set 2 keyboard"
+          )
+        '';
         config = kanataConfig + internalAlias;
+      };
+      externalKeyboard = {
+        extraDefCfg = ''
+          process-unmapped-keys yes
+          linux-dev-names-exclude (
+            "AT Translated Set 2 keyboard"
+          )
+        '';
+        config = kanataConfig + externalAlias;
       };
     };
   };
