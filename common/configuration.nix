@@ -13,13 +13,6 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
-  };
-
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -64,10 +57,8 @@
         "averdow"
       ];
     };
-    # Opinionated: disable channels
     channel.enable = false;
 
-    # Opinionated: make flake registry and nix path match flake inputs
     registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     gc.automatic = true;
@@ -156,36 +147,7 @@
     HandlePowerKey="ignore";
   '';
 
-  programs.steam.enable = true;
-  services.touchegg.enable = true;
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.cups-brother-hll2340dw ];
-
-  services.xserver.enable = true;
-
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.windowManager.awesome.enable = true;
-
   services.flatpak.enable = true;
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = "*";
-  };
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-  security.rtkit.enable = true; # recommended for audio
-
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
-  services.blueman.enable = true;
-  hardware.graphics.enable = true;
-  hardware.keyboard.qmk.enable = true;
 
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox
