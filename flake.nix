@@ -65,13 +65,14 @@
       ipad = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
+          solaar.nixosModules.default
           ./hosts/ipad/configuration.nix
         ];
       };
       gonix = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-            solaar.nixosModules.default
+          solaar.nixosModules.default
           ./hosts/gonix/configuration.nix
         ];
       };

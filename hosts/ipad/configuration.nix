@@ -9,6 +9,7 @@ in
     [
       ./hardware-configuration.nix
       ../../common/configuration.nix
+      ../../common/x/configuration.nix
     ];
   networking.hostName = "ipad";
   services.xserver.videoDrivers = ["amdgpu"];
