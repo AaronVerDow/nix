@@ -15,6 +15,9 @@ Features:
   * This allows placing the bluetooth keyboard over the internal one.  Internal keyboard is toggled with a chord press.
 * Basic vim shortcuts when holding `;` key
 * Press both shift keys for caps word
+* Auto run
+  * Press w four times rapidly and they key will be held
+  * Press s to stop
 
 Files:
 * `monolith.kbd` - main config file, requires one of the alias files below to be complete
