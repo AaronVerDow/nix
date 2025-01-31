@@ -20,7 +20,7 @@ Features:
   * Press s to stop
 
 Files:
-* `monolith.kbd` - main config file, requires one of the alias files below to be complete
+* `kanata.kbd` - main config file, requires one of the alias files below to be complete
 * `internal_alias.kbd` - defines chord that disables internal keyboard
 * `external_alias.kbd` - assigns keys that are part of the chord to their original functions
 * [`configuration.nix`](../../hosts/gonix/configuration.nix) - example configuration.nix that uses the files above

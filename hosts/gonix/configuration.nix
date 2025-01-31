@@ -2,7 +2,7 @@
 let
   internalAlias = builtins.readFile ../../common/kanata/internal_alias.kbd;
   externalAlias = builtins.readFile ../../common/kanata/external_alias.kbd;
-  kanataConfig = builtins.readFile ../../common/kanata/monolith.kbd;
+  kanataConfig = builtins.readFile ../../common/kanata/kanata.kbd;
 in
 {
   imports =
