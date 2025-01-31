@@ -10,7 +10,7 @@
 (deflayer default
   esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc                nlk  kp/  kp*  kp-
-  tab  @diq w    e    r    t    y    u    i    o    @dip [    ]    \                   kp7  kp8  kp9  kp+
+  tab  @diq @wl  e    r    t    y    u    i    o    @dip [    ]    \                   kp7  kp8  kp9  kp+
   @cp  a    s    d    f    g    h    j    k    l    @vi  '    enter                    kp4  kp5  kp6
   @cls z    x    c    v    b    n    m    ,    .    /              @crs      up        kp1  kp2  kp3  kprt
   lctl lmet lalt           spc                 ralt rmet           rctl lft  down rght kp0       kp.
@@ -34,6 +34,10 @@
   XX   XX   XX             XX                  XX   XX             XX   XX   XX   XX   XX        XX
 )
 
+(defvirtualkeys
+  vw w
+)
+
 (defalias
   cw   (caps-word 65535)
   cp   (tap-hold-press 200 200 esc lctl)
@@ -44,6 +48,16 @@
   crs  (chord capsword_chord rsft)
   doq  (chord enable_chord q)
   dop  (chord enable_chord p)
+  wl   (tap-dance-eager 200 (
+          w
+          (multi 
+	    (macro w)
+	    (on-release release-virtualkey vw)
+	  )
+	  (macro w)
+	  (on-press press-virtualkey vw)
+       ))
+
 )
 
 (defchords capsword_chord 500
