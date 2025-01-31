@@ -18,6 +18,7 @@ in
     keyboards = {
       internalKeyboard = {
         extraDefCfg = ''
+          log-layer-changes no
           process-unmapped-keys yes
           linux-dev-names-include (
             "ELAN Touchpad and Keyboard"

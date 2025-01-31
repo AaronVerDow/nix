@@ -25,6 +25,7 @@ in
     keyboards = {
       internalKeyboard = {
         extraDefCfg = ''
+          log-layer-changes no
           process-unmapped-keys yes
           linux-dev-names-include (
             "AT Translated Set 2 keyboard"
@@ -34,6 +35,7 @@ in
       };
       externalKeyboard = {
         extraDefCfg = ''
+          log-layer-changes no
           process-unmapped-keys yes
           linux-dev-names-exclude (
             "AT Translated Set 2 keyboard"
