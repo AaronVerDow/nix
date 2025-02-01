@@ -29,7 +29,7 @@
     homeDirectory = "/home/averdow";
   };
 
-  home.packages = with pkgs; [ 
+  home.packages = lib.mkMerge [ (with pkgs; [
     unzip
     usbutils
 
@@ -45,7 +45,7 @@
     (writeShellScriptBin "pkg" ''
       nom shell nixpkgs#$1
     '')
-  ];
+  ])];
 
   programs.home-manager.enable = true;
 
