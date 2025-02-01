@@ -1,7 +1,10 @@
 { pkgs, ... }:
 
 {
-  imports = [ ../../common/home.nix ];
+  imports = [ 
+    ../../common/home.nix 
+    ../../common/x/home.nix 
+  ];
   home.packages = with pkgs; [
     (writeShellScriptBin "backlight" ''
       set -euo pipefail

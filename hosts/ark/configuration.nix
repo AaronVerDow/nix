@@ -1,13 +1,11 @@
-{ config, pkgs, ... }:
+{ inputs, outputs, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../common/configuration.nix
     ];
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
@@ -16,45 +14,12 @@
   boot.zfs.extraPools = [ "array" ];
 
   networking.hostName = "ark"; # Define your hostname.
-  networking.networkmanager.enable = true;
-
-  time.timeZone = "America/Chicago";
-
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
-
-  users.users.averdow = {
-    isNormalUser = true;
-    description = "averdow";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [
-      chezmoi
-      neofetch
-      onefetch
-      git
-    ];
-  };
-
-  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    neovim
-    kitty
-    direnv
     docker-compose
   ];
 
-  services.openssh.enable = true;
+  virtualisation.docker.enable = true;
 
   services.samba = {
     enable = true;
@@ -86,8 +51,13 @@
 
 
   networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    users = {
+      averdow = import ./home.nix;
+    };
+  };
   
   system.stateVersion = "23.05"; # Did you read the comment?
-
-  virtualisation.docker.enable = true;
 }
