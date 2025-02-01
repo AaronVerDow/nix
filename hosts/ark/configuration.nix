@@ -24,19 +24,21 @@
   services.samba = {
     enable = true;
     securityType = "user";
-    extraConfig = ''
-      workgroup = WORKGROUP
-      server string = ark
-      netbios name = ark
-      security = user 
-      #use sendfile = yes
-      #max protocol = smb2
-      # note: localhost is the ipv6 localhost ::1
-      hosts allow = 10.44.12. 127.0.0.1 localhost
-      hosts deny = 0.0.0.0/0
-      guest account = nobody
-      map to guest = bad user
-    '';
+    settings = {
+      global = {
+        "workgroup" = "WORKGROUP";
+        "server string" = "ark";
+        "netbios name" = "ark";
+        security = "user";
+        #use sendfile = yes;
+        #max protocol = smb2;
+        # note: localhost is the ipv6 localhost ::1
+        "hosts allow" = "10.44.12. 127.0.0.1 localhost";
+        "hosts deny" = "0.0.0.0/0";
+        "guest account" = "nobody";
+        "map to guest" = "bad user";
+      };
+    };
     shares = {
       consume = {
         path = "/home/averdow/containers/paperless/consume";

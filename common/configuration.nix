@@ -147,8 +147,6 @@
     HandlePowerKey="ignore";
   '';
 
-  services.flatpak.enable = true;
-
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox
     FLAKE = "/home/averdow/git/nix"; # used by nix helper
