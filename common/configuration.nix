@@ -101,8 +101,6 @@
       packages = with pkgs; [
         neofetch
         neovim
-        nodejs # for neovim
-        gcc # makes neovim plugins happy
         vimpager
         btop
         git
@@ -124,6 +122,7 @@
     nh # uses packages above for os builds
     liboping
     gdu
+    restic
   ];
 
   networking.networkmanager = {
