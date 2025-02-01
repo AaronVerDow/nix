@@ -42,7 +42,7 @@ vi() {
 
     command nvim "$@"
     local return_value=$?
-    wcgraph
+    wcgraph 2> /dev/null
     return $return_value
 }
 
