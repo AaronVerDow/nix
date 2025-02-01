@@ -69,10 +69,17 @@
   security.sudo.extraRules = [
     {
       users = ["averdow"];
-      commands = [ {
-        command = "${pkgs.liboping}/bin/noping";
-        options = ["NOPASSWD"];
-      } ];
+      commands = [ 
+        {
+          # command = "${pkgs.util-linux}/bin/dmesg";
+          command = "/run/current-system/sw/bin/dmesg";
+          options = ["NOPASSWD"];
+        } 
+        {
+          command = "${pkgs.liboping}/bin/noping";
+          options = ["NOPASSWD"];
+        }
+      ];
     }
   ];
 
