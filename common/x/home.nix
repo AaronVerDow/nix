@@ -31,7 +31,7 @@ in
   # allow fonts to be used from package list
   fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; [ 
+  home.packages = lib.mkMerge [ (with pkgs; [
     # gui programs
     discord
     openscad
@@ -105,7 +105,7 @@ in
     (writeShellScriptBin "onboard_toggle" ''
       dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
     '')
-  ];
+  ])];
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
@@ -141,20 +141,13 @@ in
     '';
   };
 
-  programs.git = {
-    package = pkgs.gitAndTools.gitFull;
-    enable = true;
-    userName = "Aaron VerDow";
-    userEmail = "aaron@verdow.com";
-  };
-
-  home.file.".config/picom/picom.conf".source = ./dotfiles/dot_config/picom/picom.conf;
-  home.file.".config/awesome/rc.lua".source = ./dotfiles/dot_config/awesome/rc.lua;
-  home.file.".config/touchegg/touchegg.conf".source = ./dotfiles/dot_config/touchegg/touchegg.conf;
-  home.file.".config/rofi/config.rasi".source = ./dotfiles/dot_config/rofi/config.rasi;
-  home.file.".config/kitty/kitty.conf".source = ./dotfiles/dot_config/kitty/kitty.conf;
-  home.file.".config/volumeicon/volumeicon".source = ./dotfiles/dot_config/volumeicon/volumeicon;
-  home.file.".local/share/onboard/layouts/full.onboard".source = ./dotfiles/dot_local/share/onboard/layouts/full.onboard;
+  home.file.".config/picom/picom.conf".source = ../dotfiles/dot_config/picom/picom.conf;
+  home.file.".config/awesome/rc.lua".source = ../dotfiles/dot_config/awesome/rc.lua;
+  home.file.".config/touchegg/touchegg.conf".source = ../dotfiles/dot_config/touchegg/touchegg.conf;
+  home.file.".config/rofi/config.rasi".source = ../dotfiles/dot_config/rofi/config.rasi;
+  home.file.".config/kitty/kitty.conf".source = ../dotfiles/dot_config/kitty/kitty.conf;
+  home.file.".config/volumeicon/volumeicon".source = ../dotfiles/dot_config/volumeicon/volumeicon;
+  home.file.".local/share/onboard/layouts/full.onboard".source = ../dotfiles/dot_local/share/onboard/layouts/full.onboard;
   home.file.".config/awesome/awesome-wm-widgets".source = awesomeWmWidgets;
 
   home.activation.copyRofiConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
