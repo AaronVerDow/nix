@@ -52,7 +52,7 @@
   };
 
 
-  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 ];
+  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 ];
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
