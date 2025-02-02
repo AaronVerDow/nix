@@ -123,6 +123,7 @@
     liboping
     gdu
     restic
+    screen
   ];
 
   networking.networkmanager = {
