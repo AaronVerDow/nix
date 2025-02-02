@@ -24,7 +24,6 @@
   services.samba = {
     enable = true;
     openFirewall = true;
-    securityType = "user";
     settings = {
       global = {
         "workgroup" = "WORKGROUP";
@@ -39,8 +38,6 @@
         "guest account" = "nobody";
         "map to guest" = "bad user";
       };
-    };
-    shares = {
       consume = {
         path = "/home/averdow/containers/paperless/consume";
         browseable = "no";
