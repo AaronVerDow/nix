@@ -12,7 +12,7 @@ let
 in
 {
     home.packages = with pkgs; [
-        mlterm # variable width terminal
+        # mlterm # variable width terminal
         R-with-my-packages
         pandoc
         texliveFull

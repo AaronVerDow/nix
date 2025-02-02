@@ -11,6 +11,7 @@
 {
   imports = [
     ./nvim.nix
+    ./prose/prose.nix
   ];
 
   nixpkgs = {

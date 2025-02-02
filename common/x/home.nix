@@ -25,7 +25,6 @@ in
   imports = [
     ./dconf/onboard.nix
     ./firefox/firefox.nix
-    ./prose/prose.nix
   ];
 
   # allow fonts to be used from package list
