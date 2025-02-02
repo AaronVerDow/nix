@@ -29,7 +29,7 @@ alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir
 alias xclip='xclip -sel clip'
 alias fd='fd --type f'
 alias ncdu='instead_use gdu'
-alias dmesg='sudo dmesg'
+alias dmesg='sudo dmesg --color'
 which fdfind &> /dev/null && alias fd='fdfind --type f' 
 
 # running vi against a directory will cd into it
