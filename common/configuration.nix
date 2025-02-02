@@ -124,6 +124,7 @@
     gdu
     restic
     screen
+    kitty
   ];
 
   networking.networkmanager = {
