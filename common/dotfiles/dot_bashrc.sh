@@ -95,7 +95,14 @@ cat() {
         return $?
     fi
 
-    # Define categories
+    # PDFs can only be opened one at a time
+    if [ -z "$2" ] && echo "$1" | grep -qi '\.pdf$'; then
+        # this must currently be manually built per system and linked into ~/.local/bin/
+        fancy-cat "$1"
+        return $?
+    fi
+
+    # Define categories for items that can be opened in bulk
     images=0
     markdown=0
 
