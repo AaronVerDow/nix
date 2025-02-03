@@ -67,8 +67,6 @@
   home.file.".dir_colors".source = ./dotfiles/dot_dir_colors.sh;
   home.file.".bashrc".source = ./dotfiles/dot_bashrc.sh;
   home.file.".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
-  # this was manually compiled, to get rid of this finish ../pkg/fancy_cat/
-  home.file.".local/bin/fancy-cat".source = ./dotfiles/dot_local/bin/fancy-cat;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
