@@ -73,7 +73,6 @@ in
     copyq
     xorg.xkill
     xrotate # custom rotation package
-    evince # read PDF files
     wavemon
     arandr
 
