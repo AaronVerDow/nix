@@ -1,8 +1,9 @@
-{ 
-  stdenv,
+{
   lib,
   fetchFromGitHub,
-  pkg-config,
+  stdenv,
+  zig_0_13,
+  callPackage,
   mupdf,
   harfbuzz,
   freetype,
@@ -11,22 +12,28 @@
   openjpeg,
   gumbo,
   mujs,
-  zlib,
-  zig
+  zlib
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "fancy-cat";
   version = "0.0.1";
 
   src = fetchFromGitHub {
-    owner = "freref";
+    # owner = "freref";
+    # repo = "fancy-cat";
+    # rev = "6a651ae9f3700c1b176734ddf1dd369d82cb6fbc";
+    # hash = "sha256-rEdCxHoG7nQE0ejkpbp4flOK5qYHPKB5yrtFQqCjM6k=";
+
+    owner = "AaronVerDow";
     repo = "fancy-cat";
-    rev = "6a651ae9f3700c1b176734ddf1dd369d82cb6fbc";
+    rev = "fcb812efd294b332ad65698b22a217ec3b5854a1";
     hash = "sha256-rEdCxHoG7nQE0ejkpbp4flOK5qYHPKB5yrtFQqCjM6k=";
   };
 
-  nativeBuildInputs = [ pkg-config zig ];
+  postPatch = ''
+    ln -s ${callPackage ./build.zig.zon.nix { }} $ZIG_GLOBAL_CACHE_DIR/p
+  '';
 
   buildInputs = [
     mupdf
@@ -40,30 +47,11 @@ stdenv.mkDerivation {
     zlib
   ];
 
-  buildPhase = ''
-    # Copy the source to a writable directory
-    cp -r $src $TMPDIR/source
-    cd $TMPDIR/source
+  nativeBuildInputs = [
+    zig_0_13.hook
+  ];
 
-    # Set Zig's cache directory to a writable location
-    export ZIG_GLOBAL_CACHE_DIR=$TMPDIR/zig-cache
-
-    # Run sed on the copied files
-    sed -i 's/mupdf-third/mupdf/g' build.zig
-
-    # Build the project
-    zig build --fetch
-    zig build --release=fast
-  '';
-
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out/bin
-    cp $TMPDIR/source/zig-out/bin/fancy-cat $out/bin/
-
-    runHook postInstall
-  '';
+  env.VERSION = finalAttrs.version;
 
   meta = with lib; {
     description = "PDF viewer for terminals using the Kitty image protocol";
@@ -72,4 +60,4 @@ stdenv.mkDerivation {
     maintainers = with maintainers; [ averdow ];
     platforms = [ "x86_64-linux" ];
   };
-}
+})
