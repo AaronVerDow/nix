@@ -33,7 +33,7 @@
   home.packages = lib.mkMerge [ (with pkgs; [
     unzip
     usbutils
-    fancy-cat
+    my_fancy-cat
 
     texliveFull
     nix-search-cli
