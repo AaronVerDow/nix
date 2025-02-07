@@ -55,8 +55,11 @@ stdenv.mkDerivation (finalAttrs: {
     sed -i 's/mupdf-third/mupdf/g' build.zig
 
     # Build the project
-    zig build --fetch --system ${finalAttrs.deps}
-    zig build --release=fast --system ${finalAttrs.deps}
+    # zig build --release=fast --system ${finalAttrs.deps}
+    
+    # Workaround for build issue https://github.com/freref/fancy-cat/issues/18
+    zig build --release=fast --system ${finalAttrs.deps} -Dcpu="skylake"
+
   '';
 
   installPhase = ''
