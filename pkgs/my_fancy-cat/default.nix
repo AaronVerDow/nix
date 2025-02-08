@@ -23,8 +23,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "AaronVerDow";
     repo = "fancy-cat";
-    rev = "be4230bb3fec92a46d359a886eb198a414b907bd";
-    hash = "sha256-g0BgvHyxWD8i/alVis5L8eAcIady548kcwTQAyuXptA=";
+    rev = "59a3973e65ccd630c7d6447658149df099fc7eed";
+    hash = "sha256-wND8u3WfKzpwsVXf0cuTJz3YTEoZx0BOhstlyDLmVKg=";
   };
 
   nativeBuildInputs = [ pkg-config zig ];
