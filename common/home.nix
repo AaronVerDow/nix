@@ -56,6 +56,9 @@
     enable = true;
     userName = "Aaron VerDow";
     userEmail = "aaron@verdow.com";
+    extraConfig = {
+      pager.branch = false;
+    };
   };
 
   # Nicely reload system units when changing configs
