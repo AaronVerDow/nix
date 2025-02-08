@@ -43,7 +43,6 @@ in
     onlyoffice-bin
     jetbrains.idea-ultimate
     unstable.via
-    chromium
 
     mlterm
     merriweather
@@ -112,6 +111,16 @@ in
     };
   };
 
+  # Install this as needed
+  xdg.desktopEntries.chromium-nix = {
+    name = "Chromium (Nix Shell)";
+    comment = "Open Chromium browser in a Nix shell";
+    exec = "nix-shell -p chromium --run chromium-browser";
+    icon = "web-browser";
+    terminal = false;
+    type = "Application";
+    categories = [ "Network" "WebBrowser" ];
+  };
 
   home.pointerCursor = {
     package = pkgs.volantes-cursors;
