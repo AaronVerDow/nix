@@ -43,6 +43,7 @@ in
     onlyoffice-bin
     jetbrains.idea-ultimate
     unstable.via
+    camset
 
     mlterm
     merriweather

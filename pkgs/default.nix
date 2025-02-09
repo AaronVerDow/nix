@@ -5,4 +5,5 @@ pkgs: {
   my_numworks = pkgs.callPackage ./my_numworks { };
   xrotate = pkgs.callPackage ./xrotate { };
   my_fancy-cat = pkgs.callPackage ./my_fancy-cat { };
+  camset = pkgs.callPackage ./camset { };
 }
