@@ -1,13 +1,8 @@
 {
   python312Packages,
   fetchFromGitHub,
-  cairo,
-  glib,
   gobject-introspection,
-  libGL,
-  stdenv,
   v4l-utils,
-  gtk3,
   wrapGAppsHook3
 }:
 
@@ -26,18 +21,9 @@ python312Packages.buildPythonPackage rec {
   ];
 
   propagatedBuildInputs = [ 
-    python312Packages.pytest 
     python312Packages.pygobject3
     python312Packages.opencv4
-    # python312Packages.numpy 
-    # pkgs.libsndfile 
-    cairo
-    glib
-    # gobject-introspection
-    libGL
-    stdenv.cc.cc.lib
     v4l-utils
-    gtk3
   ];
 
   preFixup = ''
