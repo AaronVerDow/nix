@@ -3,7 +3,8 @@
   fetchFromGitHub,
   gobject-introspection,
   v4l-utils,
-  wrapGAppsHook3
+  wrapGAppsHook3,
+  lib
 }:
 
 python312Packages.buildPythonPackage rec {
@@ -29,4 +30,11 @@ python312Packages.buildPythonPackage rec {
   preFixup = ''
     makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
   '';
+  
+  meta = with lib; {
+    description = "GUI for Video4Linux adjustments of webcams";
+    homepage = "https://github.com/azeam/camset";
+    license = licenses.asl20;
+    maintainers = with maintainers; [ AaronVerDow ];
+  };
 }
