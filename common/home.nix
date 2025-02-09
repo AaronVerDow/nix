@@ -34,6 +34,7 @@
     unzip
     usbutils
     my_fancy-cat
+    gh
 
     texliveFull
     nix-search-cli
