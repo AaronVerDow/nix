@@ -1,14 +1,9 @@
-{
-  python312Packages,
-  fetchFromGitHub,
-  gobject-introspection,
-  v4l-utils,
-  wrapGAppsHook3,
-  lib
-}:
+{ python312Packages, fetchFromGitHub, gobject-introspection, v4l-utils
+, wrapGAppsHook3, lib }:
 
 python312Packages.buildPythonPackage rec {
   name = "camset";
+  version = "0.0.1";
   src = fetchFromGitHub {
     owner = "azeam";
     repo = "camset";
@@ -16,21 +11,15 @@ python312Packages.buildPythonPackage rec {
     hash = "sha256-vTF3MJQi9fZZDlbEj5800H22GGWOte3+KZCpSnsSTaQ=";
   };
 
-  nativeBuildInputs = [
-    gobject-introspection
-    wrapGAppsHook3
-  ];
+  nativeBuildInputs = [ gobject-introspection wrapGAppsHook3 ];
 
-  propagatedBuildInputs = [ 
-    python312Packages.pygobject3
-    python312Packages.opencv4
-    v4l-utils
-  ];
+  propagatedBuildInputs =
+    [ python312Packages.pygobject3 python312Packages.opencv4 v4l-utils ];
 
   preFixup = ''
     makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
   '';
-  
+
   meta = with lib; {
     description = "GUI for Video4Linux adjustments of webcams";
     homepage = "https://github.com/azeam/camset";
