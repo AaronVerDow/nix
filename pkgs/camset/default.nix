@@ -1,6 +1,7 @@
 {
   python3Packages,
   fetchFromGitHub,
+  copyDesktopItems,
   makeDesktopItem,
   gobject-introspection,
   v4l-utils,
@@ -9,7 +10,7 @@
 }:
 
 python3Packages.buildPythonApplication rec {
-  name = "camset";
+  pname = "camset";
   version = "0-unstable-2023-05-20";
   pyproject = true;
 
@@ -25,6 +26,7 @@ python3Packages.buildPythonApplication rec {
   nativeBuildInputs = [
     gobject-introspection
     wrapGAppsHook3
+    copyDesktopItems
   ];
 
   dependencies = with python3Packages; [
@@ -32,12 +34,11 @@ python3Packages.buildPythonApplication rec {
     opencv-python
   ];
 
-  propagatedBuildInputs = [ v4l-utils ];
-
   dontWrapGApps = true;
 
   preFixup = ''
     makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
+    makeWrapperArgs+=(--prefix PATH : ${lib.makeBinPath [ v4l-utils ]})
   '';
 
   desktopItems = [
@@ -47,7 +48,10 @@ python3Packages.buildPythonApplication rec {
       icon = "camera";
       comment = "Adjust webcam settings";
       desktopName = "Camset";
-      categories = [ "Utility" "Video" ];
+      categories = [
+        "Utility"
+        "Video"
+      ];
       type = "Application";
     })
   ];
