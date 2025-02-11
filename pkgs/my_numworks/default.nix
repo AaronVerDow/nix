@@ -1,31 +1,36 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, libpng
-, libjpeg
-, freetype
-, xorg
-, python3
-, imagemagick
-, gcc-arm-embedded
-, pkg-config
-, python3Packages
-, makeDesktopItem
-, copyDesktopItems
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  libpng,
+  libjpeg,
+  freetype,
+  xorg,
+  python3,
+  imagemagick,
+  gcc-arm-embedded,
+  pkg-config,
+  python3Packages,
+  makeDesktopItem,
+  copyDesktopItems
 }:
 
 stdenv.mkDerivation rec {
   pname = "numworks-epsilon";
-  version = "22.2.0";
+  version = "23.2.3";
 
   src = fetchFromGitHub {
     owner = "numworks";
     repo = "epsilon";
     rev = version;
-    hash = "sha256-E2WaXTn8+Ky9kdZxvQmEt63Ggo6Ns0fZ0Za+rQGIMSg=";
+    hash = "sha256-w9ddcULE1MrGnYcXA0qOg1elQv/eBhcXqhMSjWT3Bkk=";
   };
 
-  nativeBuildInputs = [ pkg-config ];
+  nativeBuildInputs = [ 
+    pkg-config 
+    copyDesktopItems 
+  ];
+
   buildInputs = [
     libpng
     libjpeg
@@ -35,7 +40,6 @@ stdenv.mkDerivation rec {
     imagemagick
     gcc-arm-embedded
     python3Packages.lz4
-    copyDesktopItems
   ];
 
   makeFlags = [
@@ -48,9 +52,21 @@ stdenv.mkDerivation rec {
     mv ./output/release/simulator/linux/{epsilon.bin,epsilon}
     mkdir -p $out/bin
     cp -r ./output/release/simulator/linux/* $out/bin/
+    install -Dm644 ${./numworks.png} $out/share/icons/hicolor/128x128/apps/epsilon.svg
 
     runHook postInstall
   '';
+  
+  desktopItems = [
+    (makeDesktopItem {
+      name = "epsilon";
+      exec = "epsilon";
+      icon = "epsilon";
+      desktopName = "Epsilon Calculator";
+      comment = "A powerful calculator";
+      categories = [ "Utility" ];
+    })
+  ];
 
   meta = with lib; {
     description = "Simulator for Epsilon, a High-performance graphing calculator operating system";
@@ -59,20 +75,4 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ erikbackman ];
     platforms = [ "x86_64-linux" ];
   };
-
-  postInstall = ''
-    # not working currently, cannot find numworks.png
-    # install -Dm644 $src/numworks.png $out/share/icons/hicolor/48x48/apps/numworks.png
-  '';
-
-  desktopItems = [
-   (makeDesktopItem {
-      name = "Epsilon";
-      exec = "epsilon";
-      icon = "accessories-calculator";
-      desktopName = "Epsilon Calculator";
-      comment = "A powerful calculator";
-      categories = [ "Utility" ];
-    })
-    ];
 }
