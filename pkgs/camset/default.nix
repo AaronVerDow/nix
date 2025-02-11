@@ -1,11 +1,17 @@
-{ python3Packages, fetchFromGitHub, gobject-introspection, v4l-utils
-, wrapGAppsHook3, lib }:
+{
+  python3Packages,
+  fetchFromGitHub,
+  makeDesktopItem,
+  gobject-introspection,
+  v4l-utils,
+  wrapGAppsHook3,
+  lib,
+}:
 
 python3Packages.buildPythonApplication rec {
   name = "camset";
   version = "0-unstable-2023-05-20";
   pyproject = true;
-  dontWrapGApps = true;
 
   src = fetchFromGitHub {
     owner = "azeam";
@@ -16,33 +22,40 @@ python3Packages.buildPythonApplication rec {
 
   build-system = with python3Packages; [ setuptools ];
 
-  nativeBuildInputs = [ gobject-introspection wrapGAppsHook3 ];
+  nativeBuildInputs = [
+    gobject-introspection
+    wrapGAppsHook3
+  ];
 
-  dependencies = with python3Packages; [ pygobject3 opencv-python ];
+  dependencies = with python3Packages; [
+    pygobject3
+    opencv-python
+  ];
 
   propagatedBuildInputs = [ v4l-utils ];
+
+  dontWrapGApps = true;
 
   preFixup = ''
     makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
   '';
 
-  postInstall = ''
-    mkdir -p $out/share/applications
-    cat > $out/share/applications/camset.desktop <<EOF
-    [Desktop Entry]
-    Name=Camset
-    Comment=Adjust webcam settings
-    Exec=$out/bin/camset
-    Icon=camera
-    Type=Application
-    Categories=Utility;Video;
-    EOF
-  '';
+  desktopItems = [
+    (makeDesktopItem {
+      name = "camset";
+      exec = "camset";
+      icon = "camera";
+      comment = "Adjust webcam settings";
+      desktopName = "Camset";
+      categories = [ "Utility" "Video" ];
+      type = "Application";
+    })
+  ];
 
   meta = {
     description = "GUI for Video4Linux adjustments of webcams";
     homepage = "https://github.com/azeam/camset";
-    license = lib.licenses.gpl3;
-    maintainers = with lib.maintainers; [ AaronVerDow ];
+    license = lib.licenses.gpl3Only;
+    maintainers = with lib.maintainers; [ averdow ];
   };
 }
