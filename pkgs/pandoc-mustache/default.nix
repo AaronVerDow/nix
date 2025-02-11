@@ -8,7 +8,6 @@
 buildPythonApplication rec {
   pname = "pandoc-mustache";
   version = "0.1.0";
-  # format = "setuptools";
   pyproject = true;
 
   src = fetchPypi {
@@ -16,26 +15,24 @@ buildPythonApplication rec {
     hash = "sha256-xGjRwhZ2zx+YJARaB4/l1OhFauy/LMosIjMQqoGnxrM=";
   };
 
-  build-system = with python3Packages; [ setuptools ];
+  build-system = with python3Packages; [ 
+    setuptools 
+    pyparsing
+  ];
 
   dependencies = with python3Packages; [ 
-    pyparsing
     panflute
     pystache
     pyyaml
     future
   ];
 
-  # nativeCheckInputs = [ python3Packages.pytestCheckHook ];
-
-  # pythonImportsCheck = [ ];
-
-  meta = with lib; {
+  meta = {
     description = "Pandoc Mustache Filter";
     homepage = "https://github.com/michaelstepner/pandoc-mustache";
-    license = with licenses; [
-      lgpl3Only # or
-      bsd3
+    maintainers = with lib.maintainers; [ averdow ];
+    license = with lib.licenses; [
+      cc-by-10
     ];
   };
 }
