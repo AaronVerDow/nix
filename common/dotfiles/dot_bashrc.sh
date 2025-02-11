@@ -59,8 +59,8 @@ cd() {
 
         # Only show for new repos
         if [ "${ONEFETCH_LAST_REPO:-}" != "$git_name" ]; then
-            onefetch
             export ONEFETCH_LAST_REPO=$git_name
+            onefetch
         fi
 
         # wordcount graph for writing
