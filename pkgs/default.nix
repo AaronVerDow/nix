@@ -6,4 +6,8 @@ pkgs: {
   xrotate = pkgs.callPackage ./xrotate { };
   my_fancy-cat = pkgs.callPackage ./my_fancy-cat { };
   camset = pkgs.callPackage ./camset { };
+  pandoc-mustache = pkgs.callPackage ./pandoc-mustache { 
+      # buildPythonPackage = pkgs.python3Packages.buildPythonPackage;
+      buildPythonApplication = pkgs.python3Packages.buildPythonApplication;
+  };
 }

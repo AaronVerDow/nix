@@ -1,31 +1,34 @@
 {
+  buildPythonApplication,
+  fetchPypi,
   lib,
-  buildPythonPackage,
-  fetchFromGitHub,
-  pyparsing,
-  pytestCheckHook,
-  pythonOlder,
+  python3Packages,
 }:
 
-buildPythonPackage rec {
-  pname = "python-mustache";
+buildPythonApplication rec {
+  pname = "pandoc-mustache";
   version = "0.1.0";
-  format = "setuptools";
+  # format = "setuptools";
+  pyproject = true;
 
-  disabled = pythonOlder "3.7";
-
-  src = fetchFromGitHub {
-    owner = "michaelstepner";
-    repo = "${pname}";
-    rev = "refs/tags/v${version}";
-    hash = "sha256-YMkLSx7L2srLINZa6Ec0rPoxE2SdMv6CnI4BpHgHuzM=";
+  src = fetchPypi {
+    inherit pname version;
+    hash = "sha256-xGjRwhZ2zx+YJARaB4/l1OhFauy/LMosIjMQqoGnxrM=";
   };
 
-  propagatedBuildInputs = [ pyparsing ];
+  build-system = with python3Packages; [ setuptools ];
 
-  nativeCheckInputs = [ pytestCheckHook ];
+  dependencies = with python3Packages; [ 
+    pyparsing
+    panflute
+    pystache
+    pyyaml
+    future
+  ];
 
-  pythonImportsCheck = [ "pandoc-mustache" ];
+  # nativeCheckInputs = [ python3Packages.pytestCheckHook ];
+
+  # pythonImportsCheck = [ ];
 
   meta = with lib; {
     description = "Pandoc Mustache Filter";

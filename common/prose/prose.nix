@@ -16,6 +16,7 @@ in
         R-with-my-packages
         pandoc
         texliveFull
+        pandoc-mustache
         # rWrapper.override{packages = [ rPackages.bookdown ];}
 
 
