@@ -1,9 +1,12 @@
-{ python312Packages, fetchFromGitHub, gobject-introspection, v4l-utils
+{ python3Packages, fetchFromGitHub, gobject-introspection, v4l-utils
 , wrapGAppsHook3, lib }:
 
-python312Packages.buildPythonPackage rec {
+python3Packages.buildPythonApplication rec {
   name = "camset";
-  version = "0.0.1";
+  version = "0-unstable-2023-05-20";
+  pyproject = true;
+  dontWrapGApps = true;
+
   src = fetchFromGitHub {
     owner = "azeam";
     repo = "camset";
@@ -11,19 +14,22 @@ python312Packages.buildPythonPackage rec {
     hash = "sha256-vTF3MJQi9fZZDlbEj5800H22GGWOte3+KZCpSnsSTaQ=";
   };
 
+  build-system = with python3Packages; [ setuptools ];
+
   nativeBuildInputs = [ gobject-introspection wrapGAppsHook3 ];
 
-  propagatedBuildInputs =
-    [ python312Packages.pygobject3 python312Packages.opencv4 v4l-utils ];
+  dependencies = with python3Packages; [ pygobject3 opencv-python ];
+
+  propagatedBuildInputs = [ v4l-utils ];
 
   preFixup = ''
     makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
   '';
 
-  meta = with lib; {
+  meta = {
     description = "GUI for Video4Linux adjustments of webcams";
     homepage = "https://github.com/azeam/camset";
-    license = licenses.asl20;
-    maintainers = with maintainers; [ AaronVerDow ];
+    license = lib.licenses.gpl3;
+    maintainers = with lib.maintainers; [ AaronVerDow ];
   };
 }
