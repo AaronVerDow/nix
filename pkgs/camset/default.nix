@@ -26,6 +26,19 @@ python3Packages.buildPythonApplication rec {
     makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
   '';
 
+  postInstall = ''
+    mkdir -p $out/share/applications
+    cat > $out/share/applications/camset.desktop <<EOF
+    [Desktop Entry]
+    Name=Camset
+    Comment=Adjust webcam settings
+    Exec=$out/bin/camset
+    Icon=camera
+    Type=Application
+    Categories=Utility;Video;
+    EOF
+  '';
+
   meta = {
     description = "GUI for Video4Linux adjustments of webcams";
     homepage = "https://github.com/azeam/camset";
