@@ -9,7 +9,7 @@
   lib,
 }:
 
-python3Packages.buildPythonApplication rec {
+python3Packages.buildPythonApplication {
   pname = "camset";
   version = "0-unstable-2023-05-20";
   pyproject = true;
