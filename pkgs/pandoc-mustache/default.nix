@@ -1,17 +1,19 @@
 {
   python3Packages,
-  fetchPypi,
+  fetchFromGitHub,
   lib,
 }:
 
-python3Packages.buildPythonApplication rec {
+python3Packages.buildPythonApplication {
   pname = "pandoc-mustache";
   version = "0.1.0";
   pyproject = true;
 
-  src = fetchPypi {
-    inherit pname version;
-    hash = "sha256-xGjRwhZ2zx+YJARaB4/l1OhFauy/LMosIjMQqoGnxrM=";
+  src = fetchFromGitHub {
+    owner = "michaelstepner";
+    repo = "pandoc-mustache";
+    rev = "5d63040554d1f4c2babeed29caec8fcb334ec946";
+    hash = "sha256-PQEq2Tg4VibdejQqNWjNsWfL5D0RbozJHAyGmNxGrc0=";
   };
 
   build-system = with python3Packages; [
