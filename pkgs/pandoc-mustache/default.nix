@@ -1,6 +1,7 @@
 {
   python3Packages,
   fetchFromGitHub,
+  nix-update-script,
   lib,
 }:
 
@@ -12,8 +13,8 @@ python3Packages.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "michaelstepner";
     repo = "pandoc-mustache";
-    rev = "5d63040554d1f4c2babeed29caec8fcb334ec946";
-    hash = "sha256-PQEq2Tg4VibdejQqNWjNsWfL5D0RbozJHAyGmNxGrc0=";
+    tag = "${version}";
+    hash = "sha256-lgbQV4X2N4VuIEtjeSA542yqGdIs5QQ7+bdCoy/aloE=";
   };
 
   build-system = with python3Packages; [
@@ -27,6 +28,8 @@ python3Packages.buildPythonApplication rec {
     pyyaml
     future
   ];
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Pandoc Mustache Filter";
