@@ -11,12 +11,13 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-cvsBeV9pdgr8V+82Fw/XZS1Ljq/7ff4JYMHnNxqNvOM=";
   };
 
-  cargoHash = "sha256-Z59Ba2tvriHNfQCGBX0aZ8xKQM+tVd7YJPv+K/SF4CM=";
+  useFetchCargoVendor = true;
+  cargoHash = "sha256-FIIt8RwPaPrVG3D9FoMjR4L81NzUrKZsAeW2AJkBG1o=";
 
   meta = {
     description = "Interactive flamegraph viewer in the terminal";
     homepage = "https://github.com/YS-L/flamelens";
-    changelog = "https://github.com/YS-L/flamelens/releases/tag/${version}/CHANGELOG.md";
+    changelog = "https://github.com/YS-L/flamelens/releases/tag/v${version}/CHANGELOG.md";
     license = lib.licenses.mit;
     maintainers = [ lib.maintainers.averdow ];
   };
