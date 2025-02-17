@@ -7,4 +7,5 @@ pkgs: {
   my_fancy-cat = pkgs.callPackage ./my_fancy-cat { };
   camset = pkgs.callPackage ./camset { };
   pandoc-mustache = pkgs.callPackage ./pandoc-mustache { };
+  flamelens = pkgs.callPackage ./flamelens { };
 }
