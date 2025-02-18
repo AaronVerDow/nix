@@ -10,12 +10,6 @@
 }: 
 
 let
-  awesomeWmWidgets = pkgs.fetchFromGitHub {
-    owner = "streetturtle";
-    repo = "awesome-wm-widgets";
-    rev = "df6bc4a260158fdc6e2678f1bb281f442d7887ac";
-    sha256 = "sha256-IXV4YxG1hIq/LCurgbR1jEcwljRxxyVvwbEhrcJhlAk=";
-  };
   rofiConfig = builtins.fetchGit {
     url = "https://github.com/adi1090x/rofi.git";
     rev = "3a28753b0a8fb666f4bd0394ac4b0e785577afa2"; 
@@ -157,7 +151,6 @@ in
   home.file.".config/kitty/kitty.conf".source = ../dotfiles/dot_config/kitty/kitty.conf;
   home.file.".config/volumeicon/volumeicon".source = ../dotfiles/dot_config/volumeicon/volumeicon;
   home.file.".local/share/onboard/layouts/full.onboard".source = ../dotfiles/dot_local/share/onboard/layouts/full.onboard;
-  home.file.".config/awesome/awesome-wm-widgets".source = awesomeWmWidgets;
 
   home.activation.copyRofiConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
     mkdir -p ~/.config/rofi

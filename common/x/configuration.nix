@@ -20,7 +20,12 @@
   services.xserver.enable = true;
   hardware.graphics.enable = true;
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.windowManager.awesome.enable = true;
+  services.xserver.windowManager.awesome = {
+    enable = true;
+    luaModules = [ 
+      pkgs.awesome-wm-widgets
+    ];
+  };
 
   services.flatpak.enable = true;
 

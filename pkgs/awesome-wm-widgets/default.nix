@@ -1,31 +1,26 @@
 {
   lua,
   lib,
-  # luaPackages,
   stdenv,
   fetchFromGitHub,
 }:
 
-# luaPackages.buildLuaPackage {
 stdenv.mkDerivation {
   pname = "awesome-wm-widgets";
-  version = "0-unstable-2024-02-15";
+  version = "0-unstable-2025-01-08";
 
   src = fetchFromGitHub {
     owner = "streetturtle";
     repo = "awesome-wm-widgets";
-    rev = "cb5ef827d006bdd6fa23f68d7c5e7c9f27d8ffbd";
-    hash = "sha256-ejihBFxTtuZl/KJa9BalZ8JISAjn9oWmirK37O169lw=";
+    rev = "1dfa75cee48f991f7ec2a034ab27fc3a6bc8ce73";
+    hash = "sha256-m5WzRgZjHjnCVjh1GKEzqE4NP0/nuGsNpH4KvOggDPY=";
   };
 
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/share/awesome/lib/awesome-wm-widgets
-    cp -r $src/* $out/share/awesome/lib/awesome-wm-widgets
-
-    # mkdir -p $out/lib/lua/${lua.luaversion}/awesome-wm-widgets
-    # cp -r $src/* $out/lib/lua/${lua.luaversion}/awesome-wm-widgets
+    mkdir -p $out/lib/lua/${lua.luaversion}/awesome-wm-widgets
+    cp -r $src/* $out/lib/lua/${lua.luaversion}/awesome-wm-widgets
 
     runHook postInstall
   '';
