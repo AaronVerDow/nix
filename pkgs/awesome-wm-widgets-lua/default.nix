@@ -1,14 +1,13 @@
 {
   lua,
   lib,
-  # luaPackages,
   stdenv,
   fetchFromGitHub,
 }:
 
 # luaPackages.buildLuaPackage {
 stdenv.mkDerivation {
-  pname = "awesome-wm-widgets";
+  pname = "awesome-wm-widgets-lua";
   version = "0-unstable-2024-02-15";
 
   src = fetchFromGitHub {
@@ -21,11 +20,8 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/share/awesome/lib/awesome-wm-widgets
-    cp -r $src/* $out/share/awesome/lib/awesome-wm-widgets
-
-    # mkdir -p $out/lib/lua/${lua.luaversion}/awesome-wm-widgets
-    # cp -r $src/* $out/lib/lua/${lua.luaversion}/awesome-wm-widgets
+    mkdir -p $out/lib/lua/${lua.luaversion}/awesome-wm-widgets
+    cp -r $src/* $out/lib/lua/${lua.luaversion}/awesome-wm-widgets
 
     runHook postInstall
   '';
