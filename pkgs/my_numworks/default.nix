@@ -52,7 +52,11 @@ stdenv.mkDerivation rec {
     mv ./output/release/simulator/linux/{epsilon.bin,epsilon}
     mkdir -p $out/bin
     cp -r ./output/release/simulator/linux/* $out/bin/
-    install -Dm644 ${./numworks.png} $out/share/icons/hicolor/128x128/apps/epsilon.svg
+
+    # To build this svg:
+    # copy white path from ion/src/simulator/assets/icon_mask.svg
+    # paste into ion/src/simulator/assets/logo.svg and change fill to #edb14b
+    install -Dm644 ${./numworks.svg} $out/share/icons/hicolor/scalable/apps/numworks.svg
 
     runHook postInstall
   '';
@@ -61,10 +65,14 @@ stdenv.mkDerivation rec {
     (makeDesktopItem {
       name = "epsilon";
       exec = "epsilon";
-      icon = "epsilon";
-      desktopName = "Epsilon Calculator";
+      icon = "numworks";
+      desktopName = "NumWorks Epsilon Calculator";
       comment = "A powerful calculator";
-      categories = [ "Utility" ];
+      categories = [ 
+        "Utility" 
+        "Math"
+      ];
+      type = "Application";
     })
   ];
 
