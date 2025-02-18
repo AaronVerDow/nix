@@ -2,6 +2,7 @@
   python3Packages,
   fetchFromGitHub,
   nix-update-script,
+  callPackage,
   lib,
 }:
 
@@ -29,7 +30,10 @@ python3Packages.buildPythonApplication rec {
     future
   ];
 
-  passthru.updateScript = nix-update-script { };
+  passthru = {
+    updateScript = nix-update-script { };
+    tests = callPackage ./tests {};
+  };
 
   meta = {
     description = "Pandoc Mustache Filter";
