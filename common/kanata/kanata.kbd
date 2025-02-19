@@ -41,7 +41,7 @@
 (defalias
   cw   (caps-word 65535)
   cp   (tap-hold-press 200 200 esc lctl)
-  vi   (tap-hold-press 200 200 ; (layer-toggle vimnav))
+  vi   (tap-hold-except-keys 200 200 ; (layer-toggle vimnav) (spc enter))
   vib  C-left
   viw  C-right
   doq  (chord enable_chord q)
