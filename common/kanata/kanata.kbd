@@ -12,7 +12,7 @@
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc                nlk  kp/  kp*  kp-
   tab  @diq @run e    r    t    y    u    i    o    @dip [    ]    \                   kp7  kp8  kp9  kp+
   @cp  a    @stp d    f    g    h    j    k    l    @vi  '    enter                    kp4  kp5  kp6
-  @cls z    x    c    v    b    n    m    ,    .    /              @crs      up        kp1  kp2  kp3  kprt
+  lsft z    x    c    v    b    n    m    ,    .    /              @cpsw     up        kp1  kp2  kp3  kprt
   lctl lmet lalt           spc                 ralt rmet           rctl lft  down rght kp0       kp.
 )
 
@@ -44,8 +44,6 @@
   vi   (tap-hold-press 200 200 ; (layer-toggle vimnav))
   vib  C-left
   viw  C-right
-  cls  (chord capsword_chord lsft)
-  crs  (chord capsword_chord rsft)
   doq  (chord enable_chord q)
   dop  (chord enable_chord p)
   run  (tap-dance-eager 200 (
@@ -58,14 +56,11 @@
          s
 	 (on-press release-vkey vw)
 	)
+  cpsw (tap-dance-eager 200 (
+  	  rsft
+	  (caps-word 2000)
+       ))
 
-
-)
-
-(defchords capsword_chord 500
-  (lsft) lsft
-  (rsft) rsft
-  (lsft rsft) (caps-word 2000)
 )
 
 (defchords enable_chord 500
