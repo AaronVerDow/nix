@@ -14,7 +14,7 @@ Features:
 * Split config that enables disabling an internal laptop keyboard while still controlling an external bluetooth board.
   * This allows placing the bluetooth keyboard over the internal one.  Internal keyboard is toggled with a chord press.
 * Basic vim shortcuts when holding `;` key
-* Press both shift keys for caps word
+* Double press right shift for caps word
 * Auto run
   * Press w four times rapidly and they key will be held
   * Press s to stop
@@ -29,10 +29,6 @@ Issues:
 * Config files are being concatenated in configuration.nix
   * Includes only seem to follow relative paths, not sure how to do that with nix.
   * Passing NixOS configFile does not work, even when permissions are fixed.
-* Excluding the internal keyboard does not work, that instance does nothing.
-  * Currently I am manually including external keyboards.
-* Cannot find device ID for bluetooth boards.
-* Lenovo IdeaPad doesn't seem capable of a four character chord?
 * Missing keycode for stop button
 
 Pages to copy from:
