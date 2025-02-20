@@ -66,12 +66,14 @@
   systemd.user.startServices = "sd-switch";
 
 
-  # hacky solution until I find a proper home for this, typically goes in /etc/ so root is impacted as well
-  home.file.".bash.bashrc".source = ./dotfiles/dot_bash.bashrc.sh;
-  # should be in /etc/DIR_COLORS ?
-  home.file.".dir_colors".source = ./dotfiles/dot_dir_colors.sh;
-  home.file.".bashrc".source = ./dotfiles/dot_bashrc.sh;
-  home.file.".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
+  home.file = {
+    # hacky solution until I find a proper home for this, typically goes in /etc/ so root is impacted as well
+    ".bash.bashrc".source = ./dotfiles/dot_bash.bashrc.sh;
+    # should be in /etc/DIR_COLORS ?
+    ".dir_colors".source = ./dotfiles/dot_dir_colors.sh;
+    ".bashrc".source = ./dotfiles/dot_bashrc.sh;
+    ".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
