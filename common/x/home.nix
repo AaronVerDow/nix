@@ -148,6 +148,7 @@ in
   home.file.".config/awesome/rc.lua".source = ../dotfiles/dot_config/awesome/rc.lua;
   home.file.".config/touchegg/touchegg.conf".source = ../dotfiles/dot_config/touchegg/touchegg.conf;
   home.file.".config/rofi/config.rasi".source = ../dotfiles/dot_config/rofi/config.rasi;
+  home.file.".config/rofi/touchscreen".source = ../dotfiles/dot_config/rofi/touchscreen;
   home.file.".config/kitty/kitty.conf".source = ../dotfiles/dot_config/kitty/kitty.conf;
   home.file.".config/volumeicon/volumeicon".source = ../dotfiles/dot_config/volumeicon/volumeicon;
   home.file.".local/share/onboard/layouts/full.onboard".source = ../dotfiles/dot_local/share/onboard/layouts/full.onboard;
