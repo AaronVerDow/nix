@@ -53,10 +53,13 @@ chapter_title() {
 title() {
     file_number=$( file_number "$1" )
     chapter_title=$( chapter_title "$1" )
+
+    # include leading number if it exists
     if [ -z "$file_number" ]; then
         echo "$chapter_title"
     else
-        echo "$file_number $chapter_title"
+        # number is dark gray
+        echo -e "\e[90m$file_number\e[0m $chapter_title"
     fi
 }
 
