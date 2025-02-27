@@ -42,10 +42,26 @@ parse() {
     done < <( wc --total=never -w ./*.Rmd )
 }
 
-title() {
+file_number() {
+    basename "$1" | grep -o '^[0-9]*' || echo ""
+}
+
+chapter_title() {
     grep -m 1 '^# ' "$1" | sed -s 's/^# //' || echo ""
 }
-thousands() { sed ':a;s/\B[0-9]\{3\}\>/,&/;ta'
+
+title() {
+    file_number=$( file_number "$1" )
+    chapter_title=$( chapter_title "$1" )
+    if [ -z "$file_number" ]; then
+        echo "$chapter_title"
+    else
+        echo "$file_number $chapter_title"
+    fi
+}
+
+thousands() { 
+    sed ':a;s/\B[0-9]\{3\}\>/,&/;ta'
 }
 
 is_valid() {
