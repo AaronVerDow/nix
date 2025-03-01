@@ -21,6 +21,7 @@ in
     jdk
     jdt-language-server
     nixd
+    harper # grammar checking
   ];
   programs.neovim = {
     enable = true;
@@ -43,6 +44,7 @@ in
 	vim-pencil	# better word wrap
 	limelight-vim	# highlight current editing block
 	vim-markdown	# rough markdown preview
+        nvim-lspconfig  # used for harper
 
 	# shell
 	coc-sh
@@ -81,6 +83,22 @@ vim.api.nvim_create_autocmd("BufEnter", {
         end, 100) -- Delay by 100 milliseconds
     end,
 })
+
+require'lspconfig'.harper_ls.setup {
+  settings = {
+    ["harper-ls"] = {
+      linters = {
+        SpellCheck = false,
+        AvoidCurses = false, -- not documented
+      },
+      markdown = {
+        IgnoreLinkTitle = true,
+        filetypes = { "markdown", "rmd" }, -- AI guess
+      }
+    }
+  },
+  autostart = false,
+}
 
 require('gitsigns').setup()
 require('lualine').setup()
@@ -154,6 +172,7 @@ function! s:goyo_enter()
   set mouse=
   call coc#rpc#stop()
   set noshowmode " hide --INSERT-- at bottom
+  -- LspStart
 
   augroup cmdline
     autocmd!
@@ -169,6 +188,7 @@ function! s:goyo_leave()
   NoPencil
   CocStart
   set showmode
+  LspStop
 
   " Quit Vim if this is the only remaining buffer
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
