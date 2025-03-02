@@ -9,4 +9,5 @@ pkgs: {
   pandoc-mustache = pkgs.callPackage ./pandoc-mustache { };
   flamelens = pkgs.callPackage ./flamelens { };
   awesome-wm-widgets = pkgs.callPackage ./awesome-wm-widgets { };
+  grammar = pkgs.callPackage ./grammar { };
 }

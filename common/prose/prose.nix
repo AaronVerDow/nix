@@ -17,6 +17,8 @@ in
         pandoc
         texliveFull
         pandoc-mustache
+        languagetool
+        grammar
         # rWrapper.override{packages = [ rPackages.bookdown ];}
 
 
