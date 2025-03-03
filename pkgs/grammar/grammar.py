@@ -57,6 +57,9 @@ def parse_match(error):
 
 
 def process_json(errors):
+    if not errors:
+        return
+    print('')
     for error in errors["matches"]:
         parse_match(error)
 
