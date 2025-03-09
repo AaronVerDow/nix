@@ -14,6 +14,10 @@ in
   networking.hostName = "ipad";
   services.xserver.videoDrivers = ["amdgpu"];
 
+  boot.kernelParams = [ "amd_pstate=guided" ];
+  powerManagement.enable = true;
+  powerManagement.cpuFreqGovernor = "schedutil";
+
   # Primary desk flag
   # 2109:2813
 
