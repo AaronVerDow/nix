@@ -76,6 +76,7 @@
         modules = [
           solaar.nixosModules.default
           ./hosts/ipad/configuration.nix
+          nixos-hardware.nixosModules.lenovo-ideapad-16ahp9
         ];
       };
       gonix = nixpkgs.lib.nixosSystem {
