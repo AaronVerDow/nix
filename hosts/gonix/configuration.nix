@@ -1,8 +1,9 @@
-{ inputs, outputs, ... }:
+{ inputs, outputs, pkgs, ... }:
 let
   internalAlias = builtins.readFile ../../common/kanata/internal_alias.kbd;
   externalAlias = builtins.readFile ../../common/kanata/external_alias.kbd;
   kanataConfig = builtins.readFile ../../common/kanata/kanata.kbd;
+  thermaldConfig = pkgs.copyPathToStore ./thermal-conf.xml;
 in
 {
   imports =
@@ -12,6 +13,21 @@ in
       ../../common/x/configuration.nix
     ];
   networking.hostName = "gonix";
+
+  # cache kernel compiles
+  programs.ccache = {
+    enable = true;
+    packageNames = [
+      "linux"
+    ];
+  };
+
+  # https://github.com/linux-surface/linux-surface/wiki/Surface-Laptop-Go-2
+  services.thermald = {
+    enable = true;
+    # https://github.com/linux-surface/linux-surface/tree/master/contrib/thermald
+    configFile = thermaldConfig;
+  };
 
   services.kanata = {
     enable = true;
