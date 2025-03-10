@@ -175,6 +175,24 @@
     KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
   '';
 
+  systemd.services.update-tldr = {
+    description = "Update tldr database";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.tldr}/bin/tldr --update";
+      User = "averdow";
+    };
+  };
+
+  systemd.timers.update-tldr = {
+    description = "Weekly timer for updating tldr database";
+    timerConfig = {
+      OnCalendar = "weekly";
+      Persistent = true;
+    };
+    wantedBy = [ "timers.target" ];
+  };
+
   # Kanata requirements
   boot.kernelModules = [ "uinput" ];
   hardware.uinput.enable = true;
