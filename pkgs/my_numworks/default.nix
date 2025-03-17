@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
 
     mv ./output/release/simulator/linux/{epsilon.bin,epsilon}
     mkdir -p $out/bin
-    cp -r ./output/release/simulator/linux/* $out/bin/
+    cp -r ./output/release/simulator/linux/epsilon $out/bin/
 
     # To build this svg:
     # copy white path from ion/src/simulator/assets/icon_mask.svg
