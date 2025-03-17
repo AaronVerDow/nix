@@ -37,8 +37,10 @@ python3Packages.buildPythonApplication {
   dontWrapGApps = true;
 
   preFixup = ''
-    makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
-    makeWrapperArgs+=(--prefix PATH : ${lib.makeBinPath [ v4l-utils ]})
+    makeWrapperArgs+=(
+      "''${gappsWrapperArgs[@]}"
+      --prefix PATH : ${lib.makeBinPath [ v4l-utils ]}
+    )
   '';
 
   desktopItems = [
