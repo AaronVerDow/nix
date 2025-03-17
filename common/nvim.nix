@@ -22,6 +22,7 @@ in
     jdt-language-server
     nixd
     harper # grammar checking
+    python3
   ];
   programs.neovim = {
     enable = true;
@@ -54,6 +55,10 @@ in
 	# typescript
 	typescript-tools-nvim
 	plenary-nvim # required for typescript-tools
+
+        # python
+        coc-pyright
+        nvim-treesitter-parsers.python
 
 	# lazy java setup
 	coc-java
@@ -160,7 +165,6 @@ colorscheme humanoid
 function! s:goyo_enter()
   lua require('lualine').hide()
   set linebreak
-  set spell spelllang=en_us
   Pencil
   
   let b:quitting = 0
@@ -172,7 +176,6 @@ function! s:goyo_enter()
   set mouse=
   call coc#rpc#stop()
   set noshowmode " hide --INSERT-- at bottom
-  -- LspStart
 
   augroup cmdline
     autocmd!
@@ -184,11 +187,9 @@ endfunction
 function! s:goyo_leave()
   lua require('lualine').hide({unhide=true})
   set nolinebreak
-  set nospell
   NoPencil
   CocStart
   set showmode
-  LspStop
 
   " Quit Vim if this is the only remaining buffer
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
