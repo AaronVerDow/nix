@@ -13,6 +13,8 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
+  i18n.defaultLocale = "en_US.UTF-8";
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -159,7 +161,6 @@
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox
     FLAKE = "/home/averdow/git/nix"; # used by nix helper
     MANPAGER="nvim +Man!";
-    MANWIDTH=999;
   };
 
   services.udev.packages = with pkgs; [
