@@ -2,4 +2,12 @@
 
 Vim plugin to automatically open OpenSCAD when editing files. 
 
-By default the scad file is opened as is. Windows can be opened for specific modules by commenting `\\ PREVIEW` above the module. A temporary file will be created that uses the main script and calls that module only.
+## Use
+
+Edit a .scad file in vim and the file will be automatically opened in OpenSCAD. Add a comment containing `NOPREVIEW` to disable for specific files.
+
+Set the envornment variable `OPENSCAD_EXECUTABLE` to specify a custom path to OpenSCAD.
+
+Custom views of modules can be defined by commenting `PREVIEW` above a module. When this feature is used the overall file will no longer be opened. This allows previewing multiple parts at once.
+
+OpenSCAD closes automatically when vim exits.
