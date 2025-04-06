@@ -1,3 +1,10 @@
+let s:cachedir = stdpath('cache') . '/openscad'
+if !isdirectory(s:cachedir)
+    call mkdir(s:cachedir, 'p')
+endif
+
+let $OPENSCAD_CACHE = s:cachedir
+
 let s:plugin_root = expand('<sfile>:p:h:h')  " Goes up two levels from current script
 let s:bin_path = s:plugin_root . '/bin/openscad-preview'
 
