@@ -11,6 +11,7 @@ process_all_comments() {
     mkdir -p "$OPENSCAD_CACHE"
 
     local module=""
+    local no_hits=1 # used for return value, tracks if preview is found
     # read file in reverse
     while read -r line; do
         
@@ -20,6 +21,7 @@ process_all_comments() {
 
         # skip lines until PREVIEW hit
         echo "$line" | grep -q 'PREVIEW' || continue
+        no_hits=0
 
         args=${line#*PREVIEW}   # delete everything leading up to PREVIEW
         basename=$( basename "$file" )
@@ -33,7 +35,7 @@ process_all_comments() {
 
     done < <( tac "$file" )
     [ -z "$module" ] && return 1
-    return 0
+    return $no_hits
 }
 
 build_scad() {
