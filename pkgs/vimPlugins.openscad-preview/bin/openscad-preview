@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-executable="openscad"
-
 [ -z "${OPENSCAD_CACHE:-}" ] && OPENSCAD_CACHE="/tmp/openscad"
+
 mkdir -p "$OPENSCAD_CACHE"
 PIDFILE="$OPENSCAD_CACHE/${VIM_PID:-last}.pid"
 
 process_all_comments() {
     local file=$1
-    local cmd=$2
-
 
     local module=""
     local no_hits=1 # used for return value, tracks if preview is found
@@ -33,11 +30,15 @@ process_all_comments() {
         build_scad "$file" "$module" "$output" "$args"
 
         # run command
-        $cmd $executable --viewall "$output" &
+        open_file "$output" &
 
     done < <( tac "$file" )
     [ -z "$module" ] && return 1
     return $no_hits
+}
+
+open_file() {
+    start_once "${OPENSCAD_EXECUTABLE:-openscad}" "$1" &
 }
 
 build_scad() {
@@ -57,22 +58,12 @@ build_scad() {
 start_once() {
     pgrep -f "$*" > /dev/null && return 0
     nohup "$@" &
-    echo $! >> $PIDFILE
-}
-
-_kill() {
-    pgrep -f "$*" | xargs kill
+    echo $! >> "$PIDFILE"
 }
 
 fail() {
-    echo "$RED$*$NORMAL" 1>&2
+    echo "$*" 1>&2
     exit 1
-}
-
-process_one() {
-    local file=$1
-    local cmd=$2
-    $cmd $executable --viewall "$file"
 }
 
 pidfile_kill() {
@@ -82,11 +73,8 @@ pidfile_kill() {
 
 main() {
 
-    cmd="start_once"
 
     if [ "$1" == "--kill" ]; then
-        cmd=_kill
-        shift
         pidfile_kill
         exit
     fi
@@ -97,7 +85,7 @@ main() {
     [ "${2:-}" ] && fail "Too many options"
     [ -f "$file" ] || fail "File does not exist"
     echo "$file" | grep -q '\.scad$' || fail "Not an scad file"
-    process_all_comments "$file" "$cmd" || process_one "$file" "$cmd"
+    process_all_comments "$file" || open_file "$file"
 }
 
 main "${@:-}"
