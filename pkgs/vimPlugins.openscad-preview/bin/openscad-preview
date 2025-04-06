@@ -82,6 +82,8 @@ main() {
     [ -f "$file" ] || fail "File does not exist"
     echo "$file" | grep -q '\.scad$' || fail "Not an scad file"
 
+    grep -q NOPREVIEW "$file" && return
+
     # Do a quick check for PREVIEW to speed up launch
     if grep -q PREVIEW "$file"; then
         process_all_comments "$file" || open_file "$file"
