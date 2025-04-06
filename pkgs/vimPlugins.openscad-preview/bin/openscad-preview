@@ -3,12 +3,14 @@ set -euo pipefail
 
 executable="openscad"
 
+[ -z "${OPENSCAD_CACHE:-}" ] && OPENSCAD_CACHE="/tmp/openscad"
+mkdir -p "$OPENSCAD_CACHE"
+PIDFILE="$OPENSCAD_CACHE/${VIM_PID:-last}.pid"
+
 process_all_comments() {
     local file=$1
     local cmd=$2
 
-    [ -z "${OPENSCAD_CACHE:-}" ] && OPENSCAD_CACHE="/tmp/openscad"
-    mkdir -p "$OPENSCAD_CACHE"
 
     local module=""
     local no_hits=1 # used for return value, tracks if preview is found
@@ -55,6 +57,7 @@ build_scad() {
 start_once() {
     pgrep -f "$*" > /dev/null && return 0
     nohup "$@" &
+    echo $! >> $PIDFILE
 }
 
 _kill() {
@@ -72,6 +75,11 @@ process_one() {
     $cmd $executable --viewall "$file"
 }
 
+pidfile_kill() {
+    [ -e "$PIDFILE" ] || return
+    xargs kill < "$PIDFILE"
+}
+
 main() {
 
     cmd="start_once"
@@ -79,6 +87,8 @@ main() {
     if [ "$1" == "--kill" ]; then
         cmd=_kill
         shift
+        pidfile_kill
+        exit
     fi
 
     file=$1
