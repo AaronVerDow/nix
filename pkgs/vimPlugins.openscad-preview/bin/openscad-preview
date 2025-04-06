@@ -2,7 +2,6 @@
 set -euo pipefail
 
 [ -z "${OPENSCAD_CACHE:-}" ] && OPENSCAD_CACHE="/tmp/openscad"
-
 mkdir -p "$OPENSCAD_CACHE"
 PIDFILE="$OPENSCAD_CACHE/${VIM_PID:-last}.pid"
 
@@ -44,6 +43,12 @@ open_file() {
     start_once "${OPENSCAD_EXECUTABLE:-openscad}" "$1" &
 }
 
+start_once() {
+    pgrep -f "$*" > /dev/null && return 0
+    nohup "$@" &
+    echo $! >> "$PIDFILE"
+}
+
 build_scad() {
     file=$1
     shift
@@ -58,28 +63,16 @@ build_scad() {
     echo "use <$relative_file>; $module($*);" > "$output"
 }
 
-start_once() {
-    pgrep -f "$*" > /dev/null && return 0
-    nohup "$@" &
-    echo $! >> "$PIDFILE"
-}
-
 fail() {
     echo "$*" 1>&2
     exit 1
 }
 
-pidfile_kill() {
-    [ -e "$PIDFILE" ] || return
-    xargs kill < "$PIDFILE"
-}
-
 main() {
-
-
     if [ "$1" == "--kill" ]; then
-        pidfile_kill
-        exit
+        [ -e "$PIDFILE" ] || return 1
+        xargs kill < "$PIDFILE"
+        return 0
     fi
 
     file=$1
