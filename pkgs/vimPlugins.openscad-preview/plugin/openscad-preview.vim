@@ -4,6 +4,7 @@ if !isdirectory(s:cachedir)
 endif
 
 let $OPENSCAD_CACHE = s:cachedir
+let $VIM_PID = getpid()
 
 let s:plugin_root = expand('<sfile>:p:h:h')  " Goes up two levels from current script
 let s:bin_path = s:plugin_root . '/bin/openscad-preview'
