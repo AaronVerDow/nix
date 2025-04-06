@@ -65,7 +65,7 @@ in
 	nvim-treesitter-parsers.java
 
     # treesitter-kanata
-    ];
+    ] ++ [ pkgs.openscad-preview ];
     extraLuaConfig = ''
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
