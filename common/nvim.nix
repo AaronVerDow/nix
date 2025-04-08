@@ -166,6 +166,13 @@ require("cinnamon").setup {
     },
 }
 
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*.puml",
+    callback = function()
+        vim.cmd("PlantumlOpen")
+    end,
+})
+
     '';
     extraConfig = ''
 colorscheme humanoid
