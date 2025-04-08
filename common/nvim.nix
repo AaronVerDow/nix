@@ -23,6 +23,7 @@ in
     nixd
     harper # grammar checking
     python3
+    graphviz # plantuml
   ];
   programs.neovim = {
     enable = true;
@@ -225,6 +226,8 @@ function LoadLvimrc()
 endfunction
 
 let g:vim_markdown_folding_disabled = 1
+
+let g:plantuml_previewer#viewer_path = "~/tmp/plantuml"
 
 " Enter key for auto completion
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
