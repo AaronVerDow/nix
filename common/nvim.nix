@@ -64,7 +64,11 @@ in
 	coc-java
 	nvim-treesitter-parsers.java
 
-    # treesitter-kanata
+        # plantuml
+        plantuml-syntax
+        plantuml-previewer-vim
+        open-browser-vim # required for plantuml previewer
+
     ] ++ [ pkgs.openscad-preview ];
     extraLuaConfig = ''
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
