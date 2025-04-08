@@ -23,6 +23,7 @@ in
     nixd
     harper # grammar checking
     python3
+    graphviz # plantuml
   ];
   programs.neovim = {
     enable = true;
@@ -64,8 +65,12 @@ in
 	coc-java
 	nvim-treesitter-parsers.java
 
-    # treesitter-kanata
-    ];
+        # plantuml
+        plantuml-syntax
+        plantuml-previewer-vim
+        open-browser-vim # required for plantuml previewer
+
+    ] ++ [ pkgs.openscad-preview ];
     extraLuaConfig = ''
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -224,6 +229,8 @@ function LoadLvimrc()
 endfunction
 
 let g:vim_markdown_folding_disabled = 1
+
+let g:plantuml_previewer#viewer_path = "~/tmp/plantuml"
 
 " Enter key for auto completion
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"

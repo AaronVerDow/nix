@@ -28,6 +28,7 @@ in
     # gui programs
     discord
     openscad
+    openscad-post-processor
     inkscape
     gimp
     kitty

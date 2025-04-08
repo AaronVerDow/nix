@@ -10,4 +10,6 @@ pkgs: {
   flamelens = pkgs.callPackage ./flamelens { };
   awesome-wm-widgets = pkgs.callPackage ./awesome-wm-widgets { };
   grammar = pkgs.callPackage ./grammar { };
+  openscad-post-processor = pkgs.callPackage ./openscad-post-processor { };
+  openscad-preview = pkgs.callPackage ./openscad-preview.nvim { };
 }
