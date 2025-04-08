@@ -78,6 +78,9 @@ vim.opt.termguicolors = true
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
+-- map shift-ctrl-c to yank to system buffer
+vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
+
 -- https://github.com/HiPhish/rainbow-delimiters.nvim/issues/2
 -- ChatGPT suggested the delay and it worked.
 vim.api.nvim_create_autocmd("BufEnter", {
