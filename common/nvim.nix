@@ -72,6 +72,10 @@ in
 
     ] ++ [ pkgs.openscad-preview ];
     extraLuaConfig = ''
+-- Old style tab completion
+vim.opt.wildmode = "longest:list"
+vim.opt.wildmenu = true
+
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
