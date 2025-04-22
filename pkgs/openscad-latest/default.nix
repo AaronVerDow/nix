@@ -1,5 +1,4 @@
 {
-  fetchFromGitHub,
   fetchgit,
   lib,
   stdenv,
@@ -45,21 +44,12 @@
 
 mkDerivation rec {
   pname = "openscad";
-  version = "0-github";
+  version = "0-latest";
 
   src = fetchgit {
     url = "https://github.com/openscad/openscad.git";
     rev = "edbbd86b2a44092fd876ec71e162934d03fdb25c";
     sha256 = "sha256-SuRByBKOiAvEXGjlztvDrJIeh/EdESH727/MJWSHoVA=";
-    fetchSubmodules = true;
-  };
-
-  # does not fetch submodules
-  src2 = fetchFromGitHub {
-    owner = "openscad";
-    repo = "openscad";
-    rev = "edbbd86b2a44092fd876ec71e162934d03fdb25c";
-    sha256 = "sha256-RyPvOxWnKoagqOVQWqM3Te33QcR4ZIOrgmC4s7S0ZLo=";
     fetchSubmodules = true;
   };
 
