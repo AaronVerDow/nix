@@ -70,6 +70,10 @@ in
         plantuml-previewer-vim
         open-browser-vim # required for plantuml previewer
 
+        # C
+        vim-ccls
+        nvim-treesitter-parsers.cpp
+
     ] ++ [ pkgs.openscad-preview ];
     extraLuaConfig = ''
 -- Old style tab completion
