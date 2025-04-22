@@ -3,9 +3,6 @@
   lib,
   stdenv,
   cmake,
-  qtbase,
-  qtmultimedia,
-  qscintilla,
   bison,
   flex,
   eigen,
@@ -26,23 +23,22 @@
   double-conversion,
   lib3mf,
   libzip,
-  mkDerivation,
-  qtmacextras,
   spacenavSupport ? stdenv.hostPlatform.isLinux,
   libspnav,
   wayland,
   wayland-protocols,
   wrapGAppsHook3,
-  qtwayland,
   cairo,
   openscad,
   runCommand,
   python3,
   ghostscript,
   tbb,
+  qt6,
+  qt6Packages,
 }:
 
-mkDerivation rec {
+stdenv.mkDerivation rec {
   pname = "openscad";
   version = "0-latest";
 
@@ -53,12 +49,6 @@ mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  patches = [
-  ];
-
-  postPatch = ''
-  '';
-
   nativeBuildInputs = [
     bison
     flex
@@ -68,6 +58,12 @@ mkDerivation rec {
     wrapGAppsHook3
     python3
     ghostscript
+    qt6.qttools
+    qt6.wrapQtAppsHook
+    qt6.qt5compat
+    qt6.qtmultimedia
+    qt6.qtbase
+    qt6Packages.qscintilla
   ];
 
   buildInputs =
@@ -86,9 +82,6 @@ mkDerivation rec {
       double-conversion
       freetype
       fontconfig
-      qtbase
-      qtmultimedia
-      qscintilla
       cairo
       tbb
     ]
@@ -97,13 +90,12 @@ mkDerivation rec {
       libGL
       wayland
       wayland-protocols
-      qtwayland
     ]
-    ++ lib.optional stdenv.hostPlatform.isDarwin qtmacextras
     ++ lib.optional spacenavSupport libspnav;
 
   cmakeFlags =
     [
+      "-DUSE_QT6=ON"
       "-DVERSION=${version}"
       "-DLIB3MF_INCLUDE_DIR=${lib3mf.dev}/include/lib3mf/Bindings/Cpp"
       "-DLIB3MF_LIBRARY=${lib3mf}/lib/lib3mf.so"
@@ -115,10 +107,7 @@ mkDerivation rec {
       "-DCMAKE_CXX_STANDARD=17"
     ];
 
-  # enableParallelBuilding = true;
-
-  preBuild = ''
-  '';
+  enableParallelBuilding = true;
 
   postInstall = lib.optionalString stdenv.hostPlatform.isDarwin ''
     mkdir $out/Applications
