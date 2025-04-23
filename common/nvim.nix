@@ -24,6 +24,7 @@ in
     harper # grammar checking
     python3
     graphviz # plantuml
+    ccls
   ];
   programs.neovim = {
     enable = true;
@@ -256,10 +257,23 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
     text = ''
       {
         "languageserver": {
-            "nix": {
-                "command": "nixd",
-                "filetypes": ["nix"]
+          "nix": {
+              "command": "nixd",
+              "filetypes": ["nix"]
+          }
+          "ccls": {
+            "command": "ccls",
+            "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+            "rootPatterns": [".ccls-root", "compile_commands.json"],
+            "initializationOptions": {
+              "cache": {
+                "directory": ".ccls-cache"
+              },
+              "client": {
+                "snippetSupport": true
+              }
             }
+          }
         }
         "java.jdt.ls.java.home": "${pkgs.jdk}/lib/openjdk",
         "java.configuration.updateBuildConfiguration": "automatic",
