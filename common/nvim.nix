@@ -182,6 +182,27 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end,
 })
 
+-- double tap escape to clear search highlights
+-- next still works and will reenable highlights
+
+local escape_count = 0
+local last_escape_time = 0
+
+vim.keymap.set('n', '<Esc>', function()
+  local current_time = vim.loop.now()
+  if current_time - last_escape_time < 300 then -- threshold
+    escape_count = escape_count + 1
+    if escape_count >= 1 then -- tap count
+      vim.cmd('nohlsearch')
+      escape_count = 0
+    end
+  else
+    escape_count = 0
+  end
+  last_escape_time = current_time
+  return '<Esc>'
+end, { expr = true, noremap = true })
+
     '';
     extraConfig = ''
 colorscheme humanoid
