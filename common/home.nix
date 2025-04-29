@@ -10,7 +10,7 @@
 }: 
 {
   imports = [
-    ./nvim.nix
+    ./nvim/nvim.nix
     ./prose/prose.nix
   ];
 
