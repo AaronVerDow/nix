@@ -30,7 +30,6 @@
 
       # prose
       goyo-vim # minimal interface
-      vim-pencil # better word wrap
       limelight-vim # highlight current editing block
       vim-markdown # rough markdown preview
       nvim-lspconfig # used for harper

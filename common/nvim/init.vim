@@ -3,7 +3,6 @@ colorscheme humanoid
 function! s:goyo_enter()
   lua require('lualine').hide()
   set linebreak
-  Pencil
   
   let b:quitting = 0
   let b:quitting_bang = 0
@@ -25,7 +24,6 @@ endfunction
 function! s:goyo_leave()
   lua require('lualine').hide({unhide=true})
   set nolinebreak
-  NoPencil
   CocStart
   set showmode
 

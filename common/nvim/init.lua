@@ -105,10 +105,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 -- double tap escape to clear search highlights
 -- next still works and will reenable highlights
-
 local escape_count = 0
 local last_escape_time = 0
-
 vim.keymap.set('n', '<Esc>', function()
   local current_time = vim.loop.now()
   if current_time - last_escape_time < 300 then -- threshold
@@ -123,3 +121,13 @@ vim.keymap.set('n', '<Esc>', function()
   last_escape_time = current_time
   return '<Esc>'
 end, { expr = true, noremap = true })
+
+-- automatic hard line wrap
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'markdown', 'rmd' }, callback = function()
+    vim.bo.formatoptions = vim.bo.formatoptions .. 'tcqj'
+    vim.bo.textwidth = 80  -- Set your desired line length
+    vim.bo.wrapmargin = 0  -- Ensure textwidth is used instead
+    vim.bo.formatoptions = vim.bo.formatoptions .. 'a'  -- Auto-wrap text while typing
+  end
+})
