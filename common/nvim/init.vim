@@ -14,6 +14,7 @@ function! s:goyo_enter()
   call coc#rpc#stop()
   set noshowmode " hide --INSERT-- at bottom
 
+  " clear messages automatically
   augroup cmdline
     autocmd!
     autocmd CmdlineLeave : lua vim.defer_fn(function() vim.cmd('echo ""') end, 5000)
