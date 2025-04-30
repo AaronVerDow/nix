@@ -10,7 +10,7 @@ function! s:goyo_enter()
   cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
 
   set conceallevel=0 "do not hide quotes in markdown
-  set mouse=
+  " set mouse=
   call coc#rpc#stop()
   set noshowmode " hide --INSERT-- at bottom
 
@@ -19,6 +19,8 @@ function! s:goyo_enter()
     autocmd!
     autocmd CmdlineLeave : lua vim.defer_fn(function() vim.cmd('echo ""') end, 5000)
   augroup END
+  
+  set spell
 
 endfunction
 
@@ -36,6 +38,8 @@ function! s:goyo_leave()
       qa
     endif
   endif
+
+  set nospell
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
