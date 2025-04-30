@@ -103,7 +103,6 @@
       packages = with pkgs; [
         neofetch
         neovim
-        vimpager
         btop
         git
         ranger
@@ -148,6 +147,7 @@
   services.openssh = {
     enable = true;
     settings = {
+      X11Forwarding = true;
       PermitRootLogin = "no";
     };
   };
