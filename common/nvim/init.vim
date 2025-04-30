@@ -13,8 +13,12 @@ function! s:goyo_enter()
 
   set conceallevel=0 "do not hide quotes in markdown
   " set mouse=
-  call coc#rpc#stop()
   set noshowmode " hide --INSERT-- at bottom
+
+  if exists('g:did_coc_loaded')
+    silent! CocDisable
+    let b:coc_disabled = 1  " Track we disabled it
+  endif
 
   " clear messages automatically
   augroup cmdline
@@ -39,6 +43,11 @@ function! s:goyo_leave()
     else
       qa
     endif
+  endif
+
+  " Re-enable Coc if we disabled it
+  if exists('b:coc_disabled') && b:coc_disabled
+    silent! CocEnable
   endif
 
   set nospell
