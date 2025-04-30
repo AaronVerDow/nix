@@ -27,22 +27,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end,
 })
 
-require'lspconfig'.harper_ls.setup {
-  settings = {
-    ["harper-ls"] = {
-      linters = {
-        SpellCheck = false,
-        AvoidCurses = false, -- not documented
-      },
-      markdown = {
-        IgnoreLinkTitle = true,
-        filetypes = { "markdown", "rmd" }, -- AI guess
-      }
-    }
-  },
-  autostart = false,
-}
-
 require('gitsigns').setup()
 require('lualine').setup()
 require("typescript-tools").setup {}

@@ -7,7 +7,6 @@
     jdk
     jdt-language-server
     nixd
-    harper # grammar checking
     python3
     graphviz # plantuml
     ccls
@@ -32,7 +31,6 @@
       goyo-vim # minimal interface
       limelight-vim # highlight current editing block
       vim-markdown # rough markdown preview
-      nvim-lspconfig # used for harper
       vim-wordy
 
       # shell
