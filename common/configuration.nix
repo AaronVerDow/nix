@@ -205,6 +205,17 @@
     ];
   };
 
+  zramSwap = {
+    enable = true;
+    algorithm = "lstd";  # lz4 or zstd (tossup)
+    memoryPercent = 100; # available uncompressed space, relative to RAM
+  };
+
+  # Reduce swappiness to avoid excessive swapping
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 20;  # Default 60, lower for less swapping
+  };
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
 }
