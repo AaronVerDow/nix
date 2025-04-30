@@ -154,6 +154,7 @@ in
     ".config/kitty/kitty.conf".source = ../dotfiles/dot_config/kitty/kitty.conf;
     ".config/volumeicon/volumeicon".source = ../dotfiles/dot_config/volumeicon/volumeicon;
     ".local/share/onboard/layouts/full.onboard".source = ../dotfiles/dot_local/share/onboard/layouts/full.onboard;
+    ".local/share/onboard/layouts/full.svg".source = ../dotfiles/dot_local/share/onboard/layouts/full.svg;
   };
 
   home.activation.copyRofiConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
