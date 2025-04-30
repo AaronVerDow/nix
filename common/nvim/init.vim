@@ -47,6 +47,13 @@ endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
+autocmd FileType markdown,rmd call SetupMarkdown()
+function! SetupMarkdown()
+  Goyo
+  " call s:goyo_enter()
+  call timer_start(50, {-> s:goyo_enter()})
+endfunction
+
 au FileType * if exists('$LOCAL_VIMRC') | call LoadLvimrc() | endif
 
 function LoadLvimrc()
