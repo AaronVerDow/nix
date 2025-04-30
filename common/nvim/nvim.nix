@@ -60,7 +60,10 @@
       vim-ccls
       nvim-treesitter-parsers.cpp
 
-    ] ++ [ pkgs.openscad-preview ];
+    ] ++ [ 
+      pkgs.openscad-preview
+      pkgs.vim-ditto
+    ];
     extraLuaConfig =
       let
         file = builtins.readFile ./init.lua;

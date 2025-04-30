@@ -63,3 +63,5 @@ let g:plantuml_previewer#viewer_path = "~/tmp/plantuml"
 
 " Enter key for auto completion
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
+let g:ditto_dir = "~/.cache/ditto"

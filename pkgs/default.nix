@@ -12,4 +12,5 @@ pkgs: {
   grammar = pkgs.callPackage ./grammar { };
   openscad-post-processor = pkgs.callPackage ./openscad-post-processor { };
   openscad-preview = pkgs.callPackage ./openscad-preview.nvim { };
+  vim-ditto = pkgs.callPackage ./vim-ditto { };
 }
