@@ -33,6 +33,7 @@
       limelight-vim # highlight current editing block
       vim-markdown # rough markdown preview
       nvim-lspconfig # used for harper
+      vim-wordy
 
       # shell
       coc-sh
