@@ -1,5 +1,7 @@
 colorscheme humanoid
 
+let g:goyo_width = 82
+
 function! s:goyo_enter()
   lua require('lualine').hide()
   set linebreak
