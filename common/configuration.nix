@@ -207,7 +207,7 @@
 
   zramSwap = {
     enable = true;
-    algorithm = "lstd";  # lz4 or zstd (tossup)
+    algorithm = "lz4";  # lz4 or zstd. Currently on lz4 for higher speeds during compile
     memoryPercent = 100; # available uncompressed space, relative to RAM
   };
 
