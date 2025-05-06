@@ -39,6 +39,7 @@ in
     jetbrains.idea-ultimate
     unstable.via
     camset
+    qtcreator
 
     mlterm
     merriweather
