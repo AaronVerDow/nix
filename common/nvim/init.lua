@@ -106,12 +106,19 @@ vim.keymap.set('n', '<Esc>', function()
   return '<Esc>'
 end, { expr = true, noremap = true })
 
+-- soft wrap
+vim.opt.wrap = true
+vim.opt.linebreak = true  -- Wrap at word boundaries (prevents breaking words)
+vim.opt.breakindent = true  -- Maintain indentation on wrapped lines
+vim.opt.showbreak = '↪ '  -- Show a symbol for wrapped lines
+
 -- automatic hard line wrap
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'markdown', 'rmd' }, callback = function()
-    vim.bo.formatoptions = vim.bo.formatoptions .. 'tcqj'
-    vim.bo.textwidth = 80  -- Set your desired line length
-    vim.bo.wrapmargin = 0  -- Ensure textwidth is used instead
-    vim.bo.formatoptions = vim.bo.formatoptions .. 'a'  -- Auto-wrap text while typing
-  end
-})
+-- keeping this because I like this setup
+-- vim.api.nvim_create_autocmd('FileType', {
+  -- pattern = { 'markdown', 'rmd' }, callback = function()
+    -- vim.bo.formatoptions = vim.bo.formatoptions .. 'tcqj'
+    -- vim.bo.textwidth = 80  -- Set your desired line length
+    -- vim.bo.wrapmargin = 0  -- Ensure textwidth is used instead
+    -- vim.bo.formatoptions = vim.bo.formatoptions .. 'a'  -- Auto-wrap text while typing
+  -- end
+-- })

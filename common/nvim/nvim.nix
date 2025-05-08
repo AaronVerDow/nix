@@ -30,7 +30,6 @@
       # prose
       goyo-vim # minimal interface
       limelight-vim # highlight current editing block
-      vim-markdown # rough markdown preview
       vim-wordy
 
       # shell

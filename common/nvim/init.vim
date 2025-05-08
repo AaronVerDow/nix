@@ -6,6 +6,7 @@ function! s:goyo_enter()
   lua require('lualine').hide()
   set linebreak
   
+  " prevent double quit in Goyo
   let b:quitting = 0
   let b:quitting_bang = 0
   autocmd QuitPre <buffer> let b:quitting = 1
