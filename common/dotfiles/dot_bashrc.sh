@@ -31,6 +31,7 @@ alias fd='fd --type f'
 alias ncdu='instead_use gdu'
 alias dmesg='sudo dmesg --color'
 alias ccat='command cat'
+alias unhardwrap='awk '\''BEGIN {RS="\n\n"; ORS="\n\n"} {gsub(/\n/, " "); print}'\'
 which fdfind &> /dev/null && alias fd='fdfind --type f' 
 
 # running vi against a directory will cd into it
