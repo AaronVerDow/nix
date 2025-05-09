@@ -112,6 +112,12 @@ vim.opt.linebreak = true  -- Wrap at word boundaries (prevents breaking words)
 vim.opt.breakindent = true  -- Maintain indentation on wrapped lines
 vim.opt.showbreak = '↪ '  -- Show a symbol for wrapped lines
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'markdown', 'rmd' }, callback = function()
+    vim.opt.breakindent = false 
+  end
+})
+
 -- automatic hard line wrap
 -- keeping this because I like this setup
 -- vim.api.nvim_create_autocmd('FileType', {
