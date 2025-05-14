@@ -40,6 +40,7 @@ in
     unstable.via
     camset
     qtcreator
+    unstable.code-cursor
 
     mlterm
     merriweather
