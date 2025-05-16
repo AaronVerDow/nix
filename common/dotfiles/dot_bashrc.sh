@@ -206,7 +206,20 @@ hist(){
 }
 
 eternal() {
-    cat $HOME/.eternal | sed 's/^ *[0-9]* *//' | egrep -v '^(hist |eternal)' | egrep -a $@
+    [ -z "$1" ] && return 1
+
+    local content new_content
+
+    content=$(sed 's/^ *[0-9]* *//' "$HOME/.eternal" | grep -E -a -v '^(hist |eternal)' | grep --color=always -a "$1" )
+    shift
+   
+    while [ -n "$1" ]; do
+        new_content=$(echo "$content" | grep --color=always -a "$1")
+        content="$new_content"
+        shift
+    done
+    
+    echo "$content"
 }
 
 
