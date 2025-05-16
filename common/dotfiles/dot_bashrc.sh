@@ -208,13 +208,26 @@ hist(){
 eternal() {
     [ -z "$1" ] && return 1
 
-    local content new_content
+    local content new_content color_index colors
 
-    content=$(sed 's/^ *[0-9]* *//' "$HOME/.eternal" | grep -E -a -v '^(hist |eternal)' | grep --color=always -a "$1" )
+    color_index=1
+
+    colors=(
+        red
+        yellow
+        green
+        cyan
+        blue
+        magenta
+    )
+
+    content=$(sed 's/^ *[0-9]* *//' "$HOME/.eternal" | grep -E -a -v '^(hist |eternal)' | rg -a --color=always --colors="match:fg:${colors[0]}" "$1" )
     shift
    
     while [ -n "$1" ]; do
-        new_content=$(echo "$content" | grep --color=always -a "$1")
+        new_content=$(echo "$content" | rg -a --color=always --colors="match:fg:${colors[$color_index]}" "$1")
+        export color_index=$((color_index + 1))
+        [ "$color_index" -ge "${#colors[@]}" ] && color_index=0
         content="$new_content"
         shift
     done

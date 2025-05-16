@@ -35,6 +35,7 @@
     usbutils
     my_fancy-cat
     gh
+    ripgrep
 
     texliveFull
     nix-search-cli
