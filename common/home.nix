@@ -49,6 +49,9 @@
     (writeShellScriptBin "pkg" ''
       nom shell nixpkgs#$1
     '')
+
+    (writeShellScriptBin "eternal" (builtins.readFile ./dotfiles/bin/eternal.sh))
+
   ])];
 
   programs.home-manager.enable = true;
