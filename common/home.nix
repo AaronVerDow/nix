@@ -1,18 +1,7 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: 
-{
-  imports = [
-    ./nvim/nvim.nix
-    ./prose/prose.nix
-  ];
+{ inputs, outputs, lib, config, pkgs, ... }: {
+  imports = [ ./nvim/nvim.nix ./prose/prose.nix ];
 
   nixpkgs = {
     overlays = [
@@ -20,9 +9,7 @@
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
     ];
-    config = {
-      allowUnfree = true;
-    };
+    config = { allowUnfree = true; };
   };
 
   home = {
@@ -30,29 +17,33 @@
     homeDirectory = "/home/averdow";
   };
 
-  home.packages = lib.mkMerge [ (with pkgs; [
-    unzip
-    usbutils
-    my_fancy-cat
-    gh
-    ripgrep
+  home.packages = lib.mkMerge [
+    (with pkgs; [
+      unzip
+      usbutils
+      my_fancy-cat
+      gh
+      ripgrep
+      nixfmt
 
-    texliveFull
-    nix-search-cli
-    mdcat
+      texliveFull
+      nix-search-cli
+      mdcat
 
-    (writeShellScriptBin "my_ping" ''
-      gateway=$( ip route | grep default | awk '{ print $3}' )
-      sudo ${pkgs.liboping}/bin/noping $gateway modem public
-    '')
+      (writeShellScriptBin "my_ping" ''
+        gateway=$( ip route | grep default | awk '{ print $3}' )
+        sudo ${pkgs.liboping}/bin/noping $gateway modem public
+      '')
 
-    (writeShellScriptBin "pkg" ''
-      nom shell nixpkgs#$1
-    '')
+      (writeShellScriptBin "pkg" ''
+        nom shell nixpkgs#$1
+      '')
 
-    (writeShellScriptBin "eternal" (builtins.readFile ./dotfiles/bin/eternal.sh))
+      (writeShellScriptBin "eternal"
+        (builtins.readFile ./dotfiles/bin/eternal.sh))
 
-  ])];
+    ])
+  ];
 
   programs.home-manager.enable = true;
 
@@ -61,14 +52,11 @@
     enable = true;
     userName = "Aaron VerDow";
     userEmail = "aaron@verdow.com";
-    extraConfig = {
-      pager.branch = false;
-    };
+    extraConfig = { pager.branch = false; };
   };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
-
 
   home.file = {
     # hacky solution until I find a proper home for this, typically goes in /etc/ so root is impacted as well
@@ -76,7 +64,8 @@
     # should be in /etc/DIR_COLORS ?
     ".dir_colors".source = ./dotfiles/dot_dir_colors.sh;
     ".bashrc".source = ./dotfiles/dot_bashrc.sh;
-    ".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
+    ".config/neofetch/config.conf".source =
+      ./dotfiles/dot_config/neofetch/config;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
