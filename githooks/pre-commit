@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Get list of staged .nix files
+staged_nix_files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.nix$' || true)
+
+[ -z "$staged_nix_files" ] && exit 0
+
+exit_code=0
+
+for file in $staged_nix_files; do
+    [ -f "$file" ] || continue
+    echo "Formatting $file"
+    if nixfmt "$file"; then
+        git add "$file"
+    else
+        echo "Error: nixfmt failed on $file"
+        exit_code=1
+    fi
+done
+
+if [ $exit_code -ne 0 ]; then
+    echo "nixfmt failed on some files. Please check the errors above."
+    exit 1
+fi
+
+exit 0 
