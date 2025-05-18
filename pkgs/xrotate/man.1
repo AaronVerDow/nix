@@ -1,0 +1,65 @@
+.\"Modified from man(1) of FreeBSD, the NetBSD mdoc.template, and mdoc.samples.
+.\"See Also:
+.\"man mdoc.samples for a complete listing of options
+.\"man mdoc for the short list of editing options
+.\"/usr/share/misc/mdoc.template
+.Dd 3/17/25               \" DATE
+.Dt xrotate 1      \" Program name and manual section number
+.Sh NAME                 \" Section Header - required - don't modify
+.Nm xrotate
+.\" The following lines are read in generating the apropos(man -k) database. Use only key
+.\" words here as the database is built based on the words here and in the .ND line.
+.\".Nm Other_name_for_same_program(),
+.\".Nm Yet another name for the same program.
+.\" Use .Nm macro to designate other names for the documented program.
+.Nd Rotate X window.
+.Sh SYNOPSIS             \" Section Header - required - don't modify
+.Nm
+[\fB\-a\fR \fIORIENTATION\fR]
+.br
+.Nm
+[\fB\-r\fR \fIDIRECTION\fR]
+.Sh DESCRIPTION
+.Pp
+Rotate X to a specific orientation or by specifying a direction.  Trackpad can be mirrored in specific orientations for use on the back side of 2-in-1 tablets.
+.Pp                      \" Inserts a space
+A list of flags and their descriptions:
+.Bl -tag -width -indent  \" Differs from above in tag removed
+.It Fl a , -absolute
+Rotate screen to a specific orientation. Valid orientations are:
+.Bl -bullet -compact
+.It
+normal
+.It
+left
+.It
+right
+.It
+inverted
+.El
+.It Fl r , -relative
+Rotate screen in a direction, relative to current orientation. Valid directions are:
+.Bl -bullet -compact
+.It
+cw: clockwise
+.It
+ccw: counter-clockwise
+.It
+flip: rotate 180 degrees
+.El
+.It Fl l , -list
+List available input devices.
+.It Fl i , -input
+Input device to rotate with screen.  May be specified mulitple times.
+.It Fl m , -mirrored_on
+Comma seperated list of rotations where the preceeding input should be mirrored.
+.El                      \" Ends the list
+.Pk
+.Sh EXAMPLES
+.Pp
+Rotate screen and touchscreen counter clockwise, mirror trackpad if end state is left or right orientation:
+.Pp
+\fIxrotate --relative cw --input "TrackPad" --mirrored_on "left,right" --input "TouchScreen"
+.Sh SEE ALSO
+.Xr xinput 1 ,
+.Xr xrandr 1 ,
