@@ -1,18 +1,11 @@
-{ inputs, outputs, ... }:
-let
-  internalAlias = builtins.readFile ../../common/kanata/internal_alias.kbd;
-  externalAlias = builtins.readFile ../../common/kanata/external_alias.kbd;
-  kanataConfig = builtins.readFile ../../common/kanata/kanata.kbd;
-in
-{
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../common/configuration.nix
-      ../../common/x/configuration.nix
-    ];
+{ inputs, outputs, ... }: {
+  imports = [
+    ./hardware-configuration.nix
+    ../../common/configuration.nix
+    ../../common/x/configuration.nix
+  ];
   networking.hostName = "ipad";
-  services.xserver.videoDrivers = ["amdgpu"];
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   boot.kernelParams = [ "amd_pstate=guided" ];
   powerManagement.enable = true;
@@ -24,36 +17,13 @@ in
   # Secondary flag
   # 291a:a392
 
-  services.kanata = {
+  services.kanata-config = {
     enable = true;
-    keyboards = {
-      internalKeyboard = {
-        extraDefCfg = ''
-          log-layer-changes no
-          process-unmapped-keys yes
-          linux-dev-names-include (
-            "AT Translated Set 2 keyboard"
-          )
-        '';
-        config = kanataConfig + internalAlias;
-      };
-      externalKeyboard = {
-        extraDefCfg = ''
-          log-layer-changes no
-          process-unmapped-keys yes
-          linux-dev-names-exclude (
-            "AT Translated Set 2 keyboard"
-          )
-        '';
-        config = kanataConfig + externalAlias;
-      };
-    };
+    internalKeyboardDeviceFilter = "AT Translated Set 2 keyboard";
   };
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
-    users = {
-      averdow = import ./home.nix;
-    };
+    users = { averdow = import ./home.nix; };
   };
 }
