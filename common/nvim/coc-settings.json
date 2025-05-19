@@ -32,5 +32,13 @@
   "java.jdt.ls.java.home": "${pkgs.jdk}/lib/openjdk",
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.import.gradle.enabled": true,
-  "java.import.maven.enabled": true
+  "java.import.maven.enabled": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackArgs": [
+    "--line-length",
+    "120"
+  ],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python"
+  ]
 }
