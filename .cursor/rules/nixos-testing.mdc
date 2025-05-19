@@ -1,0 +1,31 @@
+---
+description: Test nixos build
+globs: 
+alwaysApply: false
+---
+# NixOS Configuration Testing
+priority: 2
+
+This rule helps ensure that NixOS configuration changes are valid before applying them to the system.
+
+## Key Files
+The main NixOS configuration is in [common/configuration.nix](mdc:common/configuration.nix).
+
+## Testing Process
+When changes are made to any `.nix` files in the repository:
+1. The rule will trigger automatically after formatting is complete
+2. `nh os build` will be run to build the configuration
+3. Build errors will be displayed if any issues are found
+4. The build will not affect the running system
+
+## Command Details
+- Command: `nh os build`
+- Trigger: On any `.nix` file changes or creation
+- Excludes: `result` directory from builds
+- Uses nix-output-monitor for better formatting
+- Runs after formatting due to priority: 2
+
+## Important Notes
+- This is a build-only operation that won't modify your system
+- The build may take several minutes depending on changes
+- If the build fails, review the error messages before proceeding

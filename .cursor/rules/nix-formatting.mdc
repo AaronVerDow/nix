@@ -1,0 +1,24 @@
+---
+description: Format nix files
+globs: 
+alwaysApply: false
+---
+# Nix Formatting
+priority: 1
+
+This rule automatically formats Nix files using `nixfmt` to maintain consistent code style.
+
+## Key Files
+All `.nix` files in the repository will be automatically formatted.
+
+## Process
+When changes are made to any `.nix` files:
+1. The rule will trigger automatically
+2. `nixfmt` will format the changed file
+3. The formatting is done in-place
+
+## Command Details
+- Command: `nixfmt`
+- Trigger: On any `.nix` file changes or creation
+- Excludes: `result` directory
+- Runs before the build check due to priority: 1
