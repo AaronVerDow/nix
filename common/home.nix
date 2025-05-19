@@ -1,7 +1,18 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{ inputs, outputs, lib, config, pkgs, ... }: {
-  imports = [ ./nvim/nvim.nix ./prose/prose.nix ];
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
+  imports = [
+    ./nvim/nvim.nix
+    ./prose/prose.nix
+  ];
 
   nixpkgs = {
     overlays = [
@@ -9,7 +20,9 @@
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
     ];
-    config = { allowUnfree = true; };
+    config = {
+      allowUnfree = true;
+    };
   };
 
   home = {
@@ -24,7 +37,7 @@
       my_fancy-cat
       gh
       ripgrep
-      nixfmt
+      nixfmt-rfc-style
 
       texliveFull
       nix-search-cli
@@ -39,8 +52,7 @@
         nom shell nixpkgs#$1
       '')
 
-      (writeShellScriptBin "eternal"
-        (builtins.readFile ./dotfiles/bin/eternal.sh))
+      (writeShellScriptBin "eternal" (builtins.readFile ./dotfiles/bin/eternal.sh))
 
     ])
   ];
@@ -52,7 +64,9 @@
     enable = true;
     userName = "Aaron VerDow";
     userEmail = "aaron@verdow.com";
-    extraConfig = { pager.branch = false; };
+    extraConfig = {
+      pager.branch = false;
+    };
   };
 
   # Nicely reload system units when changing configs
@@ -64,8 +78,7 @@
     # should be in /etc/DIR_COLORS ?
     ".dir_colors".source = ./dotfiles/dot_dir_colors.sh;
     ".bashrc".source = ./dotfiles/dot_bashrc.sh;
-    ".config/neofetch/config.conf".source =
-      ./dotfiles/dot_config/neofetch/config;
+    ".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
