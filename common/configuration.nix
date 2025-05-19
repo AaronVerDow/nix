@@ -1,8 +1,18 @@
 # This is your system's configuration file.
 # Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   # You can import other NixOS modules here
-  imports = [ inputs.home-manager.nixosModules.home-manager ];
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
 
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -34,49 +44,64 @@
     };
   };
 
-  nix = let flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-  in {
-    settings = {
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
-      # Opinionated: disable global registry
-      flake-registry = "";
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
-      auto-optimise-store = true;
-      trusted-users = [ "root" "averdow" ];
+  nix =
+    let
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    in
+    {
+      settings = {
+        # Enable flakes and new 'nix' command
+        experimental-features = "nix-command flakes";
+        # Opinionated: disable global registry
+        flake-registry = "";
+        # Workaround for https://github.com/NixOS/nix/issues/9574
+        nix-path = config.nix.nixPath;
+        auto-optimise-store = true;
+        trusted-users = [
+          "root"
+          "averdow"
+        ];
+      };
+      channel.enable = false;
+
+      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
+      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+      gc.automatic = true;
+      gc.dates = "daily";
+      gc.options = "--delete-older-than 5d";
     };
-    channel.enable = false;
 
-    registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-    gc.automatic = true;
-    gc.dates = "daily";
-    gc.options = "--delete-older-than 5d";
-  };
-
-  security.sudo.extraRules = [{
-    users = [ "averdow" ];
-    commands = [
-      {
-        # command = "${pkgs.util-linux}/bin/dmesg";
-        command = "/run/current-system/sw/bin/dmesg";
-        options = [ "NOPASSWD" ];
-      }
-      {
-        command = "${pkgs.liboping}/bin/noping";
-        options = [ "NOPASSWD" ];
-      }
-    ];
-  }];
+  security.sudo.extraRules = [
+    {
+      users = [ "averdow" ];
+      commands = [
+        {
+          # command = "${pkgs.util-linux}/bin/dmesg";
+          command = "/run/current-system/sw/bin/dmesg";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "${pkgs.liboping}/bin/noping";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 
   users.users = {
     averdow = {
       initialPassword = "correcthorsebatterystaple";
       isNormalUser = true;
       openssh.authorizedKeys.keys = [ ];
-      extraGroups =
-        [ "networkmanager" "wheel" "adm" "input" "audio" "docker" "dialout" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "adm"
+        "input"
+        "audio"
+        "docker"
+        "dialout"
+      ];
       packages = with pkgs; [
         neofetch
         neovim
@@ -103,6 +128,7 @@
     restic
     screen
     kitty
+    ollama
   ];
 
   networking.networkmanager = {
@@ -174,19 +200,28 @@
   hardware.uinput.enable = true;
   users.groups.uinput = { };
   systemd.services.kanata-internalKeyboard.serviceConfig = {
-    SupplementaryGroups = [ "input" "uinput" ];
+    SupplementaryGroups = [
+      "input"
+      "uinput"
+    ];
   };
 
   zramSwap = {
     enable = true;
-    algorithm =
-      "lz4"; # lz4 or zstd. Currently on lz4 for higher speeds during compile
+    algorithm = "lz4"; # lz4 or zstd. Currently on lz4 for higher speeds during compile
     memoryPercent = 100; # available uncompressed space, relative to RAM
   };
 
   # Reduce swappiness to avoid excessive swapping
   boot.kernel.sysctl = {
     "vm.swappiness" = 20; # Default 60, lower for less swapping
+  };
+
+  services.ollama = {
+    enable = true;
+    host = "127.0.0.1";
+    port = 11434;
+    models = "gemma:2b";
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
