@@ -1,112 +1,117 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: 
+{ inputs, outputs, lib, config, pkgs, ... }:
 
 let
   rofiConfig = builtins.fetchGit {
     url = "https://github.com/adi1090x/rofi.git";
-    rev = "3a28753b0a8fb666f4bd0394ac4b0e785577afa2"; 
+    rev = "3a28753b0a8fb666f4bd0394ac4b0e785577afa2";
   };
-in
-{
-  imports = [
-    ./dconf/onboard.nix
-    ./firefox/firefox.nix
-  ];
+in {
+  imports = [ ./dconf/onboard.nix ./firefox/firefox.nix ];
 
   # allow fonts to be used from package list
   fonts.fontconfig.enable = true;
 
-  home.packages = lib.mkMerge [ (with pkgs; [
-    # gui programs
-    discord
-    openscad
-    openscad-post-processor
-    inkscape
-    gimp
-    kitty
-    blender
-    my_numworks
-    drawing
-    onlyoffice-bin
-    jetbrains.idea-ultimate
-    unstable.via
-    camset
-    qtcreator
-    unstable.code-cursor
+  home.packages = lib.mkMerge [
+    (with pkgs; [
+      # Development Tools
+      jetbrains.idea-ultimate
+      qtcreator
+      unstable.code-cursor
 
-    mlterm
-    merriweather
-    libre-baskerville
-    courier-prime
-    libertine
+      # Creative & Design Applications
+      blender # 3D modeling and animation
+      drawing # Simple drawing application
+      gimp # Image manipulation
+      inkscape # Vector graphics editor
+      openscad # Programmatic CAD modeling
+      openscad-post-processor
 
-    # X customization
-    rofi # pop up launcher
-    nitrogen # set desktop background
-    arc-icon-theme # battery widget
-    acpi # battery widget
-    ubuntu_font_family
+      # Office & Productivity
+      discord # Communication platform
+      my_numworks # Calculator software
+      onlyoffice-bin # Office suite
 
-    # utilities
-    picom-pijulius
-    scrot # screenshot utility
-    xfce.xfce4-screenshooter
-    pcmanfm
-    pwvucontrol
-    touchegg # touchscreen gestures
-    onboard # onscreen keyboard
-    xclip
-    barrier
-    volumeicon
-    flashfocus
-    networkmanagerapplet
-    copyq
-    xorg.xkill
-    xrotate # custom rotation package
-    wavemon
-    arandr
+      # Terminal & System Utilities
+      arandr # Screen layout configuration
+      barrier # Software KVM
+      camset # Camera settings utility
+      copyq # Clipboard manager
+      kitty # Terminal emulator
+      mlterm # Alternative terminal
+      wavemon # Wireless monitoring
+      xclip # Clipboard manager
+      xorg.xkill # X11 window killer
+      xrotate # Custom rotation package
 
-    (writeShellScriptBin "my_run" ''
-      ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi
-    '')
+      # System Monitoring & Control
+      acpi # Battery information
+      networkmanagerapplet
+      pwvucontrol # Audio control
+      volumeicon # Volume control
 
-    (writeShellScriptBin "set_wallpaper" ''
-      ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=0
-      ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=1 || true
-      ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=2 || true
-    '')
+      # Window Management & Desktop Environment
+      flashfocus # Focus animations
+      nitrogen # Wallpaper manager
+      picom-pijulius # Compositor
+      rofi # Application launcher
 
-    (writeShellScriptBin "wallpaper" ''
-      ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper
-      set_wallpaper
-    '')
+      # File Management
+      pcmanfm # File manager
 
-    (writeShellScriptBin "my_touchrun" ''
-      # need to add this to dotfiles still
-      ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/touchscreen/touch.rasi
-    '')
+      # Input & Accessibility
+      onboard # On-screen keyboard
+      touchegg # Touchscreen gestures
 
-    (writeShellScriptBin "calculator_toggle" ''
-      pgrep epsilon && pkill epsilon || ${pkgs.my_numworks}/bin/epsilon
-    '')
+      # Screenshot & Screen Capture
+      scrot # Screenshot utility
+      xfce.xfce4-screenshooter
 
-    (writeShellScriptBin "onboard_toggle" ''
-      dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
-    '')
-  ])];
+      # Fonts & Themes
+      arc-icon-theme # Icon theme
+      courier-prime
+      libre-baskerville
+      libertine
+      merriweather
+      ubuntu_font_family
+
+      # Hardware-specific
+      unstable.via # Keyboard configuration
+
+      # Custom Scripts
+      (writeShellScriptBin "calculator_toggle" ''
+        pgrep epsilon && pkill epsilon || ${pkgs.my_numworks}/bin/epsilon
+      '')
+
+      (writeShellScriptBin "my_run" ''
+        ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi
+      '')
+
+      (writeShellScriptBin "my_touchrun" ''
+        # need to add this to dotfiles still
+        ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/touchscreen/touch.rasi
+      '')
+
+      (writeShellScriptBin "onboard_toggle" ''
+        dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
+      '')
+
+      (writeShellScriptBin "set_wallpaper" ''
+        ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=0
+        ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=1 || true
+        ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=2 || true
+      '')
+
+      (writeShellScriptBin "wallpaper" ''
+        ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper
+        set_wallpaper
+      '')
+    ])
+  ];
 
   dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
+    "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
   };
 
   # Install this as needed
@@ -150,16 +155,20 @@ in
   home.file = {
     ".config/picom/picom.conf".source = ../dotfiles/dot_config/picom/picom.conf;
     ".config/awesome/rc.lua".source = ../dotfiles/dot_config/awesome/rc.lua;
-    ".config/touchegg/touchegg.conf".source = ../dotfiles/dot_config/touchegg/touchegg.conf;
+    ".config/touchegg/touchegg.conf".source =
+      ../dotfiles/dot_config/touchegg/touchegg.conf;
     ".config/rofi/config.rasi".source = ../dotfiles/dot_config/rofi/config.rasi;
     ".config/rofi/touchscreen".source = ../dotfiles/dot_config/rofi/touchscreen;
     ".config/kitty/kitty.conf".source = ../dotfiles/dot_config/kitty/kitty.conf;
-    ".config/volumeicon/volumeicon".source = ../dotfiles/dot_config/volumeicon/volumeicon;
-    ".local/share/onboard/layouts/full.onboard".source = ../dotfiles/dot_local/share/onboard/layouts/full.onboard;
-    ".local/share/onboard/layouts/full.svg".source = ../dotfiles/dot_local/share/onboard/layouts/full.svg;
+    ".config/volumeicon/volumeicon".source =
+      ../dotfiles/dot_config/volumeicon/volumeicon;
+    ".local/share/onboard/layouts/full.onboard".source =
+      ../dotfiles/dot_local/share/onboard/layouts/full.onboard;
+    ".local/share/onboard/layouts/full.svg".source =
+      ../dotfiles/dot_local/share/onboard/layouts/full.svg;
   };
 
-  home.activation.copyRofiConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.copyRofiConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p ~/.config/rofi
     chmod +w -R ~/.config/rofi # this allows the next copy to function
     ${pkgs.rsync}/bin/rsync -av --exclude 'config.rasi' ${rofiConfig}/files/ ~/.config/rofi/
