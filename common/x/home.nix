@@ -1,14 +1,25 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{ inputs, outputs, lib, config, pkgs, ... }:
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   rofiConfig = builtins.fetchGit {
     url = "https://github.com/adi1090x/rofi.git";
     rev = "3a28753b0a8fb666f4bd0394ac4b0e785577afa2";
   };
-in {
-  imports = [ ./dconf/onboard.nix ./firefox/firefox.nix ];
+in
+{
+  imports = [
+    ./dconf/onboard.nix
+    ./firefox/firefox.nix
+  ];
 
   # allow fonts to be used from package list
   fonts.fontconfig.enable = true;
@@ -84,6 +95,11 @@ in {
         pgrep epsilon && pkill epsilon || ${pkgs.my_numworks}/bin/epsilon
       '')
 
+      (writeShellScriptBin "cursor-detached" ''
+        ${pkgs.unstable.code-cursor}/bin/cursor "$@" &> /dev/null &
+        disown
+      '')
+
       (writeShellScriptBin "my_run" ''
         ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi
       '')
@@ -111,7 +127,9 @@ in {
   ];
 
   dconf.settings = {
-    "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
   };
 
   # Install this as needed
@@ -122,7 +140,10 @@ in {
     icon = "web-browser";
     terminal = false;
     type = "Application";
-    categories = [ "Network" "WebBrowser" ];
+    categories = [
+      "Network"
+      "WebBrowser"
+    ];
   };
 
   home.pointerCursor = {
@@ -155,13 +176,11 @@ in {
   home.file = {
     ".config/picom/picom.conf".source = ../dotfiles/dot_config/picom/picom.conf;
     ".config/awesome/rc.lua".source = ../dotfiles/dot_config/awesome/rc.lua;
-    ".config/touchegg/touchegg.conf".source =
-      ../dotfiles/dot_config/touchegg/touchegg.conf;
+    ".config/touchegg/touchegg.conf".source = ../dotfiles/dot_config/touchegg/touchegg.conf;
     ".config/rofi/config.rasi".source = ../dotfiles/dot_config/rofi/config.rasi;
     ".config/rofi/touchscreen".source = ../dotfiles/dot_config/rofi/touchscreen;
     ".config/kitty/kitty.conf".source = ../dotfiles/dot_config/kitty/kitty.conf;
-    ".config/volumeicon/volumeicon".source =
-      ../dotfiles/dot_config/volumeicon/volumeicon;
+    ".config/volumeicon/volumeicon".source = ../dotfiles/dot_config/volumeicon/volumeicon;
     ".local/share/onboard/layouts/full.onboard".source =
       ../dotfiles/dot_local/share/onboard/layouts/full.onboard;
     ".local/share/onboard/layouts/full.svg".source =
