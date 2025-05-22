@@ -1,0 +1,16 @@
+(defvirtualkeys
+  vw w
+)
+
+(defalias
+  run  (tap-dance-eager 200 (
+          w
+	  w
+	  w
+	  (on-press press-vkey vw)
+       ))
+  stp  (multi
+         s
+	 (on-press release-vkey vw)
+	)
+)
