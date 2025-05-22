@@ -40,5 +40,11 @@
   ],
   "coc.preferences.formatOnSaveFiletypes": [
     "python"
-  ]
+  ],
+  "pyright.typeCheckingMode": "basic",
+  "pyright.useLibraryCodeForTypes": true,
+  "pyright.diagnosticMode": "workspace",
+  "pyright.inlayHints.functionReturnTypes": true,
+  "pyright.inlayHints.variableTypes": true,
+  "pyright.inlayHints.parameterTypes": true
 }
