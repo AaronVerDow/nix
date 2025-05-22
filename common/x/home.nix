@@ -75,6 +75,7 @@ in
       onboard # On-screen keyboard
       touchegg # Touchscreen gestures
       unstable.restream
+      restream-desktop # Desktop entry for restream preview
 
       # Screenshot & Screen Capture
       scrot # Screenshot utility
