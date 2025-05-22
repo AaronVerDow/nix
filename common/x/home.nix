@@ -74,6 +74,7 @@ in
       # Input & Accessibility
       onboard # On-screen keyboard
       touchegg # Touchscreen gestures
+      unstable.restream
 
       # Screenshot & Screen Capture
       scrot # Screenshot utility
