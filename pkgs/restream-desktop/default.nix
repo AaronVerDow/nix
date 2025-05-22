@@ -4,11 +4,11 @@
 }:
 
 makeDesktopItem {
-  name = "restream-preview";
+  name = "reStream";
   exec = "restream -p";
-  icon = "video-display"; # Using a standard icon
-  comment = "Preview restream video output";
-  desktopName = "Restream Preview";
+  icon = ./remarkable.png; # Using the remarkable icon
+  comment = "Stream reMarkable tablet";
+  desktopName = "reStream";
   categories = [
     "AudioVideo"
     "Video"
