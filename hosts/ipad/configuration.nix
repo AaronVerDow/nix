@@ -1,4 +1,4 @@
-{ inputs, outputs, ... }: {
+{ inputs, outputs, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../../common/configuration.nix
@@ -21,6 +21,24 @@
     enable = true;
     internalKeyboardDeviceFilter = "AT Translated Set 2 keyboard";
   };
+
+  virtualisation = {
+    docker.enable = true;
+    virtualbox = {
+      host = {
+        enable = true;
+        enableExtensionPack = true;
+      };
+    };
+  };
+
+  # Add user to vboxusers group for VirtualBox access
+  users.users.averdow.extraGroups = [ "vboxusers" ];
+
+  # Enable Vagrant
+  environment.systemPackages = with pkgs; [
+    vagrant
+  ];
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
