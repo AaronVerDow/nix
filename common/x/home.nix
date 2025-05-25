@@ -46,7 +46,6 @@ in
 
       # Terminal & System Utilities
       arandr # Screen layout configuration
-      barrier # Software KVM
       camset # Camera settings utility
       copyq # Clipboard manager
       kitty # Terminal emulator
