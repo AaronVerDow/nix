@@ -88,6 +88,9 @@
     }
   ];
 
+  security.audit.enable = true;
+  security.auditd.enable = true;
+
   users.users = {
     averdow = {
       initialPassword = "correcthorsebatterystaple";
