@@ -95,6 +95,21 @@
   security.apparmor = {
     enable = true;
     killUnconfinedConfinables = true;
+
+    policies = {
+      firefox-glxtest = {
+        state = "enforce";
+        profile = ''
+          include "${pkgs.apparmor-d}/etc/apparmor.d/groups/browsers/firefox-glxtest"
+        '';
+      };
+      firefox = {
+        state = "enforce";
+        profile = ''
+          include "${pkgs.apparmor-d}/etc/apparmor.d/groups/browsers/firefox"
+        '';
+      };
+    };
   };
 
   users.users = {
@@ -171,7 +186,7 @@
 
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox
-    FLAKE = "/home/averdow/git/nix"; # used by nix helper
+    NH_FLAKE = "/home/averdow/git/nix"; # used by nix helper
     MANPAGER = "nvim +Man!";
   };
 
