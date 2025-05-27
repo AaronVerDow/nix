@@ -34,7 +34,7 @@
     (with pkgs; [
       unzip
       usbutils
-      my_fancy-cat
+      # fancy-cat
       gh
       ripgrep
       nixfmt-rfc-style
