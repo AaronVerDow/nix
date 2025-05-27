@@ -95,14 +95,17 @@
   security.apparmor = {
     enable = true;
     killUnconfinedConfinables = true;
+    packages = [ pkgs.apparmor-d ];
+
+    includes = {
+      "abstractions/base" = ''
+        /nix/store/*/bin/** mr,
+        /nix/store/*/lib/** mr,
+        /nix/store/** r,
+      '';
+    };
 
     policies = {
-      firefox-glxtest = {
-        state = "enforce";
-        profile = ''
-          include "${pkgs.apparmor-d}/etc/apparmor.d/groups/browsers/firefox-glxtest"
-        '';
-      };
       firefox = {
         state = "enforce";
         profile = ''
