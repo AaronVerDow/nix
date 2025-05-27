@@ -1,16 +1,12 @@
 # Custom packages, that can be defined similarly to ones from nixpkgs
 # You can build them using 'nix build .#example'
 pkgs: {
-  # example = pkgs.callPackage ./example { };
-  my_numworks = pkgs.callPackage ./my_numworks { };
   xrotate = pkgs.callPackage ./xrotate { };
-  camset = pkgs.callPackage ./camset { };
-  pandoc-mustache = pkgs.callPackage ./pandoc-mustache { };
-  flamelens = pkgs.callPackage ./flamelens { };
   awesome-wm-widgets = pkgs.callPackage ./awesome-wm-widgets { };
   grammar = pkgs.callPackage ./grammar { };
   openscad-post-processor = pkgs.callPackage ./openscad-post-processor { };
   openscad-preview = pkgs.callPackage ./openscad-preview.nvim { };
   vim-ditto = pkgs.callPackage ./vim-ditto { };
   restream-desktop = pkgs.callPackage ./restream-desktop { };
+  my_numworks = pkgs.callPackage ./my_numworks { };
 }

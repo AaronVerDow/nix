@@ -41,7 +41,7 @@ in
 
       # Office & Productivity
       discord # Communication platform
-      my_numworks # Calculator software
+      my_numworks # Calculator
       onlyoffice-bin # Office suite
 
       # Terminal & System Utilities
