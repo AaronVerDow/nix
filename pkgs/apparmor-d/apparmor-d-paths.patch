@@ -1,0 +1,16 @@
+diff --git a/apparmor.d/tunables/multiarch.d/system b/apparmor.d/tunables/multiarch.d/system
+index be37123f..57df7990 100644
+--- a/apparmor.d/tunables/multiarch.d/system
++++ b/apparmor.d/tunables/multiarch.d/system
+@@ -106,8 +106,9 @@
+ @{MOUNTS}=@{MOUNTDIRS}/*/ @{run}/user/@{uid}/gvfs/
+ 
+ # Common places for binaries and libraries across distributions
+-@{bin}=/{,usr/}{,s}bin
+-@{lib}=/{,usr/}lib{,exec,32,64}
++@{base_paths} = /nix/store/* /etc/profiles/per-user/* /run/current-system/sw
++@{bin}=@{base_paths}/bin
++@{lib}=@{base_paths}/lib
+ 
+ # Common places for temporary files
+ @{tmp}=/tmp/ /tmp/user/@{uid}/

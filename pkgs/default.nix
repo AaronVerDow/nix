@@ -9,4 +9,5 @@ pkgs: {
   vim-ditto = pkgs.callPackage ./vim-ditto { };
   restream-desktop = pkgs.callPackage ./restream-desktop { };
   my_numworks = pkgs.callPackage ./my_numworks { };
+  apparmor-d = pkgs.callPackage ./apparmor-d.nix { };
 }
