@@ -91,6 +91,12 @@
   security.audit.enable = true;
   security.auditd.enable = true;
 
+  # Enable AppArmor
+  security.apparmor = {
+    enable = true;
+    killUnconfinedConfinables = true;
+  };
+
   users.users = {
     averdow = {
       initialPassword = "correcthorsebatterystaple";
@@ -225,6 +231,15 @@
     host = "127.0.0.1";
     port = 11434;
     models = "gemma:2b";
+  };
+
+  # Specializations for different boot configurations
+  specialisation = {
+    no-apparmor = {
+      configuration = {
+        security.apparmor.enable = lib.mkForce false;
+      };
+    };
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
