@@ -92,7 +92,11 @@
   security.audit.enable = true;
   security.auditd.enable = true;
 
-  # Enable AppArmor
+  # This is a valid configuration but I don't think the
+  # profiles work with nix paths.
+
+  # This probably does nothing currently
+
   security.apparmor = {
     enable = true;
     killUnconfinedConfinables = true;
