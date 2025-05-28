@@ -98,10 +98,16 @@
     killUnconfinedConfinables = true;
     # packages = pkgs.apparmor-profiles;
     policies = {
+      firefox_sh = {
+        state = "enforce";
+        profile = ''
+          include "${pkgs.apparmor-profiles}/share/apparmor/extra-profiles/firefox.sh"
+        '';
+      };
       firefox = {
         state = "enforce";
         profile = ''
-          include "${pkgs.apparmor-profiles}/etc/apparmor.d/firefox"
+          include "${pkgs.apparmor-profiles}/share/apparmor/extra-profiles/firefox"
         '';
       };
     };
@@ -134,6 +140,8 @@
         killall
         unzip
         onefetch
+        which
+        jq
       ];
     };
   };
