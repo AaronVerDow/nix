@@ -97,29 +97,15 @@
     enable = true;
     killUnconfinedConfinables = true;
     packages = [ pkgs.apparmor-d ];
+  };
 
-    includes = {
-      "abstractions/base" = ''
-        /nix/store/*/bin/** mr,
-        /nix/store/*/lib/** mr,
-        /nix/store/** r,
-      '';
-    };
-
-    policies = {
-      firefox = {
-        state = "enforce";
-        profile = ''
-          abi <abi/4.0>,
-
-          profile firefox /{usr/lib/firefox{,-esr,-beta,-devedition,-nightly},opt/firefox}/firefox{,-esr,-bin} flags=(unconfined) {
-            userns,
-            
-            # Site-specific additions and overrides. See local/README for details.
-            include if exists <local/firefox>
-          }
-        '';
-      };
+  # Configure apparmor.d profiles
+  security.apparmor_d = {
+    enable = true;
+    profiles = {
+      "groups/browsers/firefox" = "enforce";
+      # thunderbird = "enforce";
+      # Add more profiles as needed
     };
   };
 

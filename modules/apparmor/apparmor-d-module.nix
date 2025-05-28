@@ -35,15 +35,20 @@ in
 
   config = mkIf (cfg.enable) {
     security.apparmor.packages = [ apparmor-d ];
-    security.apparmor.policies = mapAttrs (name: state: {
-      inherit state;
-      path =
-        let
-          file = "${apparmor-d}/etc/apparmor.d/${name}";
-        in
-        assert assertMsg (pathIsRegularFile file) "profile ${name} not found in apparmor.d path (${file})";
-        file;
-    }) cfg.profiles;
+    security.apparmor.policies = lib.mapAttrs' (
+      originalName: state:
+      let
+        policyName = builtins.replaceStrings [ "/" ] [ "-" ] originalName;
+        file = "${apparmor-d}/etc/apparmor.d/${originalName}";
+      in
+      lib.nameValuePair policyName {
+        inherit state;
+        path =
+          assert assertMsg (pathIsRegularFile file)
+            "profile ${originalName} not found in apparmor.d path (${file})";
+          file;
+      }
+    ) cfg.profiles;
 
     security.apparmor.includes."tunables/global.d/store" = ''
       @{package1}={@{w},.,-}
