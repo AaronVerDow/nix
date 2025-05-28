@@ -12,6 +12,7 @@
   # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    ../modules/apparmor/apparmor-d-module.nix
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -109,7 +110,14 @@
       firefox = {
         state = "enforce";
         profile = ''
-          include "${pkgs.apparmor-d}/etc/apparmor.d/groups/browsers/firefox"
+          abi <abi/4.0>,
+
+          profile firefox /{usr/lib/firefox{,-esr,-beta,-devedition,-nightly},opt/firefox}/firefox{,-esr,-bin} flags=(unconfined) {
+            userns,
+            
+            # Site-specific additions and overrides. See local/README for details.
+            include if exists <local/firefox>
+          }
         '';
       };
     };
