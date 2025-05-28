@@ -96,16 +96,14 @@
   security.apparmor = {
     enable = true;
     killUnconfinedConfinables = true;
-    packages = [ pkgs.apparmor-d ];
-  };
-
-  # Configure apparmor.d profiles
-  security.apparmor_d = {
-    enable = true;
-    profiles = {
-      "groups/browsers/firefox" = "enforce";
-      # thunderbird = "enforce";
-      # Add more profiles as needed
+    # packages = pkgs.apparmor-profiles;
+    policies = {
+      firefox = {
+        state = "enforce";
+        profile = ''
+          include "${pkgs.apparmor-profiles}/etc/apparmor.d/firefox"
+        '';
+      };
     };
   };
 
