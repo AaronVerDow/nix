@@ -191,6 +191,26 @@ complete -F _notes_autocomplete n
 complete -F _notes_autocomplete ni
 complete -F _notes_autocomplete nls
 
+# journalctl tab completion for services
+_journalctl_completion() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local prev="${COMP_WORDS[COMP_CWORD-1]}"
+    
+    # Complete service names after -u flag
+    if [[ "$prev" == "-u" || "$prev" == "--unit" ]]; then
+        local services
+        services=$(systemctl list-units --type=service --all --no-legend --no-pager --plain 2>/dev/null | awk '{print $1}')
+        mapfile -t COMPREPLY < <( compgen -W "$services" -- "$cur" )
+        return 0
+    fi
+    
+    # Complete common journalctl flags
+    local flags="-u --unit -f --follow -n --lines -p --priority -S --since -U --until -k --dmesg -b --boot -r --reverse --no-pager -o --output"
+    mapfile -t COMPREPLY < <( compgen -W "$flags" -- "$cur" )
+}
+
+complete -F _journalctl_completion journalctl
+
 # Temporary downloads directory
 mkdir -p /tmp/averdow/.downloads &> /dev/null
 [ -L "$HOME/tmp" ] || ln -s /tmp/averdow $HOME/tmp
