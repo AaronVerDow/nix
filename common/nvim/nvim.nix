@@ -61,6 +61,10 @@
         vim-ccls
         nvim-treesitter-parsers.cpp
 
+        # Zig
+        zig-vim
+        nvim-treesitter-parsers.zig
+        # (coc is a custom package below)
       ]
       ++ [
         pkgs.openscad-preview
