@@ -21,8 +21,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "AaronVerDow";
     repo = "fancy-cat";
-    rev = "bfa4f1da2790e84639be378c2b10715dd1407d96";
-    hash = "sha256-NeTp4uhjBipBOEu36eHG4uq6ri5kZtDpz+DEdaDiHkY=";
+    rev = "ddf908fbe340047ec6a202319bd9a95e0cbb1f94";
+    hash = "sha256-PShUyXKUFuYg/X/Q80VwEyb05TBkHprY85lmpvOz/o0=";
   };
 
   patches = [ ./0001-changes.patch ];
