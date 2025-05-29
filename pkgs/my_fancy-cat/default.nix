@@ -1,21 +1,19 @@
-{ 
-  stdenv,
-  lib,
-  fetchFromGitHub,
+{
   callPackage,
-  pkg-config,
-  mupdf,
-  harfbuzz,
+  fetchFromGitHub,
   freetype,
-  jbig2dec,
-  libjpeg,
-  openjpeg,
   gumbo,
+  harfbuzz,
+  jbig2dec,
+  lib,
+  libjpeg,
+  libz,
   mujs,
-  zlib,
-  zig
+  mupdf,
+  openjpeg,
+  stdenv,
+  zig,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "fancy-cat";
   version = "0-unstable-2024-05-29";
@@ -27,9 +25,13 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-NeTp4uhjBipBOEu36eHG4uq6ri5kZtDpz+DEdaDiHkY=";
   };
 
-  nativeBuildInputs = [ pkg-config zig ];
+  patches = [ ./0001-changes.patch ];
 
-  deps = callPackage ./build.zig.zon.nix { };
+  nativeBuildInputs = [
+    zig.hook
+  ];
+
+  zigBuildFlags = [ "--release=fast" ];
 
   buildInputs = [
     mupdf
@@ -40,38 +42,19 @@ stdenv.mkDerivation (finalAttrs: {
     openjpeg
     gumbo
     mujs
-    zlib
+    libz
   ];
 
-  buildPhase = ''
-    # Copy the source to a writable directory
-    cp -r $src $TMPDIR/source
-    cd $TMPDIR/source
-
-    # Set Zig's cache directory to a writable location
-    export ZIG_GLOBAL_CACHE_DIR=$TMPDIR/zig-cache
-
-    # Run sed on the copied files
-    sed -i 's/mupdf-third/mupdf/g' build.zig
-
-    # Build the project
-    zig build --release=fast --system ${finalAttrs.deps} -Dcpu="skylake"
+  postPatch = ''
+    ln -s ${callPackage ./build.zig.zon.nix { }} $ZIG_GLOBAL_CACHE_DIR/p
   '';
 
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p $out/bin
-    cp $TMPDIR/source/zig-out/bin/fancy-cat $out/bin/
-
-    runHook postInstall
-  '';
-
-  meta = with lib; {
+  meta = {
     description = "PDF viewer for terminals using the Kitty image protocol";
     homepage = "https://github.com/freref/fancy-cat";
-    license = licenses.mit;
-    maintainers = with maintainers; [ averdow ];
-    platforms = [ "x86_64-linux" ];
+    license = lib.licenses.agpl3Plus;
+    maintainers = with lib.maintainers; [ ciflire ];
+    mainProgram = "fancy-cat";
+    inherit (zig.meta) platforms;
   };
 })
