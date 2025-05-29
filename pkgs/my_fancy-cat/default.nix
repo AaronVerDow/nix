@@ -18,13 +18,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "fancy-cat";
-  version = "0.0.1";
+  version = "0-unstable-2024-05-29";
 
   src = fetchFromGitHub {
     owner = "AaronVerDow";
     repo = "fancy-cat";
-    rev = "88674de37b02e57d3909f6482ba2330492cf83be";
-    hash = "sha256-5VaR499iqGp1D7E4Uxbnx7C877eiGiexP+FMC5Ziou0=";
+    rev = "bfa4f1da2790e84639be378c2b10715dd1407d96";
+    hash = "sha256-NeTp4uhjBipBOEu36eHG4uq6ri5kZtDpz+DEdaDiHkY=";
   };
 
   nativeBuildInputs = [ pkg-config zig ];

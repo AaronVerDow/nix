@@ -10,4 +10,5 @@ pkgs: {
   restream-desktop = pkgs.callPackage ./restream-desktop { };
   my_numworks = pkgs.callPackage ./my_numworks { };
   apparmor-d = pkgs.callPackage ./apparmor-d { };
+  my_fancy-cat = pkgs.callPackage ./my_fancy-cat { };
 }

@@ -38,6 +38,7 @@
       gh
       ripgrep
       nixfmt-rfc-style
+      my_fancy-cat
 
       texliveFull
       nix-search-cli
