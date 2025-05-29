@@ -7,6 +7,7 @@ pkgs: {
   openscad-post-processor = pkgs.callPackage ./openscad-post-processor { };
   openscad-preview = pkgs.callPackage ./openscad-preview.nvim { };
   vim-ditto = pkgs.callPackage ./vim-ditto { };
+  coc-zig = pkgs.callPackage ./coc-zig { };
   restream-desktop = pkgs.callPackage ./restream-desktop { };
   my_numworks = pkgs.callPackage ./my_numworks { };
   apparmor-d = pkgs.callPackage ./apparmor-d { };

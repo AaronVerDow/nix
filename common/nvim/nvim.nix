@@ -65,6 +65,7 @@
       ++ [
         pkgs.openscad-preview
         pkgs.vim-ditto
+        pkgs.coc-zig
       ];
     extraLuaConfig =
       let
