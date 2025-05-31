@@ -5,20 +5,21 @@
   makeDesktopItem,
   gobject-introspection,
   v4l-utils,
+  ffmpeg,
   wrapGAppsHook3,
   lib,
 }:
 
 python3Packages.buildPythonApplication {
   pname = "camset";
-  version = "0-unstable-2023-05-20";
+  version = "0-unstable-2023-05-31";
   pyproject = true;
 
   src = fetchFromGitHub {
-    owner = "azeam";
+    owner = "AaronVerDow";
     repo = "camset";
-    rev = "b813ba9b1d29f2d46fad268df67bf3615a324f3e";
-    hash = "sha256-vTF3MJQi9fZZDlbEj5800H22GGWOte3+KZCpSnsSTaQ=";
+    rev = "5f0d0d671d0bdfd5027d91adbfd93c463d831609";
+    hash = "sha256-mgZuPvKiMtBcswFdTDOS2sLlEusQh7RJxT9m1/YzhFc=";
   };
 
   build-system = with python3Packages; [ setuptools ];
@@ -29,10 +30,13 @@ python3Packages.buildPythonApplication {
     copyDesktopItems
   ];
 
-  dependencies = with python3Packages; [
-    pygobject3
-    opencv-python
-  ];
+  dependencies =
+    with python3Packages;
+    [
+      pygobject3
+      opencv-python
+    ]
+    ++ [ ffmpeg ];
 
   dontWrapGApps = true;
 

@@ -46,7 +46,7 @@ in
 
       # Terminal & System Utilities
       arandr # Screen layout configuration
-      camset # Camera settings utility
+      my_camset # Camera settings utility
       copyq # Clipboard manager
       kitty # Terminal emulator
       mlterm # Alternative terminal
