@@ -12,14 +12,14 @@
 
 python3Packages.buildPythonApplication {
   pname = "camset";
-  version = "0-unstable-2023-05-30";
+  version = "0-unstable-2023-05-31";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "AaronVerDow";
     repo = "camset";
-    rev = "414829b439315e5258e629ad7345e7d3554648cf";
-    hash = "sha256-ew36P35lE5EoB9rNLHQ1HvifHl/Zmz4Tk77PyRHDyIs=";
+    rev = "5f0d0d671d0bdfd5027d91adbfd93c463d831609";
+    hash = "sha256-mgZuPvKiMtBcswFdTDOS2sLlEusQh7RJxT9m1/YzhFc=";
   };
 
   build-system = with python3Packages; [ setuptools ];
@@ -30,10 +30,13 @@ python3Packages.buildPythonApplication {
     copyDesktopItems
   ];
 
-  dependencies = with python3Packages; [
-    pygobject3
-    opencv-python
-  ] ++ [ ffmpeg ];
+  dependencies =
+    with python3Packages;
+    [
+      pygobject3
+      opencv-python
+    ]
+    ++ [ ffmpeg ];
 
   dontWrapGApps = true;
 
