@@ -98,20 +98,23 @@
   # This probably does nothing currently
 
   security.apparmor = {
+    packages = [ pkgs.apparmor-d ];
     enable = true;
-    killUnconfinedConfinables = true;
+    # killUnconfinedConfinables = true;
     # packages = pkgs.apparmor-profiles;
+    includes = {
+      "abstractions/base" = ''
+        /nix/store/*/bin/** mr,
+        /nix/store/*/lib/** mr,
+        /nix/store/** r,
+      '';
+    };
+
     policies = {
-      firefox_sh = {
+      discord = {
         state = "enforce";
         profile = ''
-          include "${pkgs.apparmor-profiles}/share/apparmor/extra-profiles/firefox.sh"
-        '';
-      };
-      firefox = {
-        state = "enforce";
-        profile = ''
-          include "${pkgs.apparmor-profiles}/share/apparmor/extra-profiles/firefox"
+          include "${pkgs.apparmor-d}/etc/apparmor.d/profiles-a-f/discord"
         '';
       };
     };
