@@ -97,6 +97,10 @@
 
   # This probably does nothing currently
 
+  # Required for aa-genprof
+  services.rsyslogd.enable = true;
+  services.journald.forwardToSyslog = true;
+
   security.apparmor = {
     packages = [ pkgs.apparmor-d ];
     enable = true;
