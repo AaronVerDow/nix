@@ -29,7 +29,7 @@ in
     security.apparmor_d = {
       enable = true;
       profiles = {
-        discord = "complain";
+        discord = "enforce";
       };
     };
 
