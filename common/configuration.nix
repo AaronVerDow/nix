@@ -12,7 +12,6 @@
   # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    ../modules/apparmor/apparmor-d-module.nix
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -91,38 +90,6 @@
 
   security.audit.enable = true;
   security.auditd.enable = true;
-
-  # This is a valid configuration but I don't think the
-  # profiles work with nix paths.
-
-  # This probably does nothing currently
-
-  # Required for aa-genprof
-  services.rsyslogd.enable = true;
-  services.journald.forwardToSyslog = true;
-
-  security.apparmor = {
-    packages = [ pkgs.apparmor-d ];
-    enable = true;
-    # killUnconfinedConfinables = true;
-    # packages = pkgs.apparmor-profiles;
-    includes = {
-      "abstractions/base" = ''
-        /nix/store/*/bin/** mr,
-        /nix/store/*/lib/** mr,
-        /nix/store/** r,
-      '';
-    };
-
-    policies = {
-      discord = {
-        state = "enforce";
-        profile = ''
-          include "${pkgs.apparmor-d}/etc/apparmor.d/profiles-a-f/discord"
-        '';
-      };
-    };
-  };
 
   users.users = {
     averdow = {
