@@ -12,6 +12,7 @@
   # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    outputs.nixosModules.hardening
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
