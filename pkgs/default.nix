@@ -12,5 +12,4 @@ pkgs: {
   my_numworks = pkgs.callPackage ./my_numworks { };
   my_fancy-cat = pkgs.callPackage ./my_fancy-cat { };
   my_camset = pkgs.callPackage ./my_camset { };
-  apparmor-d = pkgs.callPackage ./apparmor-d { };
 }

@@ -32,11 +32,9 @@
       # neovim-nightly-overlay.overlays.default
 
       # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
+      (final: prev: {
+        apparmor-d = final.callPackage ./apparmor-d_package.nix { };
+      })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -132,7 +130,7 @@
     screen
     kitty
     ollama
-    apparmor_parser
+    apparmor-parser
   ];
 
   networking.networkmanager = {
