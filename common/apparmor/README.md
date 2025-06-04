@@ -2,14 +2,12 @@
 
 AppArmor exists in NixOS, but the policies do very little, and any external policies cannot be imported without modifications to work with Nix's unique paths. This document covers getting AppArmor configured to work on NixOS with the policies in [apparmor.d](https://github.com/roddhjav/apparmor.d), a publicly maintained repository of over 1,500 AppArmor profiles.
 
-AppArmor on NixOS is currently undergoing development.
-
-This configuration has been organized to be as simple to implement as possible and does not assume any existing organization for modules or packages.
-
-Most of this work is copied from [Grimmauld](https://github.com/LordGrimmauld):
+AppArmor on NixOS is currently undergoing development. Most of this work is copied from [Grimmauld](https://github.com/LordGrimmauld):
 * [AppArmor on NixOS Roadmap](https://discourse.nixos.org/t/apparmor-on-nixos-roadmap/57217/1)
 * [AppArmor and apparmor.d on NixOS](https://hedgedoc.grimmauld.de/s/hWcvJEniW#)
 * [The Glob is dead, long live the alias! - AppArmor on NixOS Part 2](https://hedgedoc.grimmauld.de/s/03eJUe0X3#)
+
+This configuration has been organized to be as simple to implement as possible and does not assume any existing organization for modules or packages.
 
 ## Installation
 
@@ -74,18 +72,17 @@ Add the following to `configuration.nix`:
 
 ## Choosing Profiles
 
-Browse source repository.
+Browse the [source repository](https://github.com/roddhjav/apparmor.d/tree/main/apparmor.d). Some names, especially those with multiple profiles, may be different.
 
 List available profile names:
 
     ls $( nix-store --query --requisites /run/current-system | grep apparmor-d )/etc/apparmor.d
 
-One liner to check for profiles that match programs in $PATH:
+One liner to check for profiles that match programs in `$PATH`:
 
     for x in $( ls $( nix-store --query --requisites /run/current-system | grep apparmor-d )/etc/apparmor.d ); do which ${x%%[^[:alpha:]]*} &> /dev/null || continue; echo '    '$x' = "enforce";';done
 
 This is not a complete or accurate list, and may include profiles you do not want. It is simply a quick starting point for identifying utilities you may not think about.
-
 
 ## Build and Test
 
