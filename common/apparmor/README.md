@@ -1,12 +1,15 @@
-# Apparmor on NixOS
+# AppArmor on NixOS
 
-Apparmor exists in NixOS, but the policies do very little, and any external policies cannot be imported without modifications to work with Nix's unique paths. This document covers getting Apparmor configured to work on NixOS with the policies in apparmor.d, a public maintained repository of over 1,600 Apparmor policies.
+AppArmor exists in NixOS, but the policies do very little, and any external policies cannot be imported without modifications to work with Nix's unique paths. This document covers getting AppArmor configured to work on NixOS with the policies in [apparmor.d](https://github.com/roddhjav/apparmor.d), a publicly maintained repository of over 1,500 AppArmor profiles.
 
-Apparmor on NixOS is currently undergoing development.
+AppArmor on NixOS is currently undergoing development.
 
 This configuration has been organized to be as simple to implement as possible and does not assume any existing organization for modules or packages.
 
-Most of this work is copied from xx; please see his thread here.
+Most of this work is copied from [Grimmauld](https://github.com/LordGrimmauld):
+* [AppArmor on NixOS Roadmap](https://discourse.nixos.org/t/apparmor-on-nixos-roadmap/57217/1)
+* [AppArmor and apparmor.d on NixOS](https://hedgedoc.grimmauld.de/s/hWcvJEniW#)
+* [The Glob is dead, long live the alias! - AppArmor on NixOS Part 2](https://hedgedoc.grimmauld.de/s/03eJUe0X3#)
 
 ## Installation
 
@@ -43,7 +46,7 @@ Add the following to `configuration.nix`:
     };
   };
   
-  # Add boot entry with Apparmor disabled in case of lockout
+  # Add boot entry with AppArmor disabled in case of lockout
   specialisation = {
     no-apparmor = {
       configuration = {
@@ -86,7 +89,7 @@ This is not a complete or accurate list, and may include profiles you do not wan
 
 ## Build and Test
 
-Nix currently will not catch configuration issues with Apparmor, so always check the Apparmor service after making profile changes:
+Nix currently will not catch configuration issues with AppArmor, so always check the service after making profile changes:
 
     systemctl status apparmor.service
 
@@ -94,7 +97,7 @@ To see loaded profiles and enforced processes:
 
     sudo aa-status
 
-Configuration syntax errors will leave the entire service in the stopped state. Some profile errors will allow Apparmor to run with the already loaded profiles, but the remaining profiles will be skipped.
+Configuration syntax errors will leave the entire service in the stopped state. Some profile errors will allow AppArmor to run with the already loaded profiles, but the remaining profiles will be skipped.
 
 ## Use
 
