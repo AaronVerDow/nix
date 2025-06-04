@@ -12,7 +12,7 @@
   # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    ./apparmor_d_module.nix
+    ./apparmor/apparmor_d_module.nix
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -21,24 +21,16 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
 
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
       (final: prev: {
-        apparmor-d = final.callPackage ./apparmor-d_package.nix { };
+        apparmor-d = final.callPackage ./apparmor/apparmor-d_package.nix { };
       })
     ];
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
     };
   };
