@@ -7,9 +7,6 @@
 let
   inherit (lib)
     mkIf
-    getExe'
-    getExe
-    optional
     ;
 in
 {
@@ -361,14 +358,6 @@ in
         # ===============================
         # dbus-session = "enforce"; # failed to parse
       };
-    };
-
-    security.apparmor.includes = {
-      "abstractions/base" = ''
-        /nix/store/*/bin/** mr,
-        /nix/store/*/lib/** mr,
-        /nix/store/** r,
-      '';
     };
   };
 }
