@@ -1,66 +1,49 @@
 # Apparmor on NixOS
 
-Apparmor exists in NixOS, but it the existing policies do very little and other policies cannot be imported without modifications to work with Nix's unique paths.
+Apparmor exists in NixOS, but the policies do very little, and any external policies cannot be imported without modifications to work with Nix's unique paths. This document covers getting Apparmor configured to work on NixOS with the policies in apparmor.d, a public maintained repository of over 1,600 Apparmor policies.
 
-This document covers getting Apparmor configured to work on NixOS with the policies in apparmor.d, a public repository of over 1,600 Apparmor policies.
+Apparmor on NixOS is currently undergoing development.
 
-The basic requirements are:
+This configuration has been organized to be as simple to implement as possible and does not assume any existing organization for modules or packages.
 
-* Call `apparmor-d` package. This modifies the upstream apparmor.d repository to work with NixOS paths, and builds the policies. 
-  * _Warning:_ The policies in the source repository cannot be used directly.
-* Include `apparmor_d` module. This creates a module that makes it easier to include polices from the apparmor.d package.
-* Enable apparmor and apparmor_d in `configuration.nix`
+Most of this work is copied from xx; please see his thread here.
 
-## Package
+## Installation
 
-Place `default.nix` and `prebuild.patch` into `apparmor-d` directory.
+Place `apparmor_d_module.nix` and `apparmor-d_package.nix` in the directory with `configuration.nix`
 
-Include the package using `pkgs.callPackage`:
-
-    apparmor-d = pkgs.callPackage ./apparmor-d { };
-
-(May need elaboration, I do not know common methods for adding custom packages.)
-
-## Module
-
-Download `apparmor_d.nix` module.
-
-Import in `configuration.nix`:
+Add the following to `configuration.nix`:
 
 ```
-  imports = [ ./apparmor_d.nix ];
-```
+  # Import apparmor_d module for easier profile definitions
+  imports = [
+    ./apparmor_d_module.nix
+  ];
 
-## Enable Modules
+  # Include apparmor-d package in nixpkgs
+  nixpkgs = {
+    overlays = [
+      (final: prev: {
+        apparmor-d = final.callPackage ./apparmor-d_package.nix { };
+      })
+    ];
+  };
 
-Enable and configure apparmor in configuration.nix:
-
-```
-  # Required:
+  # Enable apparmor service
   security.apparmor.enable = lib.mkDefault true;
+
+  # Add additional profiles using apparmor_d module
   security.apparmor_d = {
     enable = true;
     profiles = {
+      "firefox.apparmor.d" = "enforce";
       vlc = "enforce";
       dmesg = "enforce";
       btop = "enforce";
     };
   };
   
-  # Recommended:  
-  services.dbus.apparmor = "enabled";
-  security.auditd.enable = true;
-  security.audit.backlogLimit = 8192;
-  security.apparmor.enableCache = true;
-  security.apparmor.killUnconfinedConfinables = false;
-  environment.systemPackages = with pkgs; [ apparmor-parser ];
-```
-
-## Optional: Create a boot entry without Apparmor
-
-For every generation created this will create a second boot entry with apparmor disabled. This can be helpful for recovery if locked out.
-
-```
+  # Add boot entry with Apparmor disabled in case of lockout
   specialisation = {
     no-apparmor = {
       configuration = {
@@ -68,9 +51,27 @@ For every generation created this will create a second boot entry with apparmor 
       };
     };
   };
+
+  # Other recommended settings, may be optional:  
+
+  # Adds aa-log, which is useful for debugging
+  # May do other things in this context I'm not aware of
+  environment.systemPackages = with pkgs; [ apparmor-parser ];
+  
+  # Kill existing processes if they can be confined
+  security.apparmor.killUnconfinedConfinables = false;
+
+  services.dbus.apparmor = "enabled";
+  security.apparmor.enableCache = true;
+
+  # Additional logging
+  security.auditd.enable = true;
+  security.audit.backlogLimit = 8192;
 ```
 
-## Choose profiles
+## Choosing Profiles
+
+Browse source repository.
 
 List available profile names:
 
@@ -83,12 +84,21 @@ One liner to check for profiles that match programs in $PATH:
 This is not a complete or accurate list, and may include profiles you do not want. It is simply a quick starting point for identifying utilities you may not think about.
 
 
-# Build
+## Build and Test
 
-Nix will build and switch with invalid Apparmor configurations always check the Apparmor service after making profile changes:
+Nix currently will not catch configuration issues with Apparmor, so always check the Apparmor service after making profile changes:
 
     systemctl status apparmor.service
 
 To see loaded profiles and enforced processes:
 
     sudo aa-status
+
+Configuration syntax errors will leave the entire service in the stopped state. Some profile errors will allow Apparmor to run with the already loaded profiles, but the remaining profiles will be skipped.
+
+## Use
+
+Summary of denied actions:
+
+    sudo aa-log
+
