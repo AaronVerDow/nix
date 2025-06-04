@@ -10,7 +10,7 @@ let
     ;
 in
 {
-  imports = [ ./apparmor-d-module.nix ];
+  imports = [ ../modules/nixos/apparmor-d ];
 
   config = mkIf config.security.apparmor.enable {
     services.dbus.apparmor = "enabled";

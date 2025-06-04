@@ -12,7 +12,7 @@
   # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    ../modules/nixos/apparmor
+    ./apparmor.nix
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -88,10 +88,6 @@
       ];
     }
   ];
-
-  security.audit.enable = true;
-  security.auditd.enable = true;
-  security.apparmor.enable = true;
 
   users.users = {
     averdow = {
@@ -231,7 +227,10 @@
     models = "gemma:2b";
   };
 
-  # Specializations for different boot configurations
+  # this will trigger additional configuration in ./apparmor.nix
+  security.apparmor.enable = true;
+
+  # add a boot entry with apparmor disabled
   specialisation = {
     no-apparmor = {
       configuration = {
