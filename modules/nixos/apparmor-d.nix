@@ -10,7 +10,6 @@ let
     mapAttrs
     assertMsg
     pathIsRegularFile
-    mkForce
     mkEnableOption
     mkOption
     types
