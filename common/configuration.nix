@@ -12,7 +12,7 @@
   # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    outputs.nixosModules.hardening
+    ../modules/nixos/apparmor
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -91,6 +91,7 @@
 
   security.audit.enable = true;
   security.auditd.enable = true;
+  security.apparmor.enable = true;
 
   users.users = {
     averdow = {

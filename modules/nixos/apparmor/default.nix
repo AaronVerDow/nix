@@ -19,6 +19,7 @@ in
     services.dbus.apparmor = "enabled";
     security.auditd.enable = true;
 
+    # security.apparmor.enable = lib.mkDefault true;
     security.apparmor.enableCache = true;
     security.apparmor.killUnconfinedConfinables = false;
 
