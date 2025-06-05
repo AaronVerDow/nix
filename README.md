@@ -1,15 +1,18 @@
 # My NixOS Flake & Dotfiles
+
 * AwesomeWM
-* Dark mode
+* Dark mode + transparency
 * Touchscreen support
   * Gestures
-  * Titlebars on floating windows
-  * Onscreen keyboard
-
-# Todo
-* add new nvim configs
+    * Rotate Screen
+    * Open Onscreen keyboard
+    * Open Launcher
+* Titlebars on floating windows
+* AppArmor
+* Firefox customized to match AwesomeWM 
 
 # Import Chain
+
 * flake.nix
   * pkgs/
   * overlays/
@@ -17,5 +20,11 @@
   * hosts/${hostname}/configuration.nix
     * hosts/${hostname}/hardware-configuration.nix
     * common/configuration.nix
+      * common/apparmor/
+    * common/x/configuration.nix
     * hosts/${hostname}/home.nix
       * common/home.nix
+        * nvim/nvim.nix
+        * prose/prose.nix
+      * common/x/home.nix
+        * firefox/firefox.nix
