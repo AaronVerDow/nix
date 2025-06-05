@@ -7,13 +7,13 @@
 }:
 buildGoModule {
   pname = "apparmor-d";
-  version = "unstable-2025-05-04";
+  version = "unstable-2025-05-27";
 
   src = fetchFromGitHub {
-    rev = "6d8eda6b8735626d5c2d25a810fb7600a4e3d60e";
+    rev = "bf22a7786c39d3b56b87095bfd4479769b88ec1a";
     owner = "roddhjav";
     repo = "apparmor.d";
-    hash = "sha256-y0qdiijSZligYPpt5qbK36KAt+q6mHN03lOqq6HPSRA=";
+    hash = "sha256-J8h9LcZRxhTaZg7OU2m75upSoeD1i/abSCJQtX1WRsQ=";
   };
 
   vendorHash = null;
