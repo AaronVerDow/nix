@@ -45,6 +45,7 @@ Add the following to `configuration.nix`:
   };
   
   # Add boot entry with AppArmor disabled in case of lockout
+  # STRONGLY recommended
   specialisation = {
     no-apparmor = {
       configuration = {
@@ -78,12 +79,6 @@ List available profile names:
 
     ls $( nix-store --query --requisites /run/current-system | grep apparmor-d )/etc/apparmor.d
 
-One liner to check for profiles that match programs in `$PATH`:
-
-    for x in $( ls $( nix-store --query --requisites /run/current-system | grep apparmor-d )/etc/apparmor.d ); do which ${x%%[^[:alpha:]]*} &> /dev/null || continue; echo '    '$x' = "enforce";';done
-
-This is not a complete or accurate list, and may include profiles you do not want. It is simply a quick starting point for identifying utilities you may not think about.
-
 ## Build and Test
 
 Nix currently will not catch configuration issues with AppArmor, so always check the service after making profile changes:
@@ -95,6 +90,8 @@ To see loaded profiles and enforced processes:
     sudo aa-status
 
 Configuration syntax errors will leave the entire service in the stopped state. Some profile errors will allow AppArmor to run with the already loaded profiles, but the remaining profiles will be skipped.
+
+Reboot the system to make sure it can start properly.
 
 ## Use
 
