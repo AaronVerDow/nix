@@ -36,7 +36,7 @@
     };
 
     Service = {
-      ExecStart = "${pkgs.barrier}/bin/barrierc --display :0 --name ipad 10.44.12.141";
+      ExecStart = "${pkgs.barrier}/bin/barrierc --disable-crypto --display :0 --name ipad 10.44.12.141";
       Restart = "always";
       RestartSec = 3;
     };
