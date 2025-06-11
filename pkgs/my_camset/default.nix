@@ -18,8 +18,8 @@ python3Packages.buildPythonApplication {
   src = fetchFromGitHub {
     owner = "AaronVerDow";
     repo = "camset";
-    rev = "5f0d0d671d0bdfd5027d91adbfd93c463d831609";
-    hash = "sha256-mgZuPvKiMtBcswFdTDOS2sLlEusQh7RJxT9m1/YzhFc=";
+    rev = "62a41ecde70ee895df8a5200a00c545d4892d4cc";
+    hash = "sha256-tOlx1u3o3jh5iwMJi3ZL5ohU16Q8ahJNaBn2azQdwmg=";
   };
 
   build-system = with python3Packages; [ setuptools ];
