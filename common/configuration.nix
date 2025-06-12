@@ -243,7 +243,8 @@
     enable = true;
     profiles = {
       discord = "enforce";
-      "firefox.apparmor.d" = "enforce";
+      # can't download files in enforce mode
+      "firefox.apparmor.d" = "complain";
       ollama = "enforce";
     };
   };
