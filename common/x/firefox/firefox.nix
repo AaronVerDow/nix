@@ -54,6 +54,7 @@
         # Check about:support for extension/add-on ID strings.
         # Valid strings for installation_mode are "allowed", "blocked",
         # "force_installed" and "normal_installed".
+        # Get key: curl -s "https://addons.mozilla.org/api/v5/addons/addon/grammarly-1/" | jq '.guid'
         ExtensionSettings = {
           "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
           # uBlock Origin:
@@ -64,6 +65,11 @@
           # Privacy Badger:
           "jid1-MnnxcxisBPnSXQ@jetpack" = {
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
+            installation_mode = "force_installed";
+          };
+          # Grammarly:
+          "87677a2c52b84ad3a151a4a72f5bd3c4@jetpack" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/grammarly-1/latest.xpi";
             installation_mode = "force_installed";
           };
         };
