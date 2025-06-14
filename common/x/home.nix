@@ -91,9 +91,18 @@ in
       # Hardware-specific
       unstable.via # Keyboard configuration
 
-      # Custom Scripts
       (writeShellScriptBin "calculator_toggle" ''
-        pgrep epsilon && pkill epsilon || ${pkgs.my_numworks}/bin/epsilon
+        # Launch calculator or toggle visibility if running
+        if ! ${pkgs.xdotool}/bin/xdotool search --name "Epsilon" > /dev/null; then
+          ${pkgs.my_numworks}/bin/epsilon &
+        fi
+        WINDOW_ID=$(${pkgs.xdotool}/bin/xdotool search --name "Epsilon")
+        if ${pkgs.xorg.xwininfo}/bin/xwininfo -id "$WINDOW_ID" | grep -q "Map State: IsViewable"; then
+          ${pkgs.xdotool}/bin/xdotool windowminimize "$WINDOW_ID"
+        else
+          ${pkgs.xdotool}/bin/xdotool windowmap "$WINDOW_ID"
+          ${pkgs.xdotool}/bin/xdotool windowactivate "$WINDOW_ID"
+        fi
       '')
 
       (writeShellScriptBin "cursor-detached" ''
