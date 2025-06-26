@@ -135,6 +135,8 @@
 
   time.timeZone = "America/Chicago";
 
+  services.flatpak.enable = true;
+
   # Added for WGU D288 final
   services.mysql = {
     enable = true;

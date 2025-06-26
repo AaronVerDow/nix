@@ -91,6 +91,10 @@ in
       # Hardware-specific
       unstable.via # Keyboard configuration
 
+      # Games
+      # unstable.moonlight-qt
+      flatpak
+
       (writeShellScriptBin "calculator_toggle" ''
         # Launch calculator or toggle visibility if running
         if ! ${pkgs.xdotool}/bin/xdotool search --name "Epsilon" > /dev/null; then
