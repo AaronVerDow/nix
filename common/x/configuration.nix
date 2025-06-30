@@ -5,7 +5,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   qt = {
     enable = true;
     platformTheme = "gnome";
@@ -22,8 +23,8 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.windowManager.awesome = {
     enable = true;
-    luaModules = [ 
-      pkgs.awesome-wm-widgets
+    luaModules = with pkgs.luaPackages; [
+      awesome-wm-widgets
     ];
   };
 

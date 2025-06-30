@@ -2,7 +2,6 @@
 # You can build them using 'nix build .#example'
 pkgs: {
   xrotate = pkgs.callPackage ./xrotate { };
-  awesome-wm-widgets = pkgs.callPackage ./awesome-wm-widgets { };
   grammar = pkgs.callPackage ./grammar { };
   openscad-post-processor = pkgs.callPackage ./openscad-post-processor { };
   openscad-preview = pkgs.callPackage ./openscad-preview.nvim { };
