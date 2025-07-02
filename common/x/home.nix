@@ -27,15 +27,10 @@ in
   home.packages = lib.mkMerge [
     (with pkgs; [
       # Development Tools
-      jetbrains.idea-ultimate
-      qtcreator
       unstable.code-cursor
+      satisfactory-file-parser # TypeScript parser for Satisfactory save/blueprint files
 
       # Creative & Design Applications
-      blender # 3D modeling and animation
-      drawing # Simple drawing application
-      gimp # Image manipulation
-      inkscape # Vector graphics editor
       openscad # Programmatic CAD modeling
       openscad-post-processor
 
@@ -88,11 +83,7 @@ in
       merriweather
       ubuntu_font_family
 
-      # Hardware-specific
-      unstable.via # Keyboard configuration
-
       # Games
-      # unstable.moonlight-qt
       flatpak
 
       (writeShellScriptBin "calculator_toggle" ''
