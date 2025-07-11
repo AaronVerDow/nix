@@ -28,7 +28,6 @@ in
     (with pkgs; [
       # Development Tools
       unstable.code-cursor
-      void-editor
       satisfactory-file-parser # TypeScript parser for Satisfactory save/blueprint files
 
       # Creative & Design Applications

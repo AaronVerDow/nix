@@ -12,7 +12,4 @@ pkgs: {
   my_fancy-cat = pkgs.callPackage ./my_fancy-cat { };
   my_camset = pkgs.callPackage ./my_camset { };
   satisfactory-file-parser = pkgs.callPackage ./satisfactory-file-parser { };
-  void-editor = pkgs.callPackage ./void-editor {
-    vscode-generic = ./vscode/generic.nix;
-  };
 }
