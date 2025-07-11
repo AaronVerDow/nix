@@ -39,7 +39,7 @@
       ripgrep
       nixfmt-rfc-style
       my_fancy-cat
-      aider-chat
+      aider-chat-full
 
       texliveFull
       nix-search-cli
