@@ -66,6 +66,7 @@ in
       pcmanfm # File manager
 
       # Input & Accessibility
+      barrier
       onboard # On-screen keyboard
       touchegg # Touchscreen gestures
       unstable.restream

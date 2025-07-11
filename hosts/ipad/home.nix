@@ -27,23 +27,4 @@
     '')
 
   ];
-
-  # Automatically start barrier in client mode
-  systemd.user.services.barrier-client = {
-    Unit = {
-      Description = "Barrier Client";
-      After = [ "graphical-session-pre.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-
-    Service = {
-      ExecStart = "${pkgs.barrier}/bin/barrierc --disable-crypto --display :0 --name ipad 10.44.12.141";
-      Restart = "always";
-      RestartSec = 3;
-    };
-
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
 }
