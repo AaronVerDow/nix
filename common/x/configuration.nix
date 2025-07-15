@@ -27,7 +27,7 @@
       awesome-wm-widgets
     ];
   };
-
+  services.redshift.enable = true;
   services.flatpak.enable = true;
 
   xdg.portal = {

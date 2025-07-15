@@ -17,6 +17,14 @@
 
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # used by redshift
+  location = {
+    # provider = "geoclue2";
+    provider = "manual";
+    latitude = 41.8832;
+    longitude = -87.6324;
+  };
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
