@@ -11,7 +11,7 @@
   boot.zfs.forceImportRoot = false;
   networking.hostId = "9cd45734";
   services.zfs.autoScrub.enable = true;
-  # boot.zfs.extraPools = [ "array" ];
+  boot.zfs.extraPools = [ "array" ];
 
   networking.hostName = "titanic"; # Define your hostname.
 
@@ -48,7 +48,6 @@
       };
     };
   };
-
 
   networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 ];
 
