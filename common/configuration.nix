@@ -143,14 +143,6 @@
 
   time.timeZone = "America/Chicago";
 
-  services.flatpak.enable = true;
-
-  # Added for WGU D288 final
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-  };
-
   services.openssh = {
     enable = true;
     settings = {

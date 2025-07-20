@@ -75,6 +75,13 @@
             ./modules/nixos/kanata
           ];
         };
+        titanic = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/titanic/configuration.nix
+            ./modules/nixos/kanata
+          ];
+        };
         ipad = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
