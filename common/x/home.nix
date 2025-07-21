@@ -87,6 +87,8 @@ in
       # Games
       flatpak
 
+      vlc
+
       (writeShellScriptBin "calculator_toggle" ''
         # Launch calculator or toggle visibility if running
         if ! ${pkgs.xdotool}/bin/xdotool search --name "Epsilon" > /dev/null; then
