@@ -244,7 +244,7 @@ alias ,,,,,,,,='echo "$OLDPWD" | grep -q "^$PWD/" && cd "$( echo "$OLDPWD" | sed
 alias ,,,,,,,,,='echo "$OLDPWD" | grep -q "^$PWD/" && cd "$( echo "$OLDPWD" | sed "s#^$PWD##" | cut -d '/' -f -9 | sed 's#^/##' )"'
 alias ,,,,,,,,,,='echo "$OLDPWD" | grep -q "^$PWD/" && cd "$( echo "$OLDPWD" | sed "s#^$PWD##" | cut -d '/' -f -10 | sed 's#^/##' )"'
 
-if [ -n "$PS1" ]; then
+if [ -n "$PS1" ] && [ -z "$AIDER_CHECK_UPDATE" ]; then
     neofetch --config ~/.config/neofetch/config
 fi
 
