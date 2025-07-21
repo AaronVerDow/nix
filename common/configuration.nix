@@ -143,14 +143,6 @@
 
   time.timeZone = "America/Chicago";
 
-  services.flatpak.enable = true;
-
-  # Added for WGU D288 final
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-  };
-
   services.openssh = {
     enable = true;
     settings = {
@@ -229,13 +221,13 @@
   };
 
   # this will trigger additional configuration in ./apparmor.nix
-  security.apparmor.enable = true;
+  security.apparmor.enable = false;
 
-  # add a boot entry with apparmor disabled
+  # add a boot entry with apparmor enabled
   specialisation = {
-    no-apparmor = {
+    with-apparmor = {
       configuration = {
-        security.apparmor.enable = lib.mkForce false;
+        security.apparmor.enable = lib.mkForce true;
       };
     };
   };
