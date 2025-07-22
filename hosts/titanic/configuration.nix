@@ -19,6 +19,7 @@
     docker-compose
   ];
 
+  hardware.nvidia-container-toolkit.enable = true;
   virtualisation.docker.enable = true;
 
   # Required to serve as a remote nix builder
