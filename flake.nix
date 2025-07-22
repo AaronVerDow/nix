@@ -80,6 +80,9 @@
           modules = [
             ./hosts/titanic/configuration.nix
             ./modules/nixos/kanata
+            nixos-hardware.nixosModules.common-cpu-amd
+            nixos-hardware.nixosModules.common-cpu-amd-pstate
+            nixos-hardware.nixosModules.common-cpu-amd-zenpower
           ];
         };
         ipad = nixpkgs.lib.nixosSystem {
