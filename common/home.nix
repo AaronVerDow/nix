@@ -80,6 +80,7 @@
     # should be in /etc/DIR_COLORS ?
     ".dir_colors".source = ./dotfiles/dot_dir_colors.sh;
     ".bashrc".source = ./dotfiles/dot_bashrc.sh;
+    ".bash_profile".source = ./dotfiles/dot_bash_profile.sh;
     ".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
   };
 
