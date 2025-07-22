@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, ... }:
+{ inputs, outputs, pkgs, lib, ... }:
 
 {
   imports =
@@ -20,6 +20,25 @@
   ];
 
   virtualisation.docker.enable = true;
+
+  # Required to serve as a remote nix builder
+  services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
+
+  services.xserver.videoDrivers = ["nvidia"];
+  # services.xserver.enable = false;
+  hardware.nvidia.open = true; # required for RTX?
+  hardware.graphics.enable = true;
+  nixpkgs.config.cudaSupport = true;
+  services.ollama = {
+    enable = true;
+    host = "127.0.0.1";
+    port = 11434;
+    acceleration = "cuda";
+    environmentVariables = {
+      # Recommended for aider
+      OLLAMA_CONTEXT_LENGTH=8192;
+    };
+  };
 
   services.samba = {
     enable = true;
@@ -49,7 +68,7 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 ];
+  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 ];
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
