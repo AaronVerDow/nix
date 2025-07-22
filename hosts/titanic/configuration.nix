@@ -36,7 +36,7 @@
     acceleration = "cuda";
     environmentVariables = {
       # Recommended for aider
-      OLLAMA_CONTEXT_LENGTH=8192;
+      "OLLAMA_CONTEXT_LENGTH" = "8192";
     };
   };
 
