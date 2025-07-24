@@ -1,0 +1,3 @@
+[submodule "hosts/titanic/selfhosted"]
+	path = hosts/titanic/selfhosted
+	url = git@github.com:AaronVerDow/selfhosted.git

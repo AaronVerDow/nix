@@ -5,6 +5,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../common/configuration.nix
+      ./selfhosted/selfhosted.nix
     ];
 
   boot.supportedFilesystems = [ "zfs" ];
