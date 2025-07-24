@@ -20,8 +20,13 @@
     docker-compose
   ];
 
-  hardware.nvidia-container-toolkit.enable = true;
-  virtualisation.docker.enable = true;
+  # not working with plex
+  # hardware.nvidia-container-toolkit.enable = true;
+  hardware.graphics.enable32Bit = true;
+  virtualisation.docker = {
+    enable = true;
+    enableNvidia = true;
+  };
 
   # Required to serve as a remote nix builder
   services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
