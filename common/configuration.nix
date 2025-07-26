@@ -65,9 +65,6 @@
 
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-      gc.automatic = true;
-      gc.dates = "daily";
-      gc.options = "--delete-older-than 5d";
     };
 
   security.sudo.extraRules = [
