@@ -78,6 +78,7 @@
         titanic = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
+            solaar.nixosModules.default
             ./hosts/titanic/configuration.nix
             ./modules/nixos/kanata
             nixos-hardware.nixosModules.common-cpu-amd
