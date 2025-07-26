@@ -12,11 +12,11 @@ buildNpmPackage rec {
   src = fetchFromGitHub {
     owner = "etothepii4";
     repo = "satisfactory-file-parser";
-    rev = "main";
-    hash = "sha256-9TdZK+qUmlXq0gDf6o3+lnaf4AGekPv0/0tc7cAnCKc=";
+    rev = "8856e4f0ec0d0e8b5b6d6648a113f061e102f9ed";
+    hash = "sha256-uZMc7dLJxzvMrjQoFtmVuNyCxby7SnBMdyc1UI4wl5o=";
   };
 
-  npmDepsHash = "sha256-raZjgu7N36iN8hQJu/bLCjLg8vmhwARFRfWqNOr6QHs=";
+  npmDepsHash = "sha256-tc0P1Up4fX0GtG5rZ/WKvldJ9NDSEgzxVhMDOM/C2EA=";
 
   # Build the TypeScript package
   buildPhase = ''
