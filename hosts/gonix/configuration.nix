@@ -11,6 +11,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../common/configuration.nix
+    ../../common/cache_client.nix
     ../../common/x/configuration.nix
   ];
   networking.hostName = "gonix";
