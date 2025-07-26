@@ -34,6 +34,13 @@
     secretKeyFile = "/var/cache-priv-key.pem";
   };
 
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+
   # Required to serve as a remote nix builder
   services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
 
