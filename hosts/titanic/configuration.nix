@@ -5,6 +5,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../common/configuration.nix
+      ../../common/x/configuration.nix
       ./selfhosted/selfhosted.nix
     ];
 
@@ -26,6 +27,11 @@
   virtualisation.docker = {
     enable = true;
     enableNvidia = true;
+  };
+
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = "/var/cache-priv-key.pem";
   };
 
   # Required to serve as a remote nix builder
