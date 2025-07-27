@@ -1,12 +1,14 @@
 { inputs, outputs, pkgs, lib, ... }:
 
 {
+  disabledModules = [ "services/networking/x2goserver.nix" ];
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../common/configuration.nix
       ../../common/x/configuration.nix
       ./selfhosted/selfhosted.nix
+      ./x2goserver.nix
     ];
 
   boot.supportedFilesystems = [ "zfs" ];
@@ -29,6 +31,11 @@
     enableNvidia = true;
   };
 
+  services.x2goserver = {
+    enable = false;
+    #package = pkgs.unstable.x2goserver;
+  };
+
   services.nix-serve = {
     enable = true;
     secretKeyFile = "/var/cache-priv-key.pem";
@@ -45,7 +52,6 @@
   services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
 
   services.xserver.videoDrivers = ["nvidia"];
-  # services.xserver.enable = false;
   hardware.nvidia.open = true; # required for RTX?
   hardware.graphics.enable = true;
   nixpkgs.config.cudaSupport = true;
