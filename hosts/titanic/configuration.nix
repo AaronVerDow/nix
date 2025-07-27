@@ -32,8 +32,8 @@
   };
 
   services.x2goserver = {
-    enable = false;
-    #package = pkgs.unstable.x2goserver;
+    enable = true;
+    package = pkgs.unstable.x2goserver;
   };
 
   services.nix-serve = {
