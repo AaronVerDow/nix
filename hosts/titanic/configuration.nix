@@ -38,7 +38,7 @@
   };
 
   services.xrdp.enable = true;
-  services.xrdp.defaultWindowManager = "awesome";
+  services.xrdp.defaultWindowManager = "${pkgs.awesomeWithWidgets}/bin/awesome";
   services.xrdp.openFirewall = true;
 
   services.nix-serve = {
