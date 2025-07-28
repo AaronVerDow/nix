@@ -14,10 +14,8 @@ pkgs: {
   satisfactory-file-parser = pkgs.callPackage ./satisfactory-file-parser { };
 
  awesomeWithWidgets = pkgs.writeShellScriptBin "awesome" ''
-    # export LUA_PATH="${pkgs.luaPackages.awesome-wm-widgets}/share/lua/${pkgs.lua.luaversion}/?.lua;''${LUA_PATH:-;;}"
-    # /nix/store/bqyzp3mdly7g5fbpf44zg7vc05bspbmj-awesome-wm-widgets-0-unstable-2024-02-15/share/lua/5.2/awesome-wm-widgets/battery-widget/battery.lua'
-    export LUA_PATH="${pkgs.luaPackages.awesome-wm-widgets}/share/lua/${pkgs.lua.luaversion}/?.lua;${pkgs.lua}/share/lua/${pkgs.lua.luaversion}/?.lua;''${LUA_PATH:-;;}"
-    export LUA_CPATH="${pkgs.luaPackages.awesome-wm-widgets}/lib/lua/${pkgs.lua.luaversion}/?.so;${pkgs.lua}/lib/lua/${pkgs.lua.luaversion}/?.so;''${LUA_CPATH:-;;}"
+    export LUA_PATH="${pkgs.luaPackages.awesome-wm-widgets}/lib/lua/${pkgs.lua.luaversion}/?.lua;''${LUA_PATH:-;;}"
+    export LUA_CPATH="${pkgs.luaPackages.awesome-wm-widgets}/lib/lua/${pkgs.lua.luaversion}/?.so;''${LUA_CPATH:-;;}"
     echo "$LUA_PATH" > /tmp/awesome.log
     echo "$LUA_CPATH" >> /tmp/awesome.log
     exec ${pkgs.awesome}/bin/awesome "$@" &>> /tmp/awesome.log

@@ -2,14 +2,15 @@
 
 {
   disabledModules = [ "services/networking/x2goserver.nix" ];
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../common/configuration.nix
-      ../../common/x/configuration.nix
-      ./selfhosted/selfhosted.nix
-      ./x2goserver.nix
-    ];
+  imports = [ 
+    ./hardware-configuration.nix
+    ../../common/configuration.nix
+    ../../common/x/configuration.nix
+    ./selfhosted/selfhosted.nix
+    ./x2goserver.nix
+  ];
+
+  services.xserver.displayManager.gdm.autoSuspend = false;
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
