@@ -33,8 +33,13 @@
 
   services.x2goserver = {
     enable = true;
+    # build is currently broken in stable
     package = pkgs.unstable.x2goserver;
   };
+
+  services.xrdp.enable = true;
+  services.xrdp.defaultWindowManager = "awesome";
+  services.xrdp.openFirewall = true;
 
   services.nix-serve = {
     enable = true;
