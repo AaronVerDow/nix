@@ -62,7 +62,17 @@ cd() {
         # Only show for new repos
         if [ "${ONEFETCH_LAST_REPO:-}" != "$git_name" ]; then
             export ONEFETCH_LAST_REPO=$git_name
-            onefetch
+
+            local cache_dir cache
+            cache_dir=~/.cache/onefetch 
+            [ -d "$cache_dir" ] || mkdir -p $cache_dir
+            cache="$cache_dir/$git_name"
+        
+            # Show cached output if available
+            [ -f "$cache" ] && cat "$cache"
+
+            # Update cache in background
+            (onefetch > "$cache" 2>/dev/null &)
         fi
 
         # wordcount graph for writing
