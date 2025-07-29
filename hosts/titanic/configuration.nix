@@ -12,6 +12,8 @@
 
   services.xserver.displayManager.gdm.autoSuspend = false;
 
+  services.redshift.enable = lib.mkForce false;
+
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
   networking.hostId = "9cd45734";
