@@ -13,6 +13,7 @@ in
     ../../common/configuration.nix
     ../../common/cache_client.nix
     ../../common/x/configuration.nix
+    ../../common/x/steam.nix
   ];
   networking.hostName = "gonix";
 
