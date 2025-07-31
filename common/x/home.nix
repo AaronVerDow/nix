@@ -59,7 +59,8 @@ in
       # Window Management & Desktop Environment
       flashfocus # Focus animations
       nitrogen # Wallpaper manager
-      picom-pijulius # Compositor
+      # picom-pijulius # Compositor
+      picom
       rofi # Application launcher
 
       # File Management
@@ -191,6 +192,7 @@ in
 
   home.file = {
     ".config/picom/picom.conf".source = ../dotfiles/dot_config/picom/picom.conf;
+    ".config/picom/picom-animations.conf".source = ../dotfiles/dot_config/picom/picom-animations.conf;
     ".config/awesome/rc.lua".source = ../dotfiles/dot_config/awesome/rc.lua;
     ".config/touchegg/touchegg.conf".source = ../dotfiles/dot_config/touchegg/touchegg.conf;
     ".config/rofi/config.rasi".source = ../dotfiles/dot_config/rofi/config.rasi;
