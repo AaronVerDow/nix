@@ -22,6 +22,8 @@ in
     packageNames = [ "linux" ];
   };
 
+  services.tailscale.enable = true;
+
   # https://github.com/linux-surface/linux-surface/wiki/Surface-Laptop-Go-2
   services.thermald = {
     enable = true;
