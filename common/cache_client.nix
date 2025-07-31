@@ -5,6 +5,7 @@
     settings = {
       substituters = [
         "http://binarycache.verdow.lan"
+        "http://titanic-tail:5000"
         "https://nix-community.cachix.org"
         "https://cache.nixos.org/"
       ];
