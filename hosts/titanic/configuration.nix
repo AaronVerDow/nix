@@ -14,6 +14,10 @@
 
   services.redshift.enable = lib.mkForce false;
   services.tailscale.enable = true;
+  services.jenkins = {
+    enable = true;
+    port = 8090;
+  };
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
@@ -28,11 +32,11 @@
   ];
 
   # not working with plex
-  # hardware.nvidia-container-toolkit.enable = true;
+  hardware.nvidia-container-toolkit.enable = true;
   hardware.graphics.enable32Bit = true;
   virtualisation.docker = {
     enable = true;
-    enableNvidia = true;
+    # enableNvidia = true;
   };
 
   services.x2goserver = {
@@ -103,7 +107,7 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 ];
+  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8090 ];
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
