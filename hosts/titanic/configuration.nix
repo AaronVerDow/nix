@@ -103,7 +103,7 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8090 ];
+  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8090 50000 ];
   containers.jenkins = {
     config = { pkgs, ... }: {
       services.jenkins = {
@@ -113,13 +113,16 @@
           "-Djenkins.model.Jenkins.slaveAgentPort=50000"  # For JNLP agents
         ];
       };
-
       networking.firewall.allowedTCPPorts = [ 8090 50000 ];
     };
     autoStart = true;
-    privateNetwork = false;
-    hostAddress = "";
-    localAddress = "";
+    privateNetwork = true;
+    hostAddress = "192.168.100.1";
+    localAddress = "192.168.100.2";
+    forwardPorts = [
+      { containerPort = 8090; hostPort = 8090; protocol = "tcp"; }
+      { containerPort = 50000; hostPort = 50000; protocol = "tcp"; }
+    ];
   };
 
   home-manager = {
