@@ -60,12 +60,6 @@ show_and_build() {
     trap - EXIT INT TERM
 }
 
-package_exists() {
-    nix-store --query --references "$(
-        nix-instantiate --eval -E "with import <nixpkgs> {}; pkgs.$PACKAGE_NAME" --no-out-link 2>/dev/null
-    )" >/dev/null 2>&1
-}
-
 if [ $# -eq 0 ]; then
     echo "Usage: $0 <nix-package-name>"
     exit 1
@@ -73,9 +67,7 @@ fi
 
 PACKAGE_NAME="$1"
 
-if ! package_exists "$PACKAGE_NAME"; then
-    show_and_build "$PACKAGE_NAME"
-fi
+show_and_build "$PACKAGE_NAME"
 
 # Execute the package using nix run with nixpkgs
 nix run nixpkgs#"$PACKAGE_NAME" &
