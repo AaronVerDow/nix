@@ -116,9 +116,14 @@
       networking.firewall.allowedTCPPorts = [ 8090 50000 ];
     };
     autoStart = true;
+    restartIfChanged = true;
     privateNetwork = true;
     hostAddress = "192.168.100.1";
     localAddress = "192.168.100.2";
+    bindMounts = {
+      # "/nix" = { hostPath = "/nix"; };
+      "/var/lib/jenkins" = { hostPath = "/home/averdow/services/jenkins"; isReadOnly = false; }; 
+    };
     forwardPorts = [
       { containerPort = 8090; hostPort = 8090; protocol = "tcp"; }
       { containerPort = 50000; hostPort = 50000; protocol = "tcp"; }
