@@ -26,8 +26,10 @@ cleanup_exit() {
 trap cleanup_exit EXIT INT TERM
 
 (
-    echo "Loading $PACKAGE_NAME..." | tee "$TEMP_OUTPUT"
-    nix-shell -p "$PACKAGE_NAME" --run "echo 'Package loaded successfully'; exec $PACKAGE_NAME" 2>&1 | tee -a "$TEMP_OUTPUT"
+    echo "Building $PACKAGE_NAME..." | tee "$TEMP_OUTPUT"
+    # Use nix run with nixpkgs to execute the package
+    nix build nixpkgs#"$PACKAGE_NAME" 2>&1 | tee -a "$TEMP_OUTPUT"
+    echo "Build complete." | tee -a "$TEMP_OUTPUT"
 ) &
 
 BG_PID=$!
@@ -56,5 +58,5 @@ wait $BG_PID
 cleanup
 trap - EXIT INT TERM
 
-# Execute the package
-nix-shell -p "$PACKAGE_NAME" --run "$PACKAGE_NAME" &
+# Execute the package using nix run with nixpkgs
+nix run nixpkgs#"$PACKAGE_NAME" &
