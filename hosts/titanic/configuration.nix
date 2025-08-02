@@ -14,10 +14,6 @@
 
   services.redshift.enable = lib.mkForce false;
   services.tailscale.enable = true;
-  services.jenkins = {
-    enable = true;
-    port = 8090;
-  };
 
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.forceImportRoot = false;
@@ -108,6 +104,20 @@
   };
 
   networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8090 ];
+  containers.jenkins = {
+    config = { pkgs, ... }: {
+      services.jenkins = {
+        enable = true;
+        port = 8090;
+      };
+
+      networking.firewall.allowedTCPPorts = [ 8090 ];
+    };
+    autoStart = true;
+    privateNetwork = true;
+    hostAddress = "192.168.100.1";
+    localAddress = "192.168.100.2";
+  };
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
