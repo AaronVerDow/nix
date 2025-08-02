@@ -19,9 +19,9 @@ in {
       description = "Name of the Jenkins node";
     };
 
-    secret = mkOption {
+    secretFile = mkOption {
       type = types.str;
-      description = "Secret token for Jenkins agent authentication";
+      description = "Path to file containing the secret token for Jenkins agent authentication";
     };
 
     homeDir = mkOption {
@@ -81,8 +81,8 @@ in {
       # Start the agent
       java -jar agent.jar \
         -jnlpUrl "${cfg.controllerUrl}/computer/${cfg.nodeName}/jenkins-agent.jnlp" \
-        -secret ${cfg.secret} \
-        -workDir "${cfg.workDir}"
+        -secret "@${cfg.secretFile}" \
+        -workDir "${cfg.homeDir}"
       EOF
       
       chmod +x "${cfg.homeDir}/start-agent.sh"
