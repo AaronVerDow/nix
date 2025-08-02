@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 if [ $# -eq 0 ]; then
     echo "Usage: $0 <nix-package-name>"
@@ -10,15 +11,19 @@ PACKAGE_NAME="$1"
 TEMP_OUTPUT=$(mktemp)
 
 cleanup() {
-    rm -f "$TEMP_OUTPUT"
+    rm -f "$TEMP_OUTPUT" 2>/dev/null || true
     # Kill terminal window if it's still open
     if [[ -n "$TERMINAL_PID" ]]; then
         kill "$TERMINAL_PID" 2>/dev/null || true
     fi
+}
+
+cleanup_exit() {
+    cleanup
     exit
 }
 
-trap cleanup EXIT INT TERM
+trap cleanup_exit EXIT INT TERM
 
 (
     echo "Loading $PACKAGE_NAME..." | tee "$TEMP_OUTPUT"
@@ -48,10 +53,8 @@ fi
 # Wait for the background process to complete
 wait $BG_PID
 
-# Kill the terminal window if it's still open
-if [[ -n "$TERMINAL_PID" ]]; then
-    kill "$TERMINAL_PID" 2>/dev/null || true
-fi
+cleanup
+trap - EXIT INT TERM
 
 # Execute the package
-nix-shell -p "$PACKAGE_NAME" --run "$PACKAGE_NAME"
+nix-shell -p "$PACKAGE_NAME" --run "$PACKAGE_NAME" &
