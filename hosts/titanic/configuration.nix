@@ -109,14 +109,17 @@
       services.jenkins = {
         enable = true;
         port = 8090;
+        extraJavaOptions = [
+          "-Djenkins.model.Jenkins.slaveAgentPort=50000"  # For JNLP agents
+        ];
       };
 
-      networking.firewall.allowedTCPPorts = [ 8090 ];
+      networking.firewall.allowedTCPPorts = [ 8090 50000 ];
     };
     autoStart = true;
-    privateNetwork = true;
-    hostAddress = "192.168.100.1";
-    localAddress = "192.168.100.2";
+    privateNetwork = false;
+    hostAddress = "";
+    localAddress = "";
   };
 
   home-manager = {
