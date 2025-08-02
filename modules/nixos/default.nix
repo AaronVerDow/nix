@@ -4,4 +4,5 @@
   # List your module files here
   # my-module = import ./my-module.nix;
   kanata = import ./kanata;
+  jenkins-agent = import ./jenkins-agent;
 }
