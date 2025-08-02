@@ -21,6 +21,7 @@ in {
 
     secretFile = mkOption {
       type = types.str;
+      default = "/home/jenkins/.secret";
       description = "Path to file containing the secret token for Jenkins agent authentication";
     };
 
