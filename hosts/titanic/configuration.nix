@@ -23,6 +23,11 @@
 
   networking.hostName = "titanic"; # Define your hostname.
 
+  services.jenkins-agent = {
+    enable = true;
+    controllerUrl = "http://127.0.0.1:8090";
+  };
+
   environment.systemPackages = with pkgs; [
     docker-compose
   ];
