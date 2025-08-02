@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     ../../common/configuration.nix
     ../../common/x/configuration.nix
+    ../../common/cache_client.nix
   ];
   networking.hostName = "ipad";
   services.xserver.videoDrivers = [ "amdgpu" ];
