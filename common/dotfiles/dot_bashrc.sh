@@ -17,6 +17,7 @@ PATH="$HOME/bin:$PATH:$HOME/.local/bin"
 export NIX_SHELL_PRESERVE_PROMPT=1
 export NIXPKGS_ALLOW_UNFREE=1
 export EDITOR=nvim
+export OLLAMA_API_BASE=http://localhost:11434
 
 instead_use() {
     echo "Use $1!" | lolcat -a -d 24
