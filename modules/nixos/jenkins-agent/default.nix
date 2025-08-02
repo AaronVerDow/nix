@@ -52,6 +52,7 @@ in {
       description = "Jenkins Agent";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
+      reloadIfChanged = true;
 
       serviceConfig = {
         Type = "simple";
@@ -69,7 +70,7 @@ in {
       cd "${cfg.homeDir}"
       
       # Download the agent jar
-      curl -sO ${cfg.controllerUrl}/jnlpJars/agent.jar
+      ${pkgs.curl}/bin/curl -sO ${cfg.controllerUrl}/jnlpJars/agent.jar
       
       # Create the start script
       cat > "${cfg.homeDir}/start-agent.sh" << 'EOF'
