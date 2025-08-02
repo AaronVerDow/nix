@@ -78,10 +78,10 @@ in {
       cd "${cfg.homeDir}"
       
       # Download latest agent jar
-      curl -sO ${cfg.controllerUrl}/jnlpJars/agent.jar
+      ${pkgs.curl}/bin/curl -sO ${cfg.controllerUrl}/jnlpJars/agent.jar
       
       # Start the agent
-      java -jar agent.jar \
+      ${pkgs.jdk}/bin/java -jar agent.jar \
         -jnlpUrl "${cfg.controllerUrl}/computer/${cfg.nodeName}/jenkins-agent.jnlp" \
         -secret "@${cfg.secretFile}" \
         -workDir "${cfg.homeDir}"
