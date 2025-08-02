@@ -81,6 +81,7 @@
             solaar.nixosModules.default
             ./hosts/titanic/configuration.nix
             ./modules/nixos/kanata
+            ./modules/nixos/jenkins-agent
             nixos-hardware.nixosModules.common-cpu-amd
             nixos-hardware.nixosModules.common-cpu-amd-pstate
             nixos-hardware.nixosModules.common-cpu-amd-zenpower
