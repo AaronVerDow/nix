@@ -23,16 +23,21 @@
 
   networking.hostName = "titanic"; # Define your hostname.
 
+  services.jenkins-agent = {
+    enable = true;
+    controllerUrl = "http://127.0.0.1:8090";
+  };
+
   environment.systemPackages = with pkgs; [
     docker-compose
   ];
 
   # not working with plex
-  # hardware.nvidia-container-toolkit.enable = true;
+  hardware.nvidia-container-toolkit.enable = true;
   hardware.graphics.enable32Bit = true;
   virtualisation.docker = {
     enable = true;
-    enableNvidia = true;
+    # enableNvidia = true;
   };
 
   services.x2goserver = {
@@ -103,7 +108,32 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 ];
+  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8090 50000 ];
+  containers.jenkins = {
+    config = { pkgs, ... }: {
+      services.jenkins = {
+        enable = true;
+        port = 8090;
+        extraJavaOptions = [
+          "-Djenkins.model.Jenkins.slaveAgentPort=50000"  # For JNLP agents
+        ];
+      };
+      networking.firewall.allowedTCPPorts = [ 8090 50000 ];
+    };
+    autoStart = true;
+    restartIfChanged = true;
+    privateNetwork = true;
+    hostAddress = "192.168.100.1";
+    localAddress = "192.168.100.2";
+    bindMounts = {
+      # "/nix" = { hostPath = "/nix"; };
+      "/var/lib/jenkins" = { hostPath = "/home/averdow/services/jenkins"; isReadOnly = false; }; 
+    };
+    forwardPorts = [
+      { containerPort = 8090; hostPort = 8090; protocol = "tcp"; }
+      { containerPort = 50000; hostPort = 50000; protocol = "tcp"; }
+    ];
+  };
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
