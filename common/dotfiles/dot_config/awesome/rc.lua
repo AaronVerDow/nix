@@ -523,6 +523,15 @@ awful.rules.rules = {
         }
     },
 
+    { rule = { class = "nix_launcher" },
+        properties = {
+            floating = true,
+            titlebars_enabled = false,
+            placement = awful.placement.centered,
+            width = 800,
+            height = 600
+        }
+    },
 }
 -- >>>
 

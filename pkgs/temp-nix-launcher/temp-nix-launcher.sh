@@ -28,7 +28,7 @@ show_progress() {
     TEMP_OUTPUT=$1
     # Show progress in a terminal window
     if command -v kitty >/dev/null 2>&1; then
-        kitty -e sh -c "tail -f $TEMP_OUTPUT" &
+        kitty --class nix_launcher -e sh -c "tail -f $TEMP_OUTPUT" &
     elif command -v xterm >/dev/null 2>&1; then
         xterm -e sh -c "tail -f $TEMP_OUTPUT" &
     elif command -v gnome-terminal >/dev/null 2>&1; then
