@@ -59,7 +59,8 @@ in
       # Window Management & Desktop Environment
       flashfocus # Focus animations
       nitrogen # Wallpaper manager
-      picom-pijulius # Compositor
+      # picom-pijulius # Compositor
+      picom
       rofi # Application launcher
 
       # File Management
