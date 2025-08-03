@@ -20,7 +20,7 @@ cleanup_exit() {
 build_package() {
     PACKAGE_NAME=$1
     echo "Building $PACKAGE_NAME..."
-    nix build nixpkgs#"$PACKAGE_NAME" 2>&1
+    nom build nixpkgs#"$PACKAGE_NAME" 2>&1
     echo "Build complete."
 }
 
@@ -28,13 +28,7 @@ show_progress() {
     TEMP_OUTPUT=$1
     # Show progress in a terminal window
     if command -v kitty >/dev/null 2>&1; then
-        kitty --class nix_launcher -e sh -c "tail -f $TEMP_OUTPUT" &
-    elif command -v xterm >/dev/null 2>&1; then
-        xterm -e sh -c "tail -f $TEMP_OUTPUT" &
-    elif command -v gnome-terminal >/dev/null 2>&1; then
-        gnome-terminal -- bash -c "tail -f $TEMP_OUTPUT" &
-    elif command -v konsole >/dev/null 2>&1; then
-        konsole --hold -e sh -c "tail -f $TEMP_OUTPUT" &
+        kitty --class nix_launcher -o font_size=10 -e sh -c "tail -f $TEMP_OUTPUT" &
     else
         # Fallback to showing output in terminal
         tail -f "$TEMP_OUTPUT"
@@ -55,6 +49,7 @@ show_and_build() {
     TERMINAL_PID=$!
 
     wait $BG_PID
+    sleep 3
 
     cleanup
     trap - EXIT INT TERM
