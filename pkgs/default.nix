@@ -12,6 +12,7 @@ pkgs: {
   my_fancy-cat = pkgs.callPackage ./my_fancy-cat { };
   my_camset = pkgs.callPackage ./my_camset { };
   satisfactory-file-parser = pkgs.callPackage ./satisfactory-file-parser { };
+  my_freecad = pkgs.callPackage ./freecad { };
 
  awesomeWithWidgets = pkgs.writeShellScriptBin "awesome" ''
     export LUA_PATH="${pkgs.luaPackages.awesome-wm-widgets}/lib/lua/${pkgs.lua.luaversion}/?.lua;''${LUA_PATH:-;;}"

@@ -29,6 +29,7 @@ in
       # Development Tools
       unstable.code-cursor
       satisfactory-file-parser # TypeScript parser for Satisfactory save/blueprint files
+      my_freecad
 
       # Creative & Design Applications
       openscad # Programmatic CAD modeling
