@@ -14,11 +14,12 @@ pkgs: {
   satisfactory-file-parser = pkgs.callPackage ./satisfactory-file-parser { };
   my_freecad = pkgs.callPackage ./freecad { };
 
- awesomeWithWidgets = pkgs.writeShellScriptBin "awesome" ''
+  awesomeWithWidgets = pkgs.writeShellScriptBin "awesome" ''
     export LUA_PATH="${pkgs.luaPackages.awesome-wm-widgets}/lib/lua/${pkgs.lua.luaversion}/?.lua;''${LUA_PATH:-;;}"
     export LUA_CPATH="${pkgs.luaPackages.awesome-wm-widgets}/lib/lua/${pkgs.lua.luaversion}/?.so;''${LUA_CPATH:-;;}"
     echo "$LUA_PATH" > /tmp/awesome.log
     echo "$LUA_CPATH" >> /tmp/awesome.log
     exec ${pkgs.awesome}/bin/awesome "$@" &>> /tmp/awesome.log
   '';
+  temp-nix-launcher = pkgs.callPackage ./temp-nix-launcher { };
 }
