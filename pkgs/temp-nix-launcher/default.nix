@@ -17,6 +17,7 @@ pkgs.stdenv.mkDerivation {
   dontBuild = true;
 
   installPhase = ''
+    # Install binary
     mkdir -p $out/bin
     cp $src/temp-nix-launcher.sh $out/bin/temp-nix-launcher
     chmod +x $out/bin/temp-nix-launcher
@@ -27,5 +28,7 @@ pkgs.stdenv.mkDerivation {
         pkgs.nix
       ]
     }
+
+    cp -r $src/share $out
   '';
 }
