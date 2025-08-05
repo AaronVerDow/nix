@@ -82,6 +82,9 @@
     ".bashrc".source = ./dotfiles/dot_bashrc.sh;
     ".bash_profile".source = ./dotfiles/dot_bash_profile.sh;
     ".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
+    ".config/nixpkgs/config.nix".text = ''
+      { allowUnfree = true; }
+    '';
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
