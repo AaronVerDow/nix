@@ -20,7 +20,7 @@ cleanup_exit() {
 build_package() {
     PACKAGE_NAME=$1
     echo "Building $PACKAGE_NAME..."
-    nom build nixpkgs#"$PACKAGE_NAME" 2>&1
+    nom build --impure nixpkgs#"$PACKAGE_NAME" 2>&1
     echo "Build complete."
 }
 
@@ -65,4 +65,4 @@ PACKAGE_NAME="$1"
 show_and_build "$PACKAGE_NAME"
 
 # Execute the package using nix run with nixpkgs
-nix run nixpkgs#"$PACKAGE_NAME" &
+nix run --impure nixpkgs#"$PACKAGE_NAME" &
