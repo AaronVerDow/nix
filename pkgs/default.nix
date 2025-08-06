@@ -22,4 +22,5 @@ pkgs: {
     exec ${pkgs.awesome}/bin/awesome "$@" &>> /tmp/awesome.log
   '';
   nixxrun = pkgs.callPackage ./nixxrun { };
+  desktop-entries = pkgs.callPackage ./desktop_entries { };
 }

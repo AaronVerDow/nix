@@ -1,19 +1,12 @@
-{
-  pkgs ? import <nixpkgs> { },
-  lib ? pkgs.lib,
-}:
+{ pkgs ? import <nixpkgs> { } }:
 
 let
-  desktopCollector = {
-    name,
-    buildInputs ? [],
-    ...
-  } @ args:
+  desktopCollector = { name, buildInputs ? [ ], ... } @ args:
     pkgs.stdenv.mkDerivation ({
       inherit name;
       phases = ["installPhase"];
       
-      buildInputs = args.buildInputs or [];
+      buildInputs = buildInputs;
       
       installPhase = ''
         mkdir -p $out/share
@@ -28,7 +21,7 @@ let
           fi
         done
       '';
-    } // removeAttrs args ["buildInputs"]);
+    } // (removeAttrs args ["buildInputs"]));
 in
 
 pkgs.stdenv.mkDerivation {
@@ -59,4 +52,8 @@ pkgs.stdenv.mkDerivation {
     }
 
   '';
+
+  passthru = {
+    desktopCollector = args: desktopCollector args;
+  };
 }
