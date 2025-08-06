@@ -19,7 +19,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [ pkg-config ];
 
-  buildInputs = [
+  propagatedBuildInputs = [
     pkgs.bc
     pkgs.imagemagick
   ];
@@ -29,7 +29,6 @@ stdenv.mkDerivation (finalAttrs: {
 
     mkdir -p $out/bin
     cp bin/openscad-render $out/bin/
-    # cp bin/openscad-preview $out/bin/
 
     runHook postInstall
   '';
