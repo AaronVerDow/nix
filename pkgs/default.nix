@@ -21,5 +21,5 @@ pkgs: {
     echo "$LUA_CPATH" >> /tmp/awesome.log
     exec ${pkgs.awesome}/bin/awesome "$@" &>> /tmp/awesome.log
   '';
-  temp-nix-launcher = pkgs.callPackage ./temp-nix-launcher { };
+  nixxrun = pkgs.callPackage ./nixxrun { };
 }
