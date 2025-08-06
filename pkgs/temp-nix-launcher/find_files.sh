@@ -11,7 +11,6 @@ rsync -vrL "$store/share/applications" "$tmp"
 chmod -R +w share/ "$tmp"
 
 while read -r file; do
-    sed -i '/\[/d' "$file" # strip translations
     sed -i 's/^Name=/Name=Nix Run /' "$file"
     sed -i "s/^Exec=.*/Exec=temp-nix-launcher $program/" "$file"
     sed -i '/TryExec/d' "$file"
