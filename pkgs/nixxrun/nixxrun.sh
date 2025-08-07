@@ -49,7 +49,7 @@ show_and_build() {
     TERMINAL_PID=$!
 
     wait $BG_PID
-    sleep 3
+    sleep 5
 
     cleanup
     trap - EXIT INT TERM
