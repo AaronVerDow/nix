@@ -1,7 +1,7 @@
 { pkgs }:
 
 pkgs.nixxrun.desktopCollector {
-  name = "desktop-entries";
+  name = "nixxrun-entries";
   buildInputs = with pkgs; [ 
     blender 
     gimp 
