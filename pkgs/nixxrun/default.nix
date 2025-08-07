@@ -13,7 +13,7 @@ let
         tmp=$( mktemp -d )
         for pkg in ${toString buildInputs}; do
           # there has to be a better way
-          package_name=$( basename $pkg | cut -d- -f2- ) 
+          package_name=$( basename $pkg | cut -d- -f2- | sed 's/-[0-9].*//' )
           mkdir -p $tmp/share
           if [ -d "$pkg/share/icons" ]; then
             ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/icons $tmp/share
@@ -31,6 +31,7 @@ let
           find $tmp/share/applications -type f | while read file; do
               sed -i 's/^Name=/Name=${name_prefix} /' "$file"
               sed -i "s/^Exec=.*/Exec=nixxrun $package_name/" "$file"
+              sed -i "s/^Icon=/Icon=${file_prefix}/" "$file"
               sed -i '/TryExec/d' "$file"
           done
 
