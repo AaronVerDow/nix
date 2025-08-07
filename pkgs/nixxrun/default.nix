@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> { } }:
 
 let
-  desktopCollector = { name, buildInputs ? [ ], ... } @ args:
+  desktopCollector = { name, buildInputs ? [ ], file_prefix ? "nxr_", name_prefix ? "Nix Run", ... } @ args:
     pkgs.stdenv.mkDerivation ({
       inherit name;
       phases = ["installPhase"];
@@ -12,6 +12,8 @@ let
         set -x
         tmp=$( mktemp -d )
         for pkg in ${toString buildInputs}; do
+          # there has to be a better way
+          package_name=$( basename $pkg | cut -d- -f2- ) 
           mkdir -p $tmp/share
           if [ -d "$pkg/share/icons" ]; then
             ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/icons $tmp/share
@@ -20,14 +22,24 @@ let
             ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/applications $tmp/share
           fi
 
-          # rename files here 
+          # add file_prefix to files to avoid collisions
+          find $tmp/share -type f | while read file; do
+            mv "$file" "$( dirname $file )/${file_prefix}$( basename $file )"
+          done
+
+          # modify desktop entries
+          find $tmp/share/applications -type f | while read file; do
+              sed -i 's/^Name=/Name=${name_prefix} /' "$file"
+              sed -i "s/^Exec=.*/Exec=nixxrun $package_name/" "$file"
+              sed -i '/TryExec/d' "$file"
+          done
 
           mkdir -p $out/share
           ${pkgs.rsync}/bin/rsync -r $tmp/share/* $out/share
           rm -r $tmp/share/*
         done
       '';
-    } // (removeAttrs args ["buildInputs"]));
+    } // (removeAttrs args ["buildInputs" "file_prefix" "name_prefix"]));
 in
 
 pkgs.stdenv.mkDerivation {
