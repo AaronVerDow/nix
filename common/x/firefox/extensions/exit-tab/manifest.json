@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "Exit Tab",
+  "version": "1.0",
+  "description": "Closes the current tab when 'exit' is typed in the address bar",
+  "permissions": [
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }
+} 

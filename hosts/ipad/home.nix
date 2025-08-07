@@ -4,7 +4,6 @@
   imports = [
     ../../common/home.nix
     ../../common/x/home.nix
-    ../../common/x/extra.nix
   ];
   home.packages = with pkgs; [
     (writeShellScriptBin "backlight" ''
