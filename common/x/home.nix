@@ -30,7 +30,6 @@ in
       unstable.code-cursor
       satisfactory-file-parser # TypeScript parser for Satisfactory save/blueprint files
       nixxrun
-      nixxrun-entries
 
       # Creative & Design Applications
       openscad # Programmatic CAD modeling
@@ -142,6 +141,14 @@ in
         ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper
         set_wallpaper
       '')
+
+      (nixxrun.launcher { buildInputs = [ blender ]; })
+      (nixxrun.launcher { buildInputs = [ gimp ]; })
+      (nixxrun.launcher { buildInputs = [ inkscape ]; })
+      (nixxrun.launcher { buildInputs = [ freecad ]; })
+      (nixxrun.launcher { buildInputs = [ drawing ]; })
+      (nixxrun.launcher { buildInputs = [ via ]; })
+      (nixxrun.launcher { buildInputs = [ jetbrains.idea-ultimate ]; })
     ])
   ];
 
