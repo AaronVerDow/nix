@@ -9,15 +9,22 @@ let
       buildInputs = buildInputs;
       
       installPhase = ''
-        mkdir -p $out/share
+        set -x
+        tmp=$( mktemp -d )
         for pkg in ${toString buildInputs}; do
+          mkdir -p $tmp/share
           if [ -d "$pkg/share/icons" ]; then
-            ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/icons $out/share/
+            ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/icons $tmp/share
           fi
           if [ -d "$pkg/share/applications" ]; then
-            ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/applications $out/share/
+            ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/applications $tmp/share
           fi
-          chmod -R +w "$out/share"
+
+          # rename files here 
+
+          mkdir -p $out/share
+          ${pkgs.rsync}/bin/rsync -r $tmp/share/* $out/share
+          rm -r $tmp/share/*
         done
       '';
     } // (removeAttrs args ["buildInputs"]));
