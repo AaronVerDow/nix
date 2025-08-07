@@ -142,13 +142,13 @@ in
         set_wallpaper
       '')
 
-      (nixxrun.launcher { buildInputs = [ blender ]; })
-      (nixxrun.launcher { buildInputs = [ gimp ]; })
-      (nixxrun.launcher { buildInputs = [ inkscape ]; })
-      (nixxrun.launcher { buildInputs = [ freecad ]; })
-      (nixxrun.launcher { buildInputs = [ drawing ]; })
-      (nixxrun.launcher { buildInputs = [ via ]; })
-      (nixxrun.launcher { buildInputs = [ jetbrains.idea-ultimate ]; })
+      (nixxrun.launcher { name = "nxr_blender"; buildInputs = [ blender ]; })
+      (nixxrun.launcher { name = "nxr_gimp"; buildInputs = [ gimp ]; })
+      (nixxrun.launcher { name = "nxr_inskcape"; buildInputs = [ inkscape ]; })
+      (nixxrun.launcher { name = "nxr_freecad"; buildInputs = [ freecad ]; })
+      (nixxrun.launcher { name = "nxr_drawing"; buildInputs = [ drawing ]; })
+      (nixxrun.launcher { name = "nxr_via"; buildInputs = [ via ]; })
+      (nixxrun.launcher { name = "nxr_jetultimate"; buildInputs = [ jetbrains.idea-ultimate ]; })
     ])
   ];
 
