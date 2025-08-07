@@ -12,13 +12,12 @@ let
         mkdir -p $out/share
         for pkg in ${toString buildInputs}; do
           if [ -d "$pkg/share/icons" ]; then
-            mkdir -p $out/share/icons
-            cp -r "$pkg/share/icons/"* $out/share/icons/
+            ${pkgs.rsync}/bin/rsync -rL "$pkg/share/icons" $out/share/
           fi
           if [ -d "$pkg/share/applications" ]; then
-            mkdir -p $out/share/applications
-            cp -r "$pkg/share/applications/"* $out/share/applications/
+            ${pkgs.rsync}/bin/rsync -rL "$pkg/share/applications" $out/share/
           fi
+          chmod -R +w "$out/share"
         done
       '';
     } // (removeAttrs args ["buildInputs"]));
