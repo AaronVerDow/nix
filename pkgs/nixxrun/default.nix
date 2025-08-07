@@ -12,10 +12,10 @@ let
         mkdir -p $out/share
         for pkg in ${toString buildInputs}; do
           if [ -d "$pkg/share/icons" ]; then
-            ${pkgs.rsync}/bin/rsync -rL "$pkg/share/icons" $out/share/
+            ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/icons $out/share/
           fi
           if [ -d "$pkg/share/applications" ]; then
-            ${pkgs.rsync}/bin/rsync -rL "$pkg/share/applications" $out/share/
+            ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/applications $out/share/
           fi
           chmod -R +w "$out/share"
         done
