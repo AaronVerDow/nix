@@ -31,7 +31,7 @@ in
       satisfactory-file-parser # TypeScript parser for Satisfactory save/blueprint files
       my_freecad
       nixxrun
-      desktop-entries
+      nixxrun-entries
 
       # Creative & Design Applications
       openscad # Programmatic CAD modeling
