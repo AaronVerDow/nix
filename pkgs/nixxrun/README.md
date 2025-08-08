@@ -31,3 +31,23 @@ Alternatively, build the desktop-collector packages on a cache server first to a
 
 Putting individual programs into their own packages will reduce the amount of packages that need to be built after a change.
 
+# Todo
+
+* Generic name is not cached
+  * Automatically generate unique names
+* Add nixxrun as a propagated build input
+* Add warnings and errors
+  * No desktop files or icons
+  * No app definition
+  * Too many desktop files
+* Confirm sync with system flake
+* Add unstable option
+* Adjustable log timeout
+* Handle window actions within desktop files
+* Handle translations
+* Use generic float and size
+* Show icon before log
+* Add options for other terminals
+* Add links to cache server setup
+* Document garbage collection demo
+* Record gif
