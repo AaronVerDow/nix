@@ -6,7 +6,7 @@ let
   launcher =
     {
       name ? "nixxrun-launcher",
-      buildInputs ? [ ],
+      nativeBuildInputs ? [ ],
       file_prefix ? "nxr_",
       name_prefix ? "Nix Run",
       ...
@@ -16,12 +16,12 @@ let
         name = if args ? name then args.name else name;
         phases = [ "installPhase" ];
 
-        buildInputs = buildInputs;
-        propagatedBuildInputs = [ pkgs.nixxrun ];
+        nativeBuildInputs = nativeBuildInputs;
+        buildInputs = [ pkgs.nixxrun ];
 
         installPhase = ''
           tmp=$( mktemp -d )
-          for pkg in ${toString buildInputs}; do
+          for pkg in ${toString nativeBuildInputs}; do
             # there has to be a better way
             package_name=$( basename $pkg | cut -d- -f2- | sed 's/-[0-9].*//' )
             mkdir -p $tmp/share
@@ -52,7 +52,7 @@ let
         '';
       }
       // (removeAttrs args [
-        "buildInputs"
+        "nativeBuildInputs"
         "file_prefix"
         "name_prefix"
       ])

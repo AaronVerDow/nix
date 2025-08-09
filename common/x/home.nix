@@ -143,27 +143,27 @@ in
 
       (nixxrun.launcher {
         name = "nxr_blender";
-        buildInputs = [ blender ];
+        nativeBuildInputs = [ blender ];
       })
       (nixxrun.launcher {
         name = "nxr_gimp";
-        buildInputs = [ gimp ];
+        nativeBuildInputs = [ gimp ];
       })
       (nixxrun.launcher {
         name = "nxr_inskcape";
-        buildInputs = [ inkscape ];
+        nativeBuildInputs = [ inkscape ];
       })
       (nixxrun.launcher {
         name = "nxr_freecad";
-        buildInputs = [ freecad ];
+        nativeBuildInputs = [ freecad ];
       })
       (nixxrun.launcher {
         name = "nxr_drawing";
-        buildInputs = [ drawing ];
+        nativeBuildInputs = [ drawing ];
       })
       (nixxrun.launcher {
         name = "nxr_via";
-        buildInputs = [ via ];
+        nativeBuildInputs = [ via ];
       })
     ])
   ];
