@@ -5,7 +5,7 @@
 let
   launcher =
     {
-      name ? "nixxrun-launcher",
+      name ? "",
       nativeBuildInputs ? [ ],
       file_prefix ? "nxr_",
       name_prefix ? "Nix Run",
@@ -13,7 +13,19 @@ let
     }@args:
     pkgs.stdenv.mkDerivation (
       {
-        name = if args ? name then args.name else name;
+        name = if args ? name then args.name else 
+          if (builtins.length nativeBuildInputs > 0) then
+            let
+              # this needs work
+              firstPkg = builtins.elemAt nativeBuildInputs 0;
+              baseName = builtins.baseNameOf firstPkg;
+              stringName = builtins.toString baseName;
+              unsafe = builtins.unsafeDiscardStringContext stringName;
+              matches = builtins.match "(.*)-(.*)-(.*)" unsafe;
+              shortName = builtins.elemAt matches 1;
+            in
+            "nix-run-x_${shortName}"
+          else "nix-run-x_empty";
         phases = [ "installPhase" ];
 
         nativeBuildInputs = nativeBuildInputs;
