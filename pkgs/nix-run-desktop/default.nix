@@ -23,8 +23,9 @@ let
               unsafe = builtins.unsafeDiscardStringContext stringName;
               matches = builtins.match "(.*)-(.*)-(.*)" unsafe;
               shortName = builtins.elemAt matches 1;
+              version = builtins.elemAt matches 2;
             in
-            "nix-run-desktop_${shortName}"
+            "nix-run-desktop_${shortName}-${version}"
           else "nix-run-desktop_EMPTY";
         phases = [ "installPhase" ];
 
