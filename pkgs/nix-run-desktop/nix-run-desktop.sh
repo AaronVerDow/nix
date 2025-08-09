@@ -28,7 +28,8 @@ show_progress() {
     TEMP_OUTPUT=$1
     # Show progress in a terminal window
     if command -v kitty >/dev/null 2>&1; then
-        kitty --class nix_launcher -o font_size=10 -e sh -c "tail -f $TEMP_OUTPUT" &
+        # kitty --class nix_launcher -o font_size=10 -e sh -c "tail -f $TEMP_OUTPUT" &
+        kitty -e sh -c "tail -f $TEMP_OUTPUT" &
     else
         # Fallback to showing output in terminal
         tail -f "$TEMP_OUTPUT"
