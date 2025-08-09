@@ -1,4 +1,4 @@
-# Nix X Run
+# Nix Run Desktop
 
 Temporarily run X packages in Nix without keeping a shell open.
 
@@ -7,23 +7,23 @@ Temporarily run X packages in Nix without keeping a shell open.
 
 This allows easy access to X programs that are not used frequently. They will be installed as needed and will be removed by garbage collection.
 
-## nixxrun
+## nix-run-desktop
 
-Usage: `nixxrun PACKAGE`
+Usage: `nix-run-desktop PACKAGE`
 
-Builds and runs PACKAGE. A floating shell is launched to show build progress. It closes automatically as soon as the program launches. Programs launch detached from the shell `nixxrun` was called from so the original terminal window can be closed.
+Builds and runs PACKAGE. A floating shell is launched to show build progress. It closes automatically as soon as the program launches. Programs launch detached from the shell `nix-run-desktop` was called from so the original terminal window can be closed.
 
-`nixxrun` can also be used in desktop files.
+`nix-run-desktop` can also be used in desktop files.
 
 ## desktop-collector
 
-Builds a Nix package containing `nixxrun` desktop files.
+Builds a Nix package containing `nix-run-desktop` desktop files.
 
 This will iterate over all build inputs and:
 
 * Copy all icons and desktop files to output package
 * Rename the files to avoid conflicts
-* Modify desktop files to use `nixxrun`
+* Modify desktop files to use `nix-run-desktop`
 
 During package build the target program will be used as a build input. It will be built on the system every time the desktop-collector package changes. The packages can then be removed using garbage collection. 
 
@@ -33,9 +33,7 @@ Putting individual programs into their own packages will reduce the amount of pa
 
 # Todo
 
-* Generic name is not cached
-  * Automatically generate unique names
-* Add nixxrun as a propagated build input
+* Options for hash and version?
 * Add warnings and errors
   * No desktop files or icons
   * No app definition

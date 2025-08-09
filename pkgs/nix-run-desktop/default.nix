@@ -7,7 +7,7 @@ let
     {
       name ? "",
       nativeBuildInputs ? [ ],
-      file_prefix ? "nxr_",
+      file_prefix ? "nixrd_",
       name_prefix ? "Nix Run",
       ...
     }@args:
@@ -24,12 +24,12 @@ let
               matches = builtins.match "(.*)-(.*)-(.*)" unsafe;
               shortName = builtins.elemAt matches 1;
             in
-            "nix-run-x_${shortName}"
-          else "nix-run-x_empty";
+            "nix-run-desktop_${shortName}"
+          else "nix-run-desktop_EMPTY";
         phases = [ "installPhase" ];
 
         nativeBuildInputs = nativeBuildInputs;
-        buildInputs = [ pkgs.nixxrun ];
+        buildInputs = [ pkgs.nix-run-desktop ];
 
         installPhase = ''
           tmp=$( mktemp -d )
@@ -52,7 +52,7 @@ let
             # modify desktop entries
             find $tmp/share/applications -type f | while read file; do
                 sed -i 's/^Name=/Name=${name_prefix} /' "$file"
-                sed -i "s#^Exec=.*#Exec=${pkgs.nixxrun}/bin/nixxrun $package_name#" "$file"
+                sed -i "s#^Exec=.*#Exec=${pkgs.nix-run-desktop}/bin/nix-run-desktop $package_name#" "$file"
                 sed -i "s/^Icon=/Icon=${file_prefix}/" "$file"
                 sed -i '/TryExec/d' "$file"
             done
@@ -72,7 +72,7 @@ let
 in
 
 pkgs.stdenv.mkDerivation {
-  pname = "nixxrun";
+  pname = "nix-run-desktop";
   version = "1.0.0";
 
   src = ./.;
@@ -88,9 +88,9 @@ pkgs.stdenv.mkDerivation {
   installPhase = ''
     # Install binary
     mkdir -p $out/bin
-    cp $src/nixxrun.sh $out/bin/nixxrun
-    chmod +x $out/bin/nixxrun
-    wrapProgram $out/bin/nixxrun --prefix PATH : ${
+    cp $src/nix-run-desktop.sh $out/bin/nix-run-desktop
+    chmod +x $out/bin/nix-run-desktop
+    wrapProgram $out/bin/nix-run-desktop --prefix PATH : ${
       pkgs.lib.makeBinPath [
         pkgs.bash
         pkgs.kitty

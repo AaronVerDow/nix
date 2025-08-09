@@ -141,22 +141,22 @@ in
         set_wallpaper
       '')
 
-      (nixxrun.launcher {
+      (nix-run-desktop.launcher {
         nativeBuildInputs = [ blender ];
       })
-      (nixxrun.launcher {
+      (nix-run-desktop.launcher {
         nativeBuildInputs = [ gimp ];
       })
-      (nixxrun.launcher {
+      (nix-run-desktop.launcher {
         nativeBuildInputs = [ inkscape ];
       })
-      (nixxrun.launcher {
+      (nix-run-desktop.launcher {
         nativeBuildInputs = [ freecad ];
       })
-      (nixxrun.launcher {
+      (nix-run-desktop.launcher {
         nativeBuildInputs = [ drawing ];
       })
-      (nixxrun.launcher {
+      (nix-run-desktop.launcher {
         nativeBuildInputs = [ via ];
       })
     ])
