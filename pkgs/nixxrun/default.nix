@@ -40,7 +40,7 @@ let
             # modify desktop entries
             find $tmp/share/applications -type f | while read file; do
                 sed -i 's/^Name=/Name=${name_prefix} /' "$file"
-                sed -i "s/^Exec=.*/Exec=${pkgs.nixxrun}/bin/nixxrun $package_name/" "$file"
+                sed -i "s#^Exec=.*#Exec=${pkgs.nixxrun}/bin/nixxrun $package_name#" "$file"
                 sed -i "s/^Icon=/Icon=${file_prefix}/" "$file"
                 sed -i '/TryExec/d' "$file"
             done
