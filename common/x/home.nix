@@ -29,7 +29,6 @@ in
       # Development Tools
       unstable.code-cursor
       satisfactory-file-parser # TypeScript parser for Satisfactory save/blueprint files
-      nixxrun
 
       # Creative & Design Applications
       openscad # Programmatic CAD modeling

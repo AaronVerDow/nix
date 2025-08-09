@@ -17,6 +17,7 @@ let
         phases = [ "installPhase" ];
 
         buildInputs = buildInputs;
+        propagatedBuildInputs = [ pkgs.nixxrun ];
 
         installPhase = ''
           tmp=$( mktemp -d )
