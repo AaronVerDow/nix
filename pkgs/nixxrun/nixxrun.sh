@@ -63,6 +63,5 @@ show_and_build "$PACKAGE_NAME"
 # Execute the package using nix run with nixpkgs
 nix run --impure nixpkgs#"$PACKAGE_NAME" &
 
-sleep 5
 cleanup
 trap - EXIT INT TERM
