@@ -126,7 +126,6 @@
     restic
     screen
     kitty
-    ollama
     apparmor-parser
   ];
 
@@ -208,13 +207,6 @@
   # Reduce swappiness to avoid excessive swapping
   boot.kernel.sysctl = {
     "vm.swappiness" = 20; # Default 60, lower for less swapping
-  };
-
-  services.ollama = {
-    enable = true;
-    host = "127.0.0.1";
-    port = 11434;
-    models = "gemma:2b";
   };
 
   # this will trigger additional configuration in ./apparmor.nix
