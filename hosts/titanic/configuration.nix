@@ -71,7 +71,7 @@
   nixpkgs.config.cudaSupport = true;
   services.ollama = {
     enable = true;
-    host = "127.0.0.1";
+    host = "10.44.12.10";
     port = 11434;
     acceleration = "cuda";
     environmentVariables = {
