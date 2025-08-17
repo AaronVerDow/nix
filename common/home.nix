@@ -40,6 +40,7 @@
       nixfmt-rfc-style
       my_fancy-cat
       aider-chat-full
+      qman
 
       texliveFull
       nix-search-cli

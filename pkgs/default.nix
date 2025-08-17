@@ -13,6 +13,7 @@ pkgs: {
   my_camset = pkgs.callPackage ./my_camset { };
   satisfactory-file-parser = pkgs.callPackage ./satisfactory-file-parser { };
   my_freecad = pkgs.callPackage ./freecad { };
+  qman = pkgs.callPackage ./qman { };
 
   awesomeWithWidgets = pkgs.writeShellScriptBin "awesome" ''
     export LUA_PATH="${pkgs.luaPackages.awesome-wm-widgets}/lib/lua/${pkgs.lua.luaversion}/?.lua;''${LUA_PATH:-;;}"
