@@ -18,6 +18,8 @@
   # Secondary flag
   # 291a:a392
 
+  services.tailscale.enable = true;
+
   services.kanata-config = {
     enable = true;
     internalKeyboardDeviceFilter = "AT Translated Set 2 keyboard";
