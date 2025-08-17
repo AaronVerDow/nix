@@ -69,6 +69,7 @@
     userEmail = "aaron@verdow.com";
     extraConfig = {
       pager.branch = false;
+      push.autoSetupRemote = true;
     };
   };
 
