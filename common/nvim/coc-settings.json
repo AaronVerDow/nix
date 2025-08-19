@@ -29,7 +29,7 @@
       }
     }
   },
-  "java.jdt.ls.java.home": "${pkgs.jdk}/lib/openjdk",
+  "java.jdt.ls.java.home": "${pkgs.jdk17}/lib/openjdk",
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.import.gradle.enabled": true,
   "java.import.maven.enabled": true,
