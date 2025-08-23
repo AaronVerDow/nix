@@ -29,7 +29,22 @@
   };
   services.redshift.enable = true;
   services.flatpak.enable = true;
-  services.tumbler.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    # Thumbnailer packages
+    ffmpeg-headless
+    ffmpegthumbnailer
+    imagemagick
+    ghostscript # required by imagemagick to convert pdf files
+
+    (writeTextDir "share/thumbnailers/imagemagick-pdf.thumbnailer" ''
+      [Thumbnailer Entry]
+      TryExec=${pkgs.imagemagick}/bin/convert
+      Exec=${pkgs.imagemagick}/bin/convert %i[0] -background "#FFFFFF" -flatten -thumbnail %s %o
+      MimeType=application/pdf;application/x-pdf;image/pdf;
+    '')
+
+  ];
 
   xdg.portal = {
     enable = true;
