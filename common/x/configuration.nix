@@ -8,6 +8,7 @@
 }:
 let
   webpthumbs = pkgs.writeShellScriptBin "webpthumbs" ''
+    # I think I may be missing a library
     if tempfile=$(mktemp) && ${pkgs.libwebp}/bin/webpmux -get frame 1 "$1" -o "$tempfile"; then
       ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$tempfile" "$2"
     else
@@ -48,7 +49,7 @@ in
     ghostscript # required by imagemagick to convert pdf files
 
     # https://docs.xfce.org/xfce/tumbler/available_plugins#customized_thumbnailer_for_text-based_documents
-    (pkgs.writeTextDir "share/thumbnailers/webp.thumbnailer" ''
+    (pkgs.writeTextDir "share/thumbnailers/imagemagick-webp.thumbnailer" ''
       [Thumbnailer Entry]
       TryExec=${webpthumbs}/bin/webpthumbs
       Exec=${webpthumbs}/bin/webpthumbs %i %o %s
@@ -60,6 +61,24 @@ in
       TryExec=${pkgs.imagemagick}/bin/convert
       Exec=${pkgs.imagemagick}/bin/convert %i[0] -background "#FFFFFF" -flatten -thumbnail %s %o
       MimeType=application/pdf;application/x-pdf;image/pdf;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/openscad-scad.thumbnailer" ''
+      [Thumbnailer Entry]
+      TryExec=${pkgs.openscad}/bin/openscad
+      Exec=${pkgs.openscad}/bin/openscad %i --viewall --colorscheme "Tomorrow Night" --autocenter --imgsize %s,%s -o %o
+      MimeType=application/x-openscad;
+    '')
+
+    (pkgs.writeTextDir "share/mime/application/x-openscad.xml" ''
+      <?xml version="1.0" encoding="UTF-8"?>
+      <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+        <mime-type type="application/x-openscad">
+          <comment>OpenSCAD 3D model</comment>
+          <glob pattern="*.scad"/>
+          <sub-class-of type="text/plain"/>
+        </mime-type>
+      </mime-info>
     '')
 
   ];
