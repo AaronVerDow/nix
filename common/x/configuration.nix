@@ -29,6 +29,7 @@
   };
   services.redshift.enable = true;
   services.flatpak.enable = true;
+  services.tumbler.enable = true;
 
   xdg.portal = {
     enable = true;
