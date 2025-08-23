@@ -84,6 +84,11 @@
   };
 
   home.file.".config/nvim/coc-settings.json" = {
-    source = ./coc-settings.json;
+    text = builtins.toJSON (
+      builtins.fromJSON (builtins.readFile ./coc-settings.json)
+      // {
+        java.jdt.ls.java.home = "${pkgs.jdk17}/lib/openjdk";
+      }
+    );
   };
 }
