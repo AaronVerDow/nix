@@ -6,6 +6,16 @@
   pkgs,
   ...
 }:
+let
+  webpthumbs = pkgs.writeShellScriptBin "webpthumbs" ''
+    if tempfile=$(mktemp) && ${pkgs.libwebp}/bin/webpmux -get frame 1 "$1" -o "$tempfile"; then
+      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$tempfile" "$2"
+    else
+      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$1" "$2"
+    fi
+    [ -f "$tempfile" ] && rm "$tempfile"
+  '';
+in
 {
   qt = {
     enable = true;
@@ -37,7 +47,15 @@
     imagemagick
     ghostscript # required by imagemagick to convert pdf files
 
-    (writeTextDir "share/thumbnailers/imagemagick-pdf.thumbnailer" ''
+    # https://docs.xfce.org/xfce/tumbler/available_plugins#customized_thumbnailer_for_text-based_documents
+    (pkgs.writeTextDir "share/thumbnailers/webp.thumbnailer" ''
+      [Thumbnailer Entry]
+      TryExec=${webpthumbs}/bin/webpthumbs
+      Exec=${webpthumbs}/bin/webpthumbs %i %o %s
+      MimeType=image/webp;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/imagemagick-pdf.thumbnailer" ''
       [Thumbnailer Entry]
       TryExec=${pkgs.imagemagick}/bin/convert
       Exec=${pkgs.imagemagick}/bin/convert %i[0] -background "#FFFFFF" -flatten -thumbnail %s %o
