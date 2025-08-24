@@ -20,6 +20,23 @@ let
     echo "$0 $@" >> /tmp/thumbs
     ${pkgs.openscad}/bin/openscad $1 --viewall --colorscheme "Tomorrow Night" --autocenter --imgsize $3,$3 -o $2 &>> /tmp/thumbs
   '';
+  thumbs-stl = pkgs.writeShellScriptBin "thumbs-stl" ''
+    if (($# < 3)); then
+      echo "$0: input_file_name output_file_name size"
+      exit 1
+    fi
+     
+    INPUT_FILE=$1
+    OUTPUT_FILE=$2
+    SIZE=$3
+     
+    TEMP=$(mktemp --directory --tmpdir tumbler-stl-XXXXXX) || exit 1
+    cp "$INPUT_FILE" "$TEMP/source.stl"
+    echo 'import("source.stl", convexity=10);' > "$TEMP/thumbnail.scad"
+    ${pkgs.openscad}/bin/openscad --viewall --autocenter --imgsize "$SIZE,$SIZE" -o "$TEMP/scad.png" "$TEMP/thumbnail.scad"
+    ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#FFFFE5" "$OUTPUT_FILE"
+    rm -rf "$TEMP"
+  '';
 in
 {
   qt = {
@@ -66,6 +83,12 @@ in
       TryExec=${pkgs.imagemagick}/bin/convert
       Exec=${pkgs.imagemagick}/bin/convert %i[0] -background "#FFFFFF" -flatten -thumbnail %s %o
       MimeType=application/pdf;application/x-pdf;image/pdf;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/openscad-stl.thumbnailer" ''
+      [Thumbnailer Entry]
+      Exec=${thumbs-stl}/bin/thumbs-stl %i %o %s
+      MimeType=model/stl;
     '')
 
     (pkgs.writeTextDir "share/thumbnailers/openscad-scad.thumbnailer" ''
