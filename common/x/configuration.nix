@@ -16,6 +16,10 @@ let
     fi
     [ -f "$tempfile" ] && rm "$tempfile"
   '';
+  thumbs-openscad = pkgs.writeShellScriptBin "thumbs-openscad" ''
+    echo "$0 $@" >> /tmp/thumbs
+    ${pkgs.openscad}/bin/openscad $1 --viewall --colorscheme "Tomorrow Night" --autocenter --imgsize $3,$3 -o $2 &>> /tmp/thumbs
+  '';
 in
 {
   qt = {
@@ -65,8 +69,7 @@ in
 
     (pkgs.writeTextDir "share/thumbnailers/openscad-scad.thumbnailer" ''
       [Thumbnailer Entry]
-      TryExec=${pkgs.openscad}/bin/openscad
-      Exec=${pkgs.openscad}/bin/openscad %i --viewall --colorscheme "Tomorrow Night" --autocenter --imgsize %s,%s -o %o
+      Exec=${thumbs-openscad}/bin/thumbs-openscad %i %o %s
       MimeType=application/x-openscad;
     '')
 
