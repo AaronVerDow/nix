@@ -58,6 +58,35 @@ let
       rm "$tempFile"
     }
   '';
+  thumbs-xcf = pkgs.writeShellScriptBin "thumbs-xcf" ''
+    INPUT=$1
+    OUTPUT=$2
+    SIZE=$3
+
+    ${pkgs.gimp}/bin/gimp -i -d -f -s -b - <<EOF
+    (let* ((in  "$INPUT")
+           (out "$OUTPUT")
+           (size $SIZE)
+           (img  (car (gimp-file-load RUN-NONINTERACTIVE in in)))
+           (w    (car (gimp-image-width  img)))
+           (h    (car (gimp-image-height img)))
+           (scale (if (> w h) (/ size w) (/ size h)))
+           (neww (inexact->exact (ceiling (* w scale))))
+           (newh (inexact->exact (ceiling (* h scale))))
+           (layer (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE))))
+      (gimp-image-scale img neww newh)
+      ;; file-png-save: (run-mode image drawable filename raw-filename
+      ;;                        interlace compression bkgd gama offs phys time)
+      (file-png-save RUN-NONINTERACTIVE img layer out out
+                     0         ; interlace off
+                     9         ; compression (0..9)
+                     0 0 0 0 0 ; no extra chunks
+      )
+      (gimp-image-delete img)
+    )
+    (gimp-quit 0)
+    EOF
+  '';
 in
 {
   qt = {
@@ -122,6 +151,12 @@ in
       [Thumbnailer Entry]
       Exec=${thumbs-openscad}/bin/thumbs-openscad %i %o %s
       MimeType=application/x-openscad;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/gimp-xcf.thumbnailer" ''
+      [Thumbnailer Entry]
+      Exec=${thumbs-xcf}/bin/thumbs-xcf %i %o %s
+      MimeType=image/x-xcf;
     '')
 
     (pkgs.writeTextDir "share/mime/packages/openscad.xml" ''
