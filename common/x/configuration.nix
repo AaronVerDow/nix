@@ -52,9 +52,8 @@ let
     POINTSIZE=$((SIZE/50))
     echo "$0 $@" >> /tmp/thumbs
 
-    iFile=$(<"$INPUT")
     tempFile=$(mktemp) && {
-      echo "${"iFile:0:1600"}" > "$tempFile"
+      head -n 50 "$INPUT" > "$tempFile"
       ${pkgs.imagemagick}/bin/convert -size "''${SIZE}x$SIZE" -background black -pointsize $POINTSIZE -border $POINTSIZE -bordercolor black -fill white caption:@"$tempFile" "$OUTPUT"
       rm "$tempFile"
     }
