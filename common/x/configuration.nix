@@ -7,12 +7,12 @@
   ...
 }:
 let
-  webpthumbs = pkgs.writeShellScriptBin "webpthumbs" ''
-    # I think I may be missing a library
+  thumbs-webp = pkgs.writeShellScriptBin "thumbs-webp" ''
+    echo "$0 $@" >> /tmp/thumbs
     if tempfile=$(mktemp) && ${pkgs.libwebp}/bin/webpmux -get frame 1 "$1" -o "$tempfile"; then
-      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$tempfile" "$2"
+      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$tempfile" "$2" &>> /tmp/thumbs
     else
-      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$1" "$2"
+      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$1" "$2" &>> /tmp/thumbs
     fi
     [ -f "$tempfile" ] && rm "$tempfile"
   '';
@@ -53,10 +53,11 @@ in
     ghostscript # required by imagemagick to convert pdf files
 
     # https://docs.xfce.org/xfce/tumbler/available_plugins#customized_thumbnailer_for_text-based_documents
+
+    # this never fires for some reason
     (pkgs.writeTextDir "share/thumbnailers/imagemagick-webp.thumbnailer" ''
       [Thumbnailer Entry]
-      TryExec=${webpthumbs}/bin/webpthumbs
-      Exec=${webpthumbs}/bin/webpthumbs %i %o %s
+      Exec=${thumbs-webp}/bin/thumbs-webp %i %o %s
       MimeType=image/webp;
     '')
 
