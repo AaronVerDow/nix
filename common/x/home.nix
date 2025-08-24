@@ -38,6 +38,7 @@ in
       discord # Communication platform
       my_numworks # Calculator
       onlyoffice-bin # Office suite
+      gimp
 
       # Terminal & System Utilities
       arandr # Screen layout configuration
@@ -143,9 +144,6 @@ in
 
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ blender ];
-      })
-      (nix-run-desktop.launcher {
-        nativeBuildInputs = [ gimp ];
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ inkscape ];
