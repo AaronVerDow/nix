@@ -30,10 +30,6 @@ pkgs.stdenv.mkDerivation {
         pkgs.xorg.xvfb
         pkgs.xorg.xwininfo
         pkgs.imagemagick
-        pkgs.fontconfig
-        pkgs.mesa
-        pkgs.libGL
-        pkgs.libglvnd
       ]
     }
 
