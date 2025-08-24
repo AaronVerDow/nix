@@ -126,12 +126,6 @@ in
       MimeType=application/pdf;application/x-pdf;image/pdf;
     '')
 
-    (pkgs.writeTextDir "share/thumbnailers/imagemagick-text.thumbnailer" ''
-      [Thumbnailer Entry]
-      Exec=${thumbs-text}/bin/thumbs-text %i %o %s
-      MimeType=text/plain;text/html;text/css;
-    '')
-
     (pkgs.writeTextDir "share/thumbnailers/openscad-stl.thumbnailer" ''
       [Thumbnailer Entry]
       Exec=${thumbs-stl}/bin/thumbs-stl %i %o %s
