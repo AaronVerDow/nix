@@ -70,7 +70,7 @@ in
       MimeType=application/x-openscad;
     '')
 
-    (pkgs.writeTextDir "share/mime/application/x-openscad.xml" ''
+    (pkgs.writeTextDir "share/mime/packages/openscad.xml" ''
       <?xml version="1.0" encoding="UTF-8"?>
       <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
         <mime-type type="application/x-openscad">
@@ -80,7 +80,6 @@ in
         </mime-type>
       </mime-info>
     '')
-
   ];
 
   xdg.portal = {
