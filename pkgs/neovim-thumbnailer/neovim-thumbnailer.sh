@@ -20,8 +20,11 @@ cleanup() {
 }
 trap cleanup EXIT
 
-# xterm -geometry "${SCREEN_WIDTH}x${SCREEN_HEIGHT}" -fg white -bg black -fa Monospace -e nvim "$FILE" &
-xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim "$FILE" &
+# xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim "$FILE" &
+# xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -c "set laststatus=0" -c "set nonumber" -c "set norelativenumber" "$FILE" &
+#xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -c "set laststatus=0" -c "set noruler" -c "set noshowmode" -c "set nonumber" -c "set norelativenumber" "$FILE" &
+# xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -c "set laststatus=0" -c "hi! link StatusLine Normal" -c "hi! link StatusLineNC Normal" -c "set statusline=" -c "set nonumber" -c "set norelativenumber" "$FILE" &
+xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -c "set nonumber" -c "set norelativenumber" "$FILE" &
 XTERM_PID=$!
 
 WINDOW_ID=""
