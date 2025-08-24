@@ -45,6 +45,20 @@ let
     ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#FFFFE5" "$OUTPUT_FILE"
     rm -rf "$TEMP"
   '';
+  thumbs-text = pkgs.writeShellScriptBin "thumbs-text" ''
+    INPUT=$1
+    OUTPUT=$2
+    SIZE=$3
+    POINTSIZE=$((SIZE/50))
+    echo "$0 $@" >> /tmp/thumbs
+
+    iFile=$(<"$INPUT")
+    tempFile=$(mktemp) && {
+      echo "${"iFile:0:1600"}" > "$tempFile"
+      ${pkgs.imagemagick}/bin/convert -size "''${SIZE}x$SIZE" -background black -pointsize $POINTSIZE -border $POINTSIZE -bordercolor black -fill white caption:@"$tempFile" "$OUTPUT"
+      rm "$tempFile"
+    }
+  '';
 in
 {
   qt = {
@@ -91,6 +105,12 @@ in
       TryExec=${pkgs.imagemagick}/bin/convert
       Exec=${pkgs.imagemagick}/bin/convert %i[0] -background "#FFFFFF" -flatten -thumbnail %s %o
       MimeType=application/pdf;application/x-pdf;image/pdf;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/imagemagick-text.thumbnailer" ''
+      [Thumbnailer Entry]
+      Exec=${thumbs-text}/bin/thumbs-text %i %o %s
+      MimeType=text/plain;text/html;text/css;
     '')
 
     (pkgs.writeTextDir "share/thumbnailers/openscad-stl.thumbnailer" ''
