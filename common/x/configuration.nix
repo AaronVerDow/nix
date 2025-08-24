@@ -16,6 +16,7 @@ let
     fi
     [ -f "$tempfile" ] && rm "$tempfile"
   '';
+
   thumbs-openscad = pkgs.writeShellScriptBin "thumbs-openscad" ''
     set -euo pipefail
 
@@ -28,6 +29,7 @@ let
     ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#1d1f21" "$OUTPUT"
     rm -rf "$TEMP"
   '';
+
   thumbs-stl = pkgs.writeShellScriptBin "thumbs-stl" ''
     if (($# < 3)); then
       echo "$0: input_file_name output_file_name size"
@@ -45,18 +47,54 @@ let
     ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#FFFFE5" "$OUTPUT_FILE"
     rm -rf "$TEMP"
   '';
+  
   thumbs-text = pkgs.writeShellScriptBin "thumbs-text" ''
-    INPUT=$1
-    OUTPUT=$2
-    SIZE=$3
-    POINTSIZE=$((SIZE/50))
+    set -euo pipefail
+    set -x
 
-    tempFile=$(mktemp) && {
-      head -n 50 "$INPUT" > "$tempFile"
-      ${pkgs.imagemagick}/bin/convert -size "''${SIZE}x$SIZE" -background black -pointsize $POINTSIZE -border $POINTSIZE -bordercolor black -fill white caption:@"$tempFile" "$OUTPUT"
-      rm "$tempFile"
+    FILE="$1"
+    OUTPUT="$2"
+    SIZE="''${3:-256}"
+    XVFB_DISPLAY=:99
+    SCREEN_WIDTH=1024
+    SCREEN_HEIGHT=1024
+
+    # Start headless X server
+    ${pkgs.xorg.xvfb}/bin/Xvfb $XVFB_DISPLAY -screen 0 "''${SCREEN_WIDTH}x''${SCREEN_HEIGHT}x24" &
+    XVFB_PID=$!
+    export DISPLAY=$XVFB_DISPLAY
+    TEMP=$( mktemp )
+
+    cleanup() {
+        kill $KITTY_PID || true
+        kill $XVFB_PID || true
+        rm $TEMP
     }
+    trap cleanup EXIT
+
+    FONT_SIZE=10
+
+    # Launch Kitty + Neovim forcing Goyo full width
+    kitty --start-as maximized --override font_size=$FONT_SIZE nvim --cmd "let g:goyo_width=0" "$FILE" &
+    KITTY_PID=$!
+
+    # Wait for Kitty window
+    WINDOW_ID=""
+    for i in {1..30}; do
+        WINDOW_ID=$( ${pkgs.xorg.xwininfo}/bin/xwininfo -root -tree | grep -m1 "kitty" | awk '{print $1}' || true)
+        if [[ -n "$WINDOW_ID" ]]; then
+            break
+        fi
+        sleep 0.2
+    done
+
+    sleep 1
+
+    # Capture Kitty window
+    ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" -out "$TEMP"
+    ${pkgs.imagemagick}/bin/convert "$TEMP" -thumbnail "$SIZE" "$OUTPUT"
   '';
+
   thumbs-xcf = pkgs.writeShellScriptBin "thumbs-xcf" ''
     INPUT=$1
     OUTPUT=$2
