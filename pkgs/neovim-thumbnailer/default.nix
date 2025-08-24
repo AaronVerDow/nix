@@ -24,7 +24,7 @@ pkgs.stdenv.mkDerivation {
     wrapProgram $outfile --prefix PATH : ${
       pkgs.lib.makeBinPath [
         pkgs.bash
-        pkgs.kitty
+        pkgs.xterm
         pkgs.neovim
         pkgs.xorg.xwd
         pkgs.xorg.xvfb

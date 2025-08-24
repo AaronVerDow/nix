@@ -7,7 +7,6 @@ SIZE="${3:-256}"
 XVFB_DISPLAY=:99
 SCREEN_WIDTH=1024
 SCREEN_HEIGHT=1024
-FONT_SIZE=10
 
 Xvfb $XVFB_DISPLAY -screen 0 "${SCREEN_WIDTH}x${SCREEN_HEIGHT}x24" &
 XVFB_PID=$!
@@ -15,18 +14,19 @@ export DISPLAY=$XVFB_DISPLAY
 
 TEMP=$(mktemp)
 cleanup() {
-  kill $KITTY_PID || true
+  kill $XTERM_PID || true
   kill $XVFB_PID || true
-  rm "$TEMP"
+  # rm "$TEMP"
 }
 trap cleanup EXIT
 
-kitty --start-as maximized --override font_size=$FONT_SIZE nvim "$FILE" &
-KITTY_PID=$!
+# xterm -geometry "${SCREEN_WIDTH}x${SCREEN_HEIGHT}" -fg white -bg black -fa Monospace -e nvim "$FILE" &
+xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim "$FILE" &
+XTERM_PID=$!
 
 WINDOW_ID=""
 for i in {1..30}; do
-    WINDOW_ID=$(xwininfo -root -tree | grep -m1 "kitty" | awk '{print $1}' || true)
+    WINDOW_ID=$(xwininfo -root -tree | grep -m1 "XTerm" | awk '{print $1}' || true)
     if [[ -n "$WINDOW_ID" ]]; then break; fi
     sleep 0.2
 done
@@ -34,4 +34,4 @@ done
 sleep 1
 
 xwd -id "$WINDOW_ID" -out "$TEMP"
-convert "$TEMP" -thumbnail "$SIZE" "$OUTPUT"
+magick xwd:"$TEMP" -thumbnail "$SIZE" "$OUTPUT"
