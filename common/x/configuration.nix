@@ -17,8 +17,16 @@ let
     [ -f "$tempfile" ] && rm "$tempfile"
   '';
   thumbs-openscad = pkgs.writeShellScriptBin "thumbs-openscad" ''
-    echo "$0 $@" >> /tmp/thumbs
-    ${pkgs.openscad}/bin/openscad $1 --viewall --colorscheme "Tomorrow Night" --autocenter --imgsize $3,$3 -o $2 &>> /tmp/thumbs
+    set -euo pipefail
+
+    INPUT=$1
+    OUTPUT=$2
+    SIZE=$3
+
+    TEMP=$(mktemp --directory --tmpdir tumbler-stl-XXXXXX) || exit 1
+    ${pkgs.openscad}/bin/openscad $INPUT --viewall --colorscheme "Tomorrow Night" --autocenter --imgsize "$SIZE,$SIZE" -o "$TEMP/scad.png" 
+    ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#1d1f21" "$OUTPUT"
+    rm -rf "$TEMP"
   '';
   thumbs-stl = pkgs.writeShellScriptBin "thumbs-stl" ''
     if (($# < 3)); then
