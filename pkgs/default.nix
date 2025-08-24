@@ -14,6 +14,7 @@ pkgs: {
   satisfactory-file-parser = pkgs.callPackage ./satisfactory-file-parser { };
   my_freecad = pkgs.callPackage ./freecad { };
   qman = pkgs.callPackage ./qman { };
+  neovim-thumbnailer = pkgs.callPackage ./neovim-thumbnailer { };
 
   awesomeWithWidgets = pkgs.writeShellScriptBin "awesome" ''
     export LUA_PATH="${pkgs.luaPackages.awesome-wm-widgets}/lib/lua/${pkgs.lua.luaversion}/?.lua;''${LUA_PATH:-;;}"
