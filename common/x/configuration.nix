@@ -50,7 +50,6 @@ let
     OUTPUT=$2
     SIZE=$3
     POINTSIZE=$((SIZE/50))
-    echo "$0 $@" >> /tmp/thumbs
 
     tempFile=$(mktemp) && {
       head -n 50 "$INPUT" > "$tempFile"
