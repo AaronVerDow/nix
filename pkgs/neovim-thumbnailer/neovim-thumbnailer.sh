@@ -20,7 +20,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -u NONE -c "syntax on" -c "colorscheme humanoid" "$FILE" &
+xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -R -u NONE -c "syntax on" -c "colorscheme humanoid" "$FILE" &
 XTERM_PID=$!
 
 WINDOW_ID=""
