@@ -7,48 +7,59 @@
   ...
 }:
 let
+  basicNeovim = pkgs.neovim.override {
+    configure = {
+      packages.myVimPackage = with pkgs.vimPlugins; {
+        start = [ vim-humanoid-colorscheme ];
+        opt = [ ];
+      };
+    };
+  };
   thumbs-webp = pkgs.writeShellScriptBin "thumbs-webp" ''
-    echo "$0 $@" >> /tmp/thumbs
-    if tempfile=$(mktemp) && ${pkgs.libwebp}/bin/webpmux -get frame 1 "$1" -o "$tempfile"; then
-      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$tempfile" "$2" &>> /tmp/thumbs
+    set -euo pipefail
+    echo "$0 $@"
+    if tempfile=$(${pkgs.busybox}/bin/mktemp) && ${pkgs.libwebp}/bin/webpmux -get frame 1 "$1" -o "$tempfile"; then
+      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$tempfile" "$2"
     else
-      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$1" "$2" &>> /tmp/thumbs
+      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$1" "$2"
     fi
-    [ -f "$tempfile" ] && rm "$tempfile"
+    [ -f "$tempfile" ] && ${pkgs.busybox}/bin/rm "$tempfile"
   '';
 
   thumbs-openscad = pkgs.writeShellScriptBin "thumbs-openscad" ''
     set -euo pipefail
+    echo "$0 $@"
 
     INPUT=$1
     OUTPUT=$2
     SIZE=$3
 
-    TEMP=$(mktemp --directory --tmpdir tumbler-stl-XXXXXX) || exit 1
+    TEMP=$(${pkgs.busybox}/bin/mktemp --directory --tmpdir tumbler-stl-XXXXXX) || exit 1
     ${pkgs.openscad}/bin/openscad $INPUT --viewall --colorscheme "Tomorrow Night" --autocenter --imgsize "$SIZE,$SIZE" -o "$TEMP/scad.png" 
     ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#1d1f21" "$OUTPUT"
-    rm -rf "$TEMP"
+    ${pkgs.busybox}/bin/rm -rf "$TEMP"
   '';
 
   thumbs-stl = pkgs.writeShellScriptBin "thumbs-stl" ''
-    if (($# < 3)); then
-      echo "$0: input_file_name output_file_name size"
-      exit 1
-    fi
-     
+    set -euo pipefail
+    echo "$0 $@"
+
     INPUT_FILE=$1
     OUTPUT_FILE=$2
     SIZE=$3
      
-    TEMP=$(mktemp --directory --tmpdir tumbler-stl-XXXXXX) || exit 1
-    cp "$INPUT_FILE" "$TEMP/source.stl"
+    TEMP=$(${pkgs.busybox}/bin/mktemp --directory --tmpdir tumbler-stl-XXXXXX) || exit 1
+    ${pkgs.busybox}/bin/cp "$INPUT_FILE" "$TEMP/source.stl"
     echo 'import("source.stl", convexity=10);' > "$TEMP/thumbnail.scad"
     ${pkgs.openscad}/bin/openscad --viewall --autocenter --imgsize "$SIZE,$SIZE" -o "$TEMP/scad.png" "$TEMP/thumbnail.scad"
     ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#FFFFE5" "$OUTPUT_FILE"
-    rm -rf "$TEMP"
+    ${pkgs.busybox}/bin/rm -rf "$TEMP"
   '';
 
   thumbs-xcf = pkgs.writeShellScriptBin "thumbs-xcf" ''
+    set -euo pipefail
+    echo "$0 $@"
+
     INPUT=$1
     OUTPUT=$2
     SIZE=$3
@@ -77,6 +88,47 @@ let
     (gimp-quit 0)
     EOF
   '';
+
+  thumbs-text = pkgs.writeShellScriptBin "thumbs-text" ''
+    set -euo pipefail
+    echo "$0 $@"
+
+    FILE="$1"
+    OUTPUT="$2"
+    SIZE="''${3:-256}"
+    SCREEN="1024x1024x24"
+    TERM_SIZE="90x40"
+    FOREGROUND=white
+    BACKGROUND=black
+    FONT="Monospace:style=Bold"
+    COLORSCHEME=humanoid
+
+    export DISPLAY=:99
+    ${pkgs.xorg.xvfb}/bin/Xvfb $DISPLAY -screen 0 $SCREEN &
+    XVFB_PID=$!
+    XTERM_PID=""
+    TEMP=$(${pkgs.busybox}/bin/mktemp)
+
+    cleanup() {
+      kill $XTERM_PID || true
+      kill $XVFB_PID || true
+      ${pkgs.busybox}/bin/rm "$TEMP"
+    }
+    trap cleanup EXIT
+
+    ${pkgs.xterm}/bin/xterm -geometry $TERM_SIZE -fg $FOREGROUND -bg $BACKGROUND -fa $FONT -e ${basicNeovim}/bin/nvim -R -u NONE -c "syntax on" -c "colorscheme $COLORSCHEME" "$FILE" &
+    XTERM_PID=$!
+
+    WINDOW_ID=""
+    for i in {1..30}; do
+        WINDOW_ID=$(${pkgs.xorg.xwininfo}/bin/xwininfo -root -tree | ${pkgs.busybox}/bin/grep -m1 "XTerm" | ${pkgs.busybox}/bin/awk '{print $1}' || true)
+        ${pkgs.busybox}/bin/sleep 0.2
+        [ -n "$WINDOW_ID" ] && break
+    done
+
+    ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" -out "$TEMP"
+    ${pkgs.imagemagick}/bin/magick xwd:"$TEMP" -thumbnail "$SIZE" "$OUTPUT"
+  '';
 in
 {
   qt = {
@@ -102,22 +154,12 @@ in
   services.redshift.enable = true;
   services.flatpak.enable = true;
 
-  programs.thunar.enable = true;
-  programs.xfconf.enable = true;
-  services.tumbler.enable = true;
-  programs.thunar.plugins = with pkgs.xfce; [
-    thunar-archive-plugin
-    thunar-volman
-  ];
-  services.gvfs.enable = true;
-
   environment.systemPackages = with pkgs; [
     # Thumbnailer packages
     ffmpeg-headless
     ffmpegthumbnailer
     imagemagick
     ghostscript # required by imagemagick to convert pdf files
-    neovim-thumbnailer
 
     # https://docs.xfce.org/xfce/tumbler/available_plugins#customized_thumbnailer_for_text-based_documents
 
@@ -126,6 +168,12 @@ in
       [Thumbnailer Entry]
       Exec=${thumbs-webp}/bin/thumbs-webp %i %o %s
       MimeType=image/webp;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/nvim-text.thumbnailer" ''
+      [Thumbnailer Entry]
+      Exec=${thumbs-text}/bin/thumbs-text %i %o %s
+      MimeType=text/plain;text/html;text/css;application/x-shellscript;text/x-sh;text/x-python;application/json;text/x-yaml;text/markdown;text/x-markdown;
     '')
 
     (pkgs.writeTextDir "share/thumbnailers/imagemagick-pdf.thumbnailer" ''
@@ -186,6 +234,17 @@ in
   services.blueman.enable = true;
 
   hardware.keyboard.qmk.enable = true;
+
+  services.dbus.enable = true;
+  programs.thunar.enable = true;
+  programs.xfconf.enable = true;
+  programs.dconf.enable = true;
+  services.tumbler.enable = true;
+  programs.thunar.plugins = with pkgs.xfce; [
+    thunar-archive-plugin
+    thunar-volman
+  ];
+  services.gvfs.enable = true;
 
   services.solaar = {
     enable = true;
