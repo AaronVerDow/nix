@@ -16,15 +16,11 @@ TEMP=$(mktemp)
 cleanup() {
   kill $XTERM_PID || true
   kill $XVFB_PID || true
-  # rm "$TEMP"
+  rm "$TEMP"
 }
 trap cleanup EXIT
 
-# xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim "$FILE" &
-# xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -c "set laststatus=0" -c "set nonumber" -c "set norelativenumber" "$FILE" &
-#xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -c "set laststatus=0" -c "set noruler" -c "set noshowmode" -c "set nonumber" -c "set norelativenumber" "$FILE" &
-# xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -c "set laststatus=0" -c "hi! link StatusLine Normal" -c "hi! link StatusLineNC Normal" -c "set statusline=" -c "set nonumber" -c "set norelativenumber" "$FILE" &
-xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -c "set nonumber" -c "set norelativenumber" "$FILE" &
+xterm -geometry "90x40" -fg white -bg black -fa "Monospace:style=Bold" -e nvim -u NONE -c "syntax on" -c "colorscheme humanoid" "$FILE" &
 XTERM_PID=$!
 
 WINDOW_ID=""
