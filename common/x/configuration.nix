@@ -102,6 +102,15 @@ in
   services.redshift.enable = true;
   services.flatpak.enable = true;
 
+  programs.thunar.enable = true;
+  programs.xfconf.enable = true;
+  services.tumbler.enable = true;
+  programs.thunar.plugins = with pkgs.xfce; [
+    thunar-archive-plugin
+    thunar-volman
+  ];
+  services.gvfs.enable = true;
+
   environment.systemPackages = with pkgs; [
     # Thumbnailer packages
     ffmpeg-headless
