@@ -87,11 +87,13 @@ let
     XTERM_PID=$!
 
     WINDOW_ID=""
-    for i in {1..30}; do
+    for i in {1..10}; do
         WINDOW_ID=$(${pkgs.xorg.xwininfo}/bin/xwininfo -root -tree | ${pkgs.busybox}/bin/grep -m1 "XTerm" | ${pkgs.busybox}/bin/awk '{print $1}' || true)
         ${pkgs.busybox}/bin/sleep 0.2
         [ -n "$WINDOW_ID" ] && break
     done
+
+    ${pkgs.busybox}/bin/sleep 1
 
     ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" -out "$TEMP"
     ${pkgs.imagemagick}/bin/magick xwd:"$TEMP" -thumbnail "$SIZE" "$OUTPUT"
