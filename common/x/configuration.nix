@@ -70,11 +70,22 @@ let
     FONT="Monospace:style=Bold"
     COLORSCHEME=humanoid
 
-    export DISPLAY=:99
-    ${pkgs.xorg.xvfb}/bin/Xvfb $DISPLAY -screen 0 $SCREEN &
+    find_display() {
+      for d in {99..110}; do
+        [ -e "/tmp/.X$d-lock" ] && continue 
+        echo ":$d"
+        return 0
+      done
+      echo "No available X display found" >&2
+      return 1
+    }
+
+    DISPLAY=$(find_display)
+    export DISPLAY
+    TEMP=$(${pkgs.busybox}/bin/mktemp)
+    ${pkgs.xorg.xvfb}/bin/Xvfb "$DISPLAY" -screen 0 $SCREEN &
     XVFB_PID=$!
     XTERM_PID=""
-    TEMP=$(${pkgs.busybox}/bin/mktemp)
 
     cleanup() {
       kill $XTERM_PID || true
@@ -93,7 +104,7 @@ let
         [ -n "$WINDOW_ID" ] && break
     done
 
-    ${pkgs.busybox}/bin/sleep 1
+    ${pkgs.busybox}/bin/sleep 0.5
 
     ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" -out "$TEMP"
     ${pkgs.imagemagick}/bin/magick xwd:"$TEMP" -thumbnail "$SIZE" "$OUTPUT"
