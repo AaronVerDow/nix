@@ -26,11 +26,9 @@ XTERM_PID=$!
 WINDOW_ID=""
 for i in {1..30}; do
     WINDOW_ID=$(xwininfo -root -tree | grep -m1 "XTerm" | awk '{print $1}' || true)
-    if [[ -n "$WINDOW_ID" ]]; then break; fi
     sleep 0.2
+    [ -n "$WINDOW_ID" ] && break
 done
-
-sleep 1
 
 xwd -id "$WINDOW_ID" -out "$TEMP"
 magick xwd:"$TEMP" -thumbnail "$SIZE" "$OUTPUT"
