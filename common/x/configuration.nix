@@ -90,20 +90,19 @@ let
       echo "No available X display found" >&2
       return 1
     }
-
     DISPLAY=$(find_display)
     export DISPLAY
-    TEMP=$(mktemp)
-    ${pkgs.xorg.xvfb}/bin/Xvfb "$DISPLAY" -screen 0 $SCREEN &
-    XVFB_PID=$!
-    XTERM_PID=""
 
+    XTERM_PID=""
+    XVFB_PID=""
     cleanup() {
       kill $XTERM_PID || true
       kill $XVFB_PID || true
-      ${pkgs.busybox}/bin/rm "$TEMP"
     }
     trap cleanup EXIT
+
+    ${pkgs.xorg.xvfb}/bin/Xvfb "$DISPLAY" -screen 0 $SCREEN &
+    XVFB_PID=$!
 
     ${pkgs.xterm}/bin/xterm -geometry $TERM_SIZE -fg $FOREGROUND -bg $BACKGROUND -fa $FONT -e ${basicNeovim}/bin/nvim -R -u NONE -c "syntax on" -c "colorscheme $COLORSCHEME" "$FILE" &
     XTERM_PID=$!
@@ -117,8 +116,7 @@ let
 
     sleep 0.5
 
-    ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" -out "$TEMP"
-    ${pkgs.imagemagick}/bin/magick xwd:"$TEMP" -thumbnail "$SIZE" "$OUTPUT"
+    ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" | ${pkgs.imagemagick}/bin/magick xwd:- -thumbnail "$SIZE" "$OUTPUT"
   '';
 
   thumbs-xcf = pkgs.writeShellScriptBin "thumbs-xcf" ''
