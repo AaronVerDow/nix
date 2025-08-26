@@ -74,8 +74,8 @@ let
     OUTPUT="$2"
     SIZE="''${3:-256}"
 
-    SCREEN="1024x1024x24"
-    TERM_SIZE="90x40"
+    SCREEN="800x800x24" # not sure if this changes anything
+    TERM_SIZE="80x30"
     FOREGROUND=white
     BACKGROUND=black
     FONT="Monospace:style=Bold"
