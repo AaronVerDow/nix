@@ -85,6 +85,7 @@ in
       libertine
       merriweather
       ubuntu_font_family
+      sweet-folders
 
       # Games
       flatpak
@@ -189,6 +190,10 @@ in
 
   gtk = {
     enable = true;
+    iconTheme = {
+      name = "Sweet-Rainbow";
+      package = pkgs.sweet-folders;
+    };
     theme = {
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
