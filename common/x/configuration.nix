@@ -24,14 +24,12 @@ let
     OUTPUT=$2
     SIZE="''${3:-256}"
 
-    $TEMP=$(mktemp) 
-
+    TEMP=$(mktemp) 
     if ${pkgs.libwebp}/bin/webpmux -get frame 1 "$INPUT" -o "$TEMP"; then
       ${pkgs.imagemagick}/bin/magick "$TEMP" -thumbnail "$SIZE" "$OUTPUT"
     else
       ${pkgs.imagemagick}/bin/magick $INPUT -thumbnail "$SIZE" "$OUTPUT"
     fi
-
     [ -f "$TEMP" ] && rm "$tempfile"
   '';
 
@@ -53,26 +51,29 @@ let
   thumbs-stl = pkgs.writeShellScriptBin "thumbs-stl" ''
     set -euo pipefail
     echo "$0 $@"
+    PATH="${pkgs.busybox}/bin:$PATH"
 
-    INPUT_FILE=$1
-    OUTPUT_FILE=$2
-    SIZE=$3
+    INPUT=$1
+    OUTPUT=$2
+    SIZE="''${3:-256}"
      
-    TEMP=$(${pkgs.busybox}/bin/mktemp --directory --tmpdir tumbler-stl-XXXXXX) || exit 1
-    ${pkgs.busybox}/bin/cp "$INPUT_FILE" "$TEMP/source.stl"
+    TEMP=$(mktemp --directory --tmpdir tumbler-stl-XXXXXX)
+    cp "$INPUT" "$TEMP/source.stl"
     echo 'import("source.stl", convexity=10);' > "$TEMP/thumbnail.scad"
     ${pkgs.openscad}/bin/openscad --viewall --autocenter --imgsize "$SIZE,$SIZE" -o "$TEMP/scad.png" "$TEMP/thumbnail.scad"
-    ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#FFFFE5" "$OUTPUT_FILE"
-    ${pkgs.busybox}/bin/rm -rf "$TEMP"
+    ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#FFFFE5" "$OUTPUT"
+    rm -rf "$TEMP"
   '';
 
   thumbs-text = pkgs.writeShellScriptBin "thumbs-text" ''
     set -euo pipefail
     echo "$0 $@"
+    PATH="${pkgs.busybox}/bin:$PATH"
 
     FILE="$1"
     OUTPUT="$2"
     SIZE="''${3:-256}"
+
     SCREEN="1024x1024x24"
     TERM_SIZE="90x40"
     FOREGROUND=white
@@ -92,7 +93,7 @@ let
 
     DISPLAY=$(find_display)
     export DISPLAY
-    TEMP=$(${pkgs.busybox}/bin/mktemp)
+    TEMP=$(mktemp)
     ${pkgs.xorg.xvfb}/bin/Xvfb "$DISPLAY" -screen 0 $SCREEN &
     XVFB_PID=$!
     XTERM_PID=""
@@ -109,12 +110,12 @@ let
 
     WINDOW_ID=""
     for i in {1..10}; do
-        WINDOW_ID=$(${pkgs.xorg.xwininfo}/bin/xwininfo -root -tree | ${pkgs.busybox}/bin/grep -m1 "XTerm" | ${pkgs.busybox}/bin/awk '{print $1}' || true)
-        ${pkgs.busybox}/bin/sleep 0.2
+        WINDOW_ID=$(${pkgs.xorg.xwininfo}/bin/xwininfo -root -tree | grep -m1 "XTerm" | awk '{print $1}' || true)
+        sleep 0.2
         [ -n "$WINDOW_ID" ] && break
     done
 
-    ${pkgs.busybox}/bin/sleep 0.5
+    sleep 0.5
 
     ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" -out "$TEMP"
     ${pkgs.imagemagick}/bin/magick xwd:"$TEMP" -thumbnail "$SIZE" "$OUTPUT"
@@ -126,7 +127,7 @@ let
 
     INPUT=$1
     OUTPUT=$2
-    SIZE=$3
+    SIZE="''${3:-256}"
 
     ${pkgs.gimp}/bin/gimp -i -d -f -s -b - <<EOF
     (let* ((in  "$INPUT")
@@ -202,7 +203,6 @@ in
 
     (pkgs.writeTextDir "share/thumbnailers/imagemagick-pdf.thumbnailer" ''
       [Thumbnailer Entry]
-      TryExec=${pkgs.imagemagick}/bin/convert
       Exec=${pkgs.imagemagick}/bin/convert %i[0] -background "#FFFFFF" -flatten -thumbnail %s %o
       MimeType=application/pdf;application/x-pdf;image/pdf;
     '')
