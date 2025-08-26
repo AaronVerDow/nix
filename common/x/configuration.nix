@@ -116,7 +116,8 @@ let
 
     sleep 0.5
 
-    ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" | ${pkgs.imagemagick}/bin/magick xwd:- -thumbnail "$SIZE" "$OUTPUT"
+    ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" | ${pkgs.imagemagick}/bin/magick xwd:- -transparent "#232629" -thumbnail "$SIZE" "$OUTPUT"
+
   '';
 
   thumbs-xcf = pkgs.writeShellScriptBin "thumbs-xcf" ''
