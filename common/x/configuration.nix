@@ -18,26 +18,36 @@ let
   thumbs-webp = pkgs.writeShellScriptBin "thumbs-webp" ''
     set -euo pipefail
     echo "$0 $@"
-    if tempfile=$(${pkgs.busybox}/bin/mktemp) && ${pkgs.libwebp}/bin/webpmux -get frame 1 "$1" -o "$tempfile"; then
-      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$tempfile" "$2"
+    PATH="${pkgs.busybox}/bin:$PATH"
+
+    INPUT=$1
+    OUTPUT=$2
+    SIZE="''${3:-256}"
+
+    $TEMP=$(mktemp) 
+
+    if ${pkgs.libwebp}/bin/webpmux -get frame 1 "$INPUT" -o "$TEMP"; then
+      ${pkgs.imagemagick}/bin/magick "$TEMP" -thumbnail "$SIZE" "$OUTPUT"
     else
-      ${pkgs.imagemagick}/bin/convert -thumbnail "''${3:-256}" "$1" "$2"
+      ${pkgs.imagemagick}/bin/magick $INPUT -thumbnail "$SIZE" "$OUTPUT"
     fi
-    [ -f "$tempfile" ] && ${pkgs.busybox}/bin/rm "$tempfile"
+
+    [ -f "$TEMP" ] && rm "$tempfile"
   '';
 
   thumbs-openscad = pkgs.writeShellScriptBin "thumbs-openscad" ''
     set -euo pipefail
     echo "$0 $@"
+    PATH="${pkgs.busybox}/bin:$PATH"
 
     INPUT=$1
     OUTPUT=$2
-    SIZE=$3
+    SIZE="''${3:-256}"
 
-    TEMP=$(${pkgs.busybox}/bin/mktemp --directory --tmpdir tumbler-stl-XXXXXX) || exit 1
+    TEMP=$(mktemp --directory --tmpdir tumbler-scad-XXXXXX)
     ${pkgs.openscad}/bin/openscad $INPUT --viewall --colorscheme "Tomorrow Night" --autocenter --imgsize "$SIZE,$SIZE" -o "$TEMP/scad.png" 
     ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#1d1f21" "$OUTPUT"
-    ${pkgs.busybox}/bin/rm -rf "$TEMP"
+    rm -rf "$TEMP"
   '';
 
   thumbs-stl = pkgs.writeShellScriptBin "thumbs-stl" ''
