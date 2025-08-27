@@ -80,15 +80,17 @@ in
 
       # Fonts & Themes
       arc-icon-theme # Icon theme
+      sweet-folders
+      candy-icons
       courier-prime
       libre-baskerville
       libertine
       merriweather
       ubuntu_font_family
-      sweet-folders
-      candy-icons
       iosevka
       b612
+      victor-mono
+      google-fonts
 
       # Games
       flatpak
