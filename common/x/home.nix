@@ -83,7 +83,6 @@ in
       sweet-folders
       candy-icons
       courier-prime
-      libre-baskerville
       libertine
       merriweather
       ubuntu_font_family
