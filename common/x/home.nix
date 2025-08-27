@@ -64,9 +64,6 @@ in
       picom
       rofi # Application launcher
 
-      # File Management
-      pcmanfm # File manager
-
       # Input & Accessibility
       barrier
       onboard # On-screen keyboard
