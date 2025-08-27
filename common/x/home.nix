@@ -86,6 +86,9 @@ in
       merriweather
       ubuntu_font_family
       sweet-folders
+      candy-icons
+      iosevka
+      b612
 
       # Games
       flatpak
@@ -192,7 +195,9 @@ in
     enable = true;
     iconTheme = {
       name = "Sweet-Rainbow";
+      # name = "candy-icons";
       package = pkgs.sweet-folders;
+      # package = pkgs.candy-icons;
     };
     theme = {
       name = "Adwaita-dark";
