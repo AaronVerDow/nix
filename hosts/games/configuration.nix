@@ -6,13 +6,19 @@
     ../../common/cache_client.nix
   ];
   networking.hostName = "games";
-  services.xserver.videoDrivers = [ "amdgpu" ];
 
   boot.kernelParams = [ "amd_pstate=guided" ];
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";
 
   services.tailscale.enable = true;
+
+  hardware.nvidia-container-toolkit.enable = true;
+  hardware.graphics.enable32Bit = true;
+  services.xserver.videoDrivers = ["nvidia"];
+  hardware.nvidia.open = true; # required for RTX?
+  hardware.graphics.enable = true;
+  nixpkgs.config.cudaSupport = true;
 
   services.kanata-config = {
     enable = true;
