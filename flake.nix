@@ -112,6 +112,14 @@
             ./modules/nixos/kanata
           ];
         };
+        games = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            solaar.nixosModules.default
+            ./hosts/games/configuration.nix
+            ./modules/nixos/kanata
+          ];
+        };
       };
 
       # Standalone home-manager configuration entrypoint
