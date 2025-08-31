@@ -665,10 +665,10 @@ end)
 awful.spawn("set_wallpaper")
 awful.spawn.single_instance("picom")
 awful.spawn.single_instance("flashfocus -t 250 -l never")
-awful.spawn.single_instance("nm-applet")
 awful.spawn.single_instance("copyq")
 
 if hostname ~= "games" then
+    awful.spawn.single_instance("nm-applet")
     awful.spawn.with_shell("pgrep -a touchegg | grep client || touchegg --client")
     awful.spawn.with_shell("pgrep onboard || onboard")
 end
