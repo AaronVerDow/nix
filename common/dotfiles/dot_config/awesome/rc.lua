@@ -18,6 +18,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 
+local hostname = io.popen("hostname"):read("*l")
+
 --    Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -177,7 +179,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             cpu_widget(),
-            battery_widget({path_to_icons=os.getenv("HOME").."/.nix-profile/share/icons/Arc/status/symbolic/"}),
+            (hostname == "games") and nil or battery_widget({path_to_icons=os.getenv("HOME").."/.nix-profile/share/icons/Arc/status/symbolic/"}),
             mytextclock,
         },
     }
@@ -664,6 +666,10 @@ awful.spawn.single_instance("picom")
 awful.spawn.single_instance("flashfocus -t 250 -l never")
 awful.spawn.single_instance("nm-applet")
 awful.spawn.single_instance("copyq")
-awful.spawn.with_shell("pgrep -a touchegg | grep client || touchegg --client")
+
+if hostname ~= "games" then
+    awful.spawn.with_shell("pgrep -a touchegg | grep client || touchegg --client")
+    awful.spawn.with_shell("pgrep onboard || onboard")
+end
+
 awful.spawn.with_shell("pgrep volumeicon || (sleep 5 && volumeicon)")
-awful.spawn.with_shell("pgrep onboard || onboard")
