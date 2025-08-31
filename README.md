@@ -8,8 +8,23 @@
     * Open Onscreen keyboard
     * Open Launcher
 * Titlebars on floating windows
-* AppArmor
 * Firefox customized to match AwesomeWM 
+* Sticky wallpaper rotator
+* Neovim as IDE
+* Custom thumbnail generators
+  * xcf
+  * stl
+  * scad
+  * pdf
+  * webm
+  * text file previews, with syntax highlighting
+* Pop up scientific calculator
+* Customized key input
+  * Hold ; for vim keybindings
+  * Disable built in laptop keyboard so a Bluetooth keyboard can be placed on top
+* Desktop launchers that can load rarely used programs on the fly using Nix
+* AppArmor (experimental)
+* Personal binary cache for building packages, served through Tailscale
 
 # Import Chain
 
