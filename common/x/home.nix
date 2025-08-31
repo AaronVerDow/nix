@@ -35,9 +35,8 @@ in
       openscad-post-processor
 
       # Office & Productivity
-      vesktop # Communication platform
       (unstable.discord.override {
-        withOpenASAR = false;
+        withOpenASAR = true;
         withVencord = true;
         vencord = unstable.vencord;
       })
@@ -228,7 +227,7 @@ in
     ".config/rofi/touchscreen".source = ../dotfiles/dot_config/rofi/touchscreen;
     ".config/kitty/kitty.conf".source = ../dotfiles/dot_config/kitty/kitty.conf;
     ".config/volumeicon/volumeicon".source = ../dotfiles/dot_config/volumeicon/volumeicon;
-    ".config/vesktop/themes/ClearVision-v7-Sapphire-Vencord.css".source = ../dotfiles/dot_config/vesktop/themes/ClearVision-v7-Sapphire-Vencord.css;
+    ".config/Vencord/themes/ClearVision-v7-Sapphire-Vencord.css".source = ../dotfiles/dot_config/Vencord/themes/ClearVision-v7-Sapphire-Vencord.css;
     ".local/share/onboard/layouts/full.onboard".source =
       ../dotfiles/dot_local/share/onboard/layouts/full.onboard;
     ".local/share/onboard/layouts/full.svg".source =
