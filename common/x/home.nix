@@ -36,6 +36,11 @@ in
 
       # Office & Productivity
       vesktop # Communication platform
+      (unstable.discord.override {
+        withOpenASAR = false;
+        withVencord = true;
+        vencord = unstable.vencord;
+      })
       my_numworks # Calculator
       onlyoffice-bin # Office suite
       gimp
