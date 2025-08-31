@@ -7,9 +7,7 @@
   ];
   networking.hostName = "games";
 
-  boot.kernelParams = [ "amd_pstate=guided" ];
   powerManagement.enable = true;
-  powerManagement.cpuFreqGovernor = "schedutil";
 
   services.tailscale.enable = true;
 
@@ -19,6 +17,18 @@
   hardware.nvidia.open = true; # required for RTX?
   hardware.graphics.enable = true;
   nixpkgs.config.cudaSupport = true;
+
+  programs = {
+    gamescope = {
+      enable = true;
+      capSysNice = true;
+    };
+    steam = {
+      enable = true;
+      gamescopeSession.enable = true;
+    };
+  };
+  hardware.xone.enable = true;
 
   services.kanata-config = {
     enable = true;
