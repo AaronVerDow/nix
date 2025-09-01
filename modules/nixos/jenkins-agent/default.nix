@@ -66,6 +66,7 @@ in {
 
     # Create the startup script
     systemd.services.jenkins-agent.preStart = ''
+      set -x
       mkdir -p "${cfg.homeDir}"
       cd "${cfg.homeDir}"
       
@@ -74,7 +75,8 @@ in {
       
       # Create the start script
       cat > "${cfg.homeDir}/start-agent.sh" << 'EOF'
-      #!/bin/bash
+      #!${pkgs.bash}/bin/bash
+      set -x
       cd "${cfg.homeDir}"
       
       # Download latest agent jar
@@ -82,7 +84,8 @@ in {
       
       # Start the agent
       ${pkgs.jdk}/bin/java -jar agent.jar \
-        -jnlpUrl "${cfg.controllerUrl}/computer/${cfg.nodeName}/jenkins-agent.jnlp" \
+        -url "${cfg.controllerUrl}" \
+        -name "${cfg.nodeName}" \
         -secret "@${cfg.secretFile}" \
         -workDir "${cfg.homeDir}"
       EOF

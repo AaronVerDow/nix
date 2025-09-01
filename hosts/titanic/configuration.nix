@@ -25,7 +25,8 @@
 
   services.jenkins-agent = {
     enable = true;
-    controllerUrl = "http://127.0.0.1:8088";
+    # must use external IP due to port forwarding
+    controllerUrl = "http://10.44.12.10:8088";
   };
 
   environment.systemPackages = with pkgs; [
@@ -130,8 +131,8 @@
       "/var/lib/jenkins" = { hostPath = "/home/averdow/services/jenkins"; isReadOnly = false; }; 
     };
     forwardPorts = [
-      { containerPort = 8088; hostPort = 8088; protocol = "tcp"; }
-      { containerPort = 50000; hostPort = 50000; protocol = "tcp"; }
+      { hostPort = 8088; }
+      { hostPort = 50001; }
     ];
   };
 
