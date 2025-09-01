@@ -23,6 +23,10 @@
 
   networking.hostName = "titanic"; # Define your hostname.
 
+  # sudo iptables -t nat -A POSTROUTING -o enp9s0 -j MASQUERADE # temporary fix
+  # Install Instance Identity plugin
+  # Add agent with matching name
+
   services.jenkins-agent = {
     enable = true;
     # must use external IP due to port forwarding
@@ -109,6 +113,11 @@
     };
   };
 
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+  };
+
+  networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
   networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8088 50000 ];
   containers.jenkins = {
     config = { pkgs, ... }: {
@@ -120,6 +129,15 @@
         ];
       };
       networking.firewall.allowedTCPPorts = [ 8088 50000 ];
+      networking.firewall.checkReversePath = false;
+
+      # enable internet access
+      networking.nat.enable = true;
+      networking.nat.internalInterfaces = [ "ve-+" ];
+      networking.nat.externalInterface = "enp9s0";
+
+      networking.defaultGateway = "192.168.100.1";
+      networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
     };
     autoStart = true;
     restartIfChanged = true;
@@ -132,7 +150,7 @@
     };
     forwardPorts = [
       { hostPort = 8088; }
-      { hostPort = 50001; }
+      { hostPort = 50000; }
     ];
   };
 
