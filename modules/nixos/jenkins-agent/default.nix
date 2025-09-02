@@ -62,7 +62,7 @@ in
         git
         openssh
       ] ++ [
-        "/run/current-system/sw/bin"
+        "/run/current-system/sw"
       ];
 
       serviceConfig = {
