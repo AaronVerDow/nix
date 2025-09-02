@@ -66,7 +66,7 @@ in
         User = "jenkins";
         WorkingDirectory = "${cfg.workingDir}";
         ExecStart = "${pkgs.bash}/bin/bash ${cfg.workingDir}/start-agent.sh";
-        Environment = "PATH=$PATH:${pkgs.busybox}/bin:${pkgs.git}/bin:${pkgs.nix}/bin:${pkgs.openssh}/bin";
+        Environment = "PATH=/run/current-system/sw/bin:${pkgs.git}/bin:${pkgs.openssh}/bin";
         Restart = "always";
         RestartSec = 10;
       };
@@ -77,11 +77,11 @@ in
       };
     };
 
+    # Creates the script that is executed
     systemd.services.jenkins-agent.preStart = ''
       set -x
       mkdir -p "${cfg.workingDir}"
 
-      # Create the start script
       cat > "${cfg.workingDir}/start-agent.sh" << 'EOF'
       #!${pkgs.bash}/bin/bash
       set -x
