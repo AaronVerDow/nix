@@ -50,23 +50,24 @@ in
 
     users.groups.jenkins = { };
 
-    environment.systemPackages = with pkgs; [
-      jdk
-      curl
-    ];
-
     systemd.services.jenkins-agent = {
       description = "Jenkins Agent";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       restartIfChanged = true;
+      path = with pkgs; [
+        bash
+        jdk
+        curl
+        git
+        openssh
+      ];
 
       serviceConfig = {
         Type = "simple";
         User = "jenkins";
         WorkingDirectory = "${cfg.workingDir}";
         ExecStart = "${pkgs.bash}/bin/bash ${cfg.workingDir}/start-agent.sh";
-        Environment = "PATH=/run/current-system/sw/bin:${pkgs.git}/bin:${pkgs.openssh}/bin";
         Restart = "always";
         RestartSec = 10;
       };
@@ -94,13 +95,13 @@ in
       fi
 
       jar_url=${cfg.controllerUrl}/jnlpJars/agent.jar
-      if ! ${pkgs.curl}/bin/curl -sO $jar_url; then
+      if ! curl -sO $jar_url; then
         echo "Failed to download agent.jar from $jar_url"
         echo "Please check services.jenkins-agent.controllerUrl"
         exit 1
       fi
 
-      ${pkgs.jdk}/bin/java -jar agent.jar \
+      java -jar agent.jar \
         -url "${cfg.controllerUrl}" \
         -name "${cfg.nodeName}" \
         -secret "@${cfg.secretFile}" \
