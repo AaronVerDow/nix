@@ -61,6 +61,8 @@ in
         curl
         git
         openssh
+      ] ++ [
+        "/run/current-system/sw/bin"
       ];
 
       serviceConfig = {
