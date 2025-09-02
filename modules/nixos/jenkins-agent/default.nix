@@ -66,15 +66,17 @@ in
         User = "jenkins";
         WorkingDirectory = "${cfg.workingDir}";
         ExecStart = "${pkgs.bash}/bin/bash ${cfg.workingDir}/start-agent.sh";
-        Environment = "PATH=$PATH:${pkgs.git}/bin:${pkgs.nix}/bin:${pkgs.openssh}/bin";
+        Environment = "PATH=$PATH:${pkgs.busybox}/bin:${pkgs.git}/bin:${pkgs.nix}/bin:${pkgs.openssh}/bin";
         Restart = "always";
         RestartSec = 10;
+      };
+
+      unitConfig = {
         StartLimitBurst = 6;
         StartLimitInterval = 120;
       };
     };
 
-    # Create the startup script
     systemd.services.jenkins-agent.preStart = ''
       set -x
       mkdir -p "${cfg.workingDir}"
@@ -88,17 +90,16 @@ in
       if [ ! -f "${cfg.secretFile}" ]; then
         echo "Secret file does not exist!"
         echo "Please add Jenkins secret to ${cfg.secretFile}"
-        return 1
+        exit 1
       fi
 
       jar_url=${cfg.controllerUrl}/jnlpJars/agent.jar
       if ! ${pkgs.curl}/bin/curl -sO $jar_url; then
         echo "Failed to download agent.jar from $jar_url"
         echo "Please check services.jenkins-agent.controllerUrl"
-        return 1
+        exit 1
       fi
 
-      # Start the agent
       ${pkgs.jdk}/bin/java -jar agent.jar \
         -url "${cfg.controllerUrl}" \
         -name "${cfg.nodeName}" \
