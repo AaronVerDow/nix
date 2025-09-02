@@ -129,29 +129,14 @@
         ];
       };
       networking.firewall.allowedTCPPorts = [ 8088 50000 ];
-      networking.firewall.checkReversePath = false;
-
-      # enable internet access
-      networking.nat.enable = true;
-      networking.nat.internalInterfaces = [ "ve-+" ];
-      networking.nat.externalInterface = "enp9s0";
-
-      networking.defaultGateway = "192.168.100.1";
-      networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
     };
     autoStart = true;
     restartIfChanged = true;
-    privateNetwork = true;
-    hostAddress = "192.168.100.1";
-    localAddress = "192.168.100.2";
+    privateNetwork = false;
     bindMounts = {
       # "/nix" = { hostPath = "/nix"; };
       "/var/lib/jenkins" = { hostPath = "/home/averdow/services/jenkins"; isReadOnly = false; }; 
     };
-    forwardPorts = [
-      { hostPort = 8088; }
-      { hostPort = 50000; }
-    ];
   };
 
   home-manager = {
