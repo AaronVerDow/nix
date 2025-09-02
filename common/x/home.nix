@@ -35,10 +35,10 @@ in
       openscad-post-processor
 
       # Office & Productivity
-      (unstable.discord.override {
-        withOpenASAR = true;
+      (discord.override {
+        withOpenASAR = false;
         withVencord = true;
-        vencord = unstable.vencord;
+        vencord = vencord;
       })
       my_numworks # Calculator
       onlyoffice-bin # Office suite
@@ -163,6 +163,9 @@ in
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ via ];
       })
+      (nix-run-desktop.launcher {
+        nativeBuildInputs = [ tor-browser ];
+      })
     ])
   ];
 
@@ -227,7 +230,8 @@ in
     ".config/rofi/touchscreen".source = ../dotfiles/dot_config/rofi/touchscreen;
     ".config/kitty/kitty.conf".source = ../dotfiles/dot_config/kitty/kitty.conf;
     ".config/volumeicon/volumeicon".source = ../dotfiles/dot_config/volumeicon/volumeicon;
-    ".config/Vencord/themes/ClearVision-v7-Sapphire-Vencord.css".source = ../dotfiles/dot_config/Vencord/themes/ClearVision-v7-Sapphire-Vencord.css;
+    ".config/Vencord/themes/ClearVision-v7-Sapphire-Vencord.css".source =
+      ../dotfiles/dot_config/Vencord/themes/ClearVision-v7-Sapphire-Vencord.css;
     ".local/share/onboard/layouts/full.onboard".source =
       ../dotfiles/dot_local/share/onboard/layouts/full.onboard;
     ".local/share/onboard/layouts/full.svg".source =
