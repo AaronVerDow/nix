@@ -29,8 +29,7 @@
 
   services.jenkins-agent = {
     enable = true;
-    # must use external IP due to port forwarding
-    controllerUrl = "http://10.44.12.10:8088";
+    controllerUrl = "http://127.0.0.1:8088";
   };
 
   environment.systemPackages = with pkgs; [

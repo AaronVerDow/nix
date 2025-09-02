@@ -46,6 +46,10 @@ in {
     environment.systemPackages = with pkgs; [
       jdk
       curl
+      # not sure if these are needed
+      git
+      nix
+      openssh
     ];
 
     systemd.services.jenkins-agent = {
@@ -77,8 +81,9 @@ in {
       cat > "${cfg.homeDir}/start-agent.sh" << 'EOF'
       #!${pkgs.bash}/bin/bash
       set -x
+      export PATH="$PATH:${pkgs.git}/bin:${pkgs.nix}/bin:${pkgs.openssh}/bin"
       cd "${cfg.homeDir}"
-      
+
       # Download latest agent jar
       ${pkgs.curl}/bin/curl -sO ${cfg.controllerUrl}/jnlpJars/agent.jar
       
