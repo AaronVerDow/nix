@@ -50,36 +50,41 @@ in
 
     users.groups.jenkins = { };
 
-    environment.systemPackages = with pkgs; [
-      jdk
-      curl
-    ];
-
     systemd.services.jenkins-agent = {
       description = "Jenkins Agent";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       restartIfChanged = true;
+      path = with pkgs; [
+        bash
+        jdk
+        curl
+        git
+        openssh
+      ] ++ [
+        "/run/current-system/sw"
+      ];
 
       serviceConfig = {
         Type = "simple";
         User = "jenkins";
         WorkingDirectory = "${cfg.workingDir}";
         ExecStart = "${pkgs.bash}/bin/bash ${cfg.workingDir}/start-agent.sh";
-        Environment = "PATH=$PATH:${pkgs.git}/bin:${pkgs.nix}/bin:${pkgs.openssh}/bin";
         Restart = "always";
         RestartSec = 10;
+      };
+
+      unitConfig = {
         StartLimitBurst = 6;
         StartLimitInterval = 120;
       };
     };
 
-    # Create the startup script
+    # Creates the script that is executed
     systemd.services.jenkins-agent.preStart = ''
       set -x
       mkdir -p "${cfg.workingDir}"
 
-      # Create the start script
       cat > "${cfg.workingDir}/start-agent.sh" << 'EOF'
       #!${pkgs.bash}/bin/bash
       set -x
@@ -88,18 +93,17 @@ in
       if [ ! -f "${cfg.secretFile}" ]; then
         echo "Secret file does not exist!"
         echo "Please add Jenkins secret to ${cfg.secretFile}"
-        return 1
+        exit 1
       fi
 
       jar_url=${cfg.controllerUrl}/jnlpJars/agent.jar
-      if ! ${pkgs.curl}/bin/curl -sO $jar_url; then
+      if ! curl -sO $jar_url; then
         echo "Failed to download agent.jar from $jar_url"
         echo "Please check services.jenkins-agent.controllerUrl"
-        return 1
+        exit 1
       fi
 
-      # Start the agent
-      ${pkgs.jdk}/bin/java -jar agent.jar \
+      java -jar agent.jar \
         -url "${cfg.controllerUrl}" \
         -name "${cfg.nodeName}" \
         -secret "@${cfg.secretFile}" \
