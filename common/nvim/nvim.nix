@@ -65,6 +65,8 @@
         zig-vim
         nvim-treesitter-parsers.zig
         # (coc is a custom package below)
+
+        Jenkinsfile-vim-syntax
       ]
       ++ [
         pkgs.openscad-preview

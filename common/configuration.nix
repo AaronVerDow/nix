@@ -128,6 +128,10 @@
     screen
     kitty
     apparmor-parser
+
+    # jenkins temp fix
+    git
+    nix
   ];
 
   networking.networkmanager = {

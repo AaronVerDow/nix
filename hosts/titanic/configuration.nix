@@ -23,9 +23,13 @@
 
   networking.hostName = "titanic"; # Define your hostname.
 
+  # sudo iptables -t nat -A POSTROUTING -o enp9s0 -j MASQUERADE # temporary fix
+  # Install Instance Identity plugin
+  # Add agent with matching name
+
   services.jenkins-agent = {
     enable = true;
-    controllerUrl = "http://127.0.0.1:8090";
+    controllerUrl = "http://127.0.0.1:8088";
   };
 
   environment.systemPackages = with pkgs; [
@@ -108,31 +112,30 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8090 50000 ];
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+  };
+
+  networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
+  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8088 50000 ];
   containers.jenkins = {
     config = { pkgs, ... }: {
       services.jenkins = {
         enable = true;
-        port = 8090;
+        port = 8088;
         extraJavaOptions = [
           "-Djenkins.model.Jenkins.slaveAgentPort=50000"  # For JNLP agents
         ];
       };
-      networking.firewall.allowedTCPPorts = [ 8090 50000 ];
+      networking.firewall.allowedTCPPorts = [ 8088 50000 ];
     };
     autoStart = true;
     restartIfChanged = true;
-    privateNetwork = true;
-    hostAddress = "192.168.100.1";
-    localAddress = "192.168.100.2";
+    privateNetwork = false;
     bindMounts = {
       # "/nix" = { hostPath = "/nix"; };
       "/var/lib/jenkins" = { hostPath = "/home/averdow/services/jenkins"; isReadOnly = false; }; 
     };
-    forwardPorts = [
-      { containerPort = 8090; hostPort = 8090; protocol = "tcp"; }
-      { containerPort = 50000; hostPort = 50000; protocol = "tcp"; }
-    ];
   };
 
   home-manager = {

@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Games') {
+            steps {
+                sh 'nix build .#nixosConfigurations.games.config.system.build.toplevel'
+            }
+        }
+        stage('Titanic') {
+            steps {
+                sh 'nix build .?submodules=1#nixosConfigurations.titanic.config.system.build.toplevel'
+            }
+        }
+        stage('Gonix') {
+            steps {
+                sh 'nix build .#nixosConfigurations.gonix.config.system.build.toplevel'
+            }
+        }
+    }
+}
