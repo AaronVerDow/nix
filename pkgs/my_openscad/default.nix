@@ -40,12 +40,12 @@
 
 stdenv.mkDerivation rec {
   pname = "openscad";
-  version = "0-latest";
+  version = "0-unstable-2025-09-04";
 
   src = fetchgit {
-    url = "https://github.com/openscad/openscad.git";
-    rev = "edbbd86b2a44092fd876ec71e162934d03fdb25c";
-    sha256 = "sha256-SuRByBKOiAvEXGjlztvDrJIeh/EdESH727/MJWSHoVA=";
+    url = "https://github.com/AaronVerDow/openscad.git";
+    rev = "3a3030cf8e75612707724f904cda17fad2d038f2";
+    sha256 = "0qvpkwqllbwz92rs87gcihgj7y1pgw988k2k0q28wzkn7w226qjl";
     fetchSubmodules = true;
   };
 
@@ -66,46 +66,44 @@ stdenv.mkDerivation rec {
     qt6Packages.qscintilla
   ];
 
-  buildInputs =
-    [
-      eigen
-      boost
-      glew
-      opencsg
-      cgal
-      mpfr
-      gmp
-      glib
-      harfbuzz
-      lib3mf
-      libzip
-      double-conversion
-      freetype
-      fontconfig
-      cairo
-      tbb
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isLinux [
-      libGLU
-      libGL
-      wayland
-      wayland-protocols
-    ]
-    ++ lib.optional spacenavSupport libspnav;
+  buildInputs = [
+    eigen
+    boost
+    glew
+    opencsg
+    cgal
+    mpfr
+    gmp
+    glib
+    harfbuzz
+    lib3mf
+    libzip
+    double-conversion
+    freetype
+    fontconfig
+    cairo
+    tbb
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isLinux [
+    libGLU
+    libGL
+    wayland
+    wayland-protocols
+  ]
+  ++ lib.optional spacenavSupport libspnav;
 
-  cmakeFlags =
-    [
-      "-DUSE_QT6=ON"
-      "-DVERSION=${version}"
-      "-DLIB3MF_INCLUDE_DIR=${lib3mf.dev}/include/lib3mf/Bindings/Cpp"
-      "-DLIB3MF_LIBRARY=${lib3mf}/lib/lib3mf.so"
-    ]
-    ++ lib.optionals spacenavSupport [
-      "-DENABLE_SPNAV=ON"
-      "-DSPNAV_INCLUDE_DIR=${libspnav}/include"
-      "-DSPNAV_LIBRARY=${libspnav}/lib/libspnav.so"
-      "-DCMAKE_CXX_STANDARD=17"
-    ];
+  cmakeFlags = [
+    "-DUSE_QT6=ON"
+    "-DVERSION=${version}"
+    "-DLIB3MF_INCLUDE_DIR=${lib3mf.dev}/include/lib3mf/Bindings/Cpp"
+    "-DLIB3MF_LIBRARY=${lib3mf}/lib/lib3mf.so"
+  ]
+  ++ lib.optionals spacenavSupport [
+    "-DENABLE_SPNAV=ON"
+    "-DSPNAV_INCLUDE_DIR=${libspnav}/include"
+    "-DSPNAV_LIBRARY=${libspnav}/lib/libspnav.so"
+    "-DCMAKE_CXX_STANDARD=17"
+  ];
 
   enableParallelBuilding = true;
 

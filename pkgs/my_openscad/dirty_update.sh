@@ -7,7 +7,10 @@ file=./default.nix
 repo=github.com:AaronVerDow/openscad.git
 commit=$1
 
-hash=$( nurl "$repo" "$commit" --json | jq -r '.args.hash' )
+# doesn't support submodules 
+# hash=$( nurl "$repo" "$commit" --json | jq -r '.args.hash' )
+
+hash=$( nix-prefetch-git --url https://github.com/AaronVerDow/openscad.git --rev "$commit" --fetch-submodules --quiet | jq -r '.sha256' )
 
 sed -i "s/rev = \".*\"/rev = \"$commit\"/" "$file"
 sed -i "s#sha256 = \".*\"#sha256 = \"$hash\"#" "$file"
