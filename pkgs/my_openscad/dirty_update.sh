@@ -4,13 +4,13 @@ set -x
 # Other utilities do not edit file, or do not accept specific commits
 
 file=./default.nix
-repo=github.com:AaronVerDow/fancy-cat.git
+repo=github.com:AaronVerDow/openscad.git
 commit=$1
 
 hash=$( nurl "$repo" "$commit" --json | jq -r '.args.hash' )
 
 sed -i "s/rev = \".*\"/rev = \"$commit\"/" "$file"
-sed -i "s#hash = \".*\"#hash = \"$hash\"#" "$file"
+sed -i "s#sha256 = \".*\"#sha256 = \"$hash\"#" "$file"
 
 # date=$( git --no-pager log -1 --format=%cd --date=short "$commit" )
 
