@@ -43,7 +43,7 @@ stdenv.mkDerivation rec {
   version = "0-unstable-2025-09-04";
 
   src = fetchgit {
-    url = "https://github.com/openscad/openscad.git";
+    url = "https://github.com/AaronVerDow/openscad.git";
     rev = "76ff57a4e3d10d523b29cd2d78871adfa160ec17";
     hash = "sha256-u2Iv0mPo+F81LAuh2bGo9psH17E2Fhqu1frXuoZoeC8=";
     fetchSubmodules = true;
