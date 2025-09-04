@@ -1,11 +1,8 @@
 {
+  fetchgit,
   lib,
   stdenv,
-  fetchFromGitHub,
-  fetchpatch,
-  qtbase,
-  qtmultimedia,
-  qscintilla,
+  cmake,
   bison,
   flex,
   eigen,
@@ -26,77 +23,47 @@
   double-conversion,
   lib3mf,
   libzip,
-  mkDerivation,
-  qtmacextras,
-  qmake,
   spacenavSupport ? stdenv.hostPlatform.isLinux,
   libspnav,
   wayland,
   wayland-protocols,
   wrapGAppsHook3,
-  qtwayland,
   cairo,
   openscad,
   runCommand,
+  python3,
+  ghostscript,
+  tbb,
+  qt6,
+  qt6Packages,
 }:
 
-mkDerivation rec {
+stdenv.mkDerivation rec {
   pname = "openscad";
-  version = "2021.01";
+  version = "0-latest";
 
-  src = fetchFromGitHub {
-    owner = "openscad";
-    repo = "openscad";
-    rev = "${pname}-${version}";
-    sha256 = "sha256-2tOLqpFt5klFPxHNONnHVzBKEFWn4+ufx/MU+eYbliA=";
+  src = fetchgit {
+    url = "https://github.com/openscad/openscad.git";
+    rev = "edbbd86b2a44092fd876ec71e162934d03fdb25c";
+    sha256 = "sha256-SuRByBKOiAvEXGjlztvDrJIeh/EdESH727/MJWSHoVA=";
+    fetchSubmodules = true;
   };
-
-  patches = [
-    (fetchpatch {
-      name = "CVE-2022-0496.patch";
-      url = "https://github.com/openscad/openscad/commit/00a4692989c4e2f191525f73f24ad8727bacdf41.patch";
-      sha256 = "sha256-q3SLj2b5aM/IQ8vIDj4iVcwCajgyJ5juNV/KN35uxfI=";
-    })
-    (fetchpatch {
-      name = "CVE-2022-0497.patch";
-      url = "https://github.com/openscad/openscad/commit/84addf3c1efbd51d8ff424b7da276400bbfa1a4b.patch";
-      sha256 = "sha256-KNEVu10E2d4G2x+FJcuHo2tjD8ygMRuhUcW9NbN98bM=";
-    })
-    (fetchpatch {
-      # needed for cgal_5
-      name = "cgalutils-tess.cc-cgal-5.patch";
-      url = "https://github.com/openscad/openscad/commit/3a81c1fb9b663ebbedd6eb044e7276357b1f30a1.patch";
-      hash = "sha256-JdBznXkewx5ybY92Ss0h7UnMZ7d3IQbFRaDCDjb1bRA=";
-    })
-    (fetchpatch {
-      # needed for cgal_5
-      name = "cgalutils-tess.cc-cgal-5_4.patch";
-      url = "https://github.com/openscad/openscad/commit/71f2831c0484c3f35cbf44e1d1dc2c857384100b.patch";
-      hash = "sha256-Fu8dnjNIwZKCI6ukOeHYK8NiJwoA0XtqT8dg8sVevG8=";
-    })
-    (fetchpatch {
-      # needed for cgal_5. Removes dead code
-      name = "cgalutils-polyhedron.cc-cgal-5_3.patch";
-      url = "https://github.com/openscad/openscad/commit/cc49ad8dac24309f5452d5dea9abd406615a52d9.patch";
-      hash = "sha256-B3i+o6lR5osRcVXTimDZUFQmm12JhmbFgG9UwOPebF4=";
-    })
-  ];
-
-  postPatch = ''
-    substituteInPlace src/FileModule.cc \
-      --replace-fail 'fs::is_regular' 'fs::is_regular_file'
-
-    substituteInPlace src/openscad.cc \
-      --replace-fail 'boost::join' 'boost::algorithm::join'
-  '';
 
   nativeBuildInputs = [
     bison
     flex
     pkg-config
     gettext
-    qmake
+    cmake
     wrapGAppsHook3
+    python3
+    ghostscript
+    qt6.qttools
+    qt6.wrapQtAppsHook
+    qt6.qt5compat
+    qt6.qtmultimedia
+    qt6.qtbase
+    qt6Packages.qscintilla
   ];
 
   buildInputs =
@@ -115,38 +82,32 @@ mkDerivation rec {
       double-conversion
       freetype
       fontconfig
-      qtbase
-      qtmultimedia
-      qscintilla
       cairo
+      tbb
     ]
     ++ lib.optionals stdenv.hostPlatform.isLinux [
       libGLU
       libGL
       wayland
       wayland-protocols
-      qtwayland
     ]
-    ++ lib.optional stdenv.hostPlatform.isDarwin qtmacextras
     ++ lib.optional spacenavSupport libspnav;
 
-  qmakeFlags =
+  cmakeFlags =
     [
-      "VERSION=${version}"
-      "LIB3MF_INCLUDEPATH=${lib3mf.dev}/include/lib3mf/Bindings/Cpp"
-      "LIB3MF_LIBPATH=${lib3mf}/lib"
+      "-DUSE_QT6=ON"
+      "-DVERSION=${version}"
+      "-DLIB3MF_INCLUDE_DIR=${lib3mf.dev}/include/lib3mf/Bindings/Cpp"
+      "-DLIB3MF_LIBRARY=${lib3mf}/lib/lib3mf.so"
     ]
     ++ lib.optionals spacenavSupport [
-      "ENABLE_SPNAV=1"
-      "SPNAV_INCLUDEPATH=${libspnav}/include"
-      "SPNAV_LIBPATH=${libspnav}/lib"
+      "-DENABLE_SPNAV=ON"
+      "-DSPNAV_INCLUDE_DIR=${libspnav}/include"
+      "-DSPNAV_LIBRARY=${libspnav}/lib/libspnav.so"
+      "-DCMAKE_CXX_STANDARD=17"
     ];
 
   enableParallelBuilding = true;
-
-  preBuild = ''
-    make objects/parser.cxx
-  '';
 
   postInstall = lib.optionalString stdenv.hostPlatform.isDarwin ''
     mkdir $out/Applications
