@@ -125,6 +125,7 @@
         port = 8088;
         extraJavaOptions = [
           "-Djenkins.model.Jenkins.slaveAgentPort=50000"  # For JNLP agents
+          "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
         ];
       };
       networking.firewall.allowedTCPPorts = [ 8088 50000 ];
