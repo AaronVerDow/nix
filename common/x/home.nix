@@ -92,9 +92,8 @@ in
       victor-mono
       google-fonts
 
-      # Games
       flatpak
-
+      gamemode
       vlc
 
       (writeShellScriptBin "calculator_toggle" ''
