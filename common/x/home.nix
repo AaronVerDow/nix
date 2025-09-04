@@ -31,7 +31,7 @@ in
       satisfactory-file-parser # TypeScript parser for Satisfactory save/blueprint files
 
       # Creative & Design Applications
-      openscad # Programmatic CAD modeling
+      my_openscad # Programmatic CAD modeling
       openscad-post-processor
 
       # Office & Productivity

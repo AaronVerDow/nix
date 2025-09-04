@@ -11,6 +11,7 @@ pkgs: {
   my_numworks = pkgs.callPackage ./my_numworks { };
   my_fancy-cat = pkgs.callPackage ./my_fancy-cat { };
   my_camset = pkgs.callPackage ./my_camset { };
+  my_openscad = pkgs.callPackage ./my_openscad { };
   satisfactory-file-parser = pkgs.callPackage ./satisfactory-file-parser { };
   my_freecad = pkgs.callPackage ./freecad { };
   qman = pkgs.callPackage ./qman { };
