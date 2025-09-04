@@ -44,8 +44,8 @@ stdenv.mkDerivation rec {
 
   src = fetchgit {
     url = "https://github.com/AaronVerDow/openscad.git";
-    rev = "76ff57a4e3d10d523b29cd2d78871adfa160ec17";
-    hash = "sha256-u2Iv0mPo+F81LAuh2bGo9psH17E2Fhqu1frXuoZoeC8=";
+    rev = "3a3030cf8e75612707724f904cda17fad2d038f2";
+    sha256 = "0qvpkwqllbwz92rs87gcihgj7y1pgw988k2k0q28wzkn7w226qjl";
     fetchSubmodules = true;
   };
 
