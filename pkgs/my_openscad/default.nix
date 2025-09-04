@@ -118,6 +118,15 @@ stdenv.mkDerivation rec {
     rmdir $out/share/openscad
   '';
 
+  # OpenSCAD’s manifold code is written against newer oneTBB (≥ 2021), which has tbb::task_arena::priority.
+  # Nix is pulling in tbb 2020.3, which doesn’t have that symbol.
+  # Quick fix suggested by ChatGPT
+  postPatch = ''
+    substituteInPlace submodules/manifold/src/impl.cpp \
+      --replace "tbb::task_arena gc_arena(1, 1, tbb::task_arena::priority::low);" \
+                "tbb::task_arena gc_arena(1, 1);"
+  '';
+
   meta = {
     description = "3D parametric model compiler";
     longDescription = ''
