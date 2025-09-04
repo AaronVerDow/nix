@@ -25,8 +25,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-PShUyXKUFuYg/X/Q80VwEyb05TBkHprY85lmpvOz/o0=";
   };
 
-  patches = [ ./0001-changes.patch ];
-
   nativeBuildInputs = [
     zig.hook
   ];
