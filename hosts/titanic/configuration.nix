@@ -34,6 +34,9 @@
 
   environment.systemPackages = with pkgs; [
     docker-compose
+    prometheus
+    prometheus-systemd-exporter
+    grafana
   ];
 
   # not working with plex
@@ -117,7 +120,6 @@
   };
 
   networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
-  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8088 50000 ];
   containers.jenkins = {
     config = { pkgs, ... }: {
       services.jenkins = {
@@ -138,6 +140,39 @@
       "/var/lib/jenkins" = { hostPath = "/home/averdow/services/jenkins"; isReadOnly = false; }; 
     };
   };
+
+  services.prometheus = {
+    enable = true;
+    port = 9090;
+    exporters = {
+      node = {
+        enable = true;
+        enabledCollectors = [ "systemd" ];
+        port = 9100;
+      };
+    };
+    scrapeConfigs = [
+      {
+        job_name = "node";
+        static_configs = [{
+          targets = [ "localhost:9100" ];
+        }];
+      }
+    ];
+  };
+
+  services.grafana = {
+    enable = true;
+    port = 3000;
+    settings = {
+      server = {
+        http_addr = "0.0.0.0";
+        domain = "localhost";
+      };
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8088 50000 9090 3000 9100 ];
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
