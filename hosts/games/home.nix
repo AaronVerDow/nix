@@ -9,6 +9,7 @@
   home.packages = with pkgs; [
     unstable.r2modman
     protonup-qt
+    huestacean
   ];
 
 }
