@@ -5,4 +5,5 @@
   # my-module = import ./my-module.nix;
   kanata = import ./kanata;
   jenkins-agent = import ./jenkins-agent;
+  opnsense-exporter = import ./opnsense-exporter;
 }
