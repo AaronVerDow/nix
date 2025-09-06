@@ -1,6 +1,5 @@
 { stdenv
-, fetchgit
-, cmake
+, fetchgit , cmake
 , libsForQt5
 , libGL
 , libX11
@@ -14,14 +13,6 @@
 stdenv.mkDerivation {
   pname = "huestacean";
   version = "2.6";
-
-  #src = fetchFromGitHub {
-  #  owner = "BradyBrenot";
-  #  repo = "huestacean";
-  #  rev = "24da9fff3584f1453ef8bc032a26774e3ac8ea5a";
-  #  sha256 = "0gcaw65axij912zq7ckal99310hqn4p11dc5svzai9zf9in9mbxq";
-  #  fetchSubmodules = true;
-  #};
 
   src = fetchgit {
     url = "https://github.com/BradyBrenot/huestacean.git";
@@ -55,6 +46,23 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     cp huestacean $out/bin/huestacean
     wrapQtApp $out/bin/huestacean
+    
+    # Create desktop file
+    mkdir -p $out/share/applications
+    cat > $out/share/applications/huestacean.desktop << EOF
+[Desktop Entry]
+Name=Huestacean
+Comment=Philips Hue Light Sync
+Exec=huestacean
+Icon=huestacean
+Terminal=false
+Type=Application
+Categories=Settings;HardwareSettings;
+EOF
+    
+    # Copy icon to share directory
+    mkdir -p $out/share/icons
+    cp ${./huestacean.png} $out/share/icons/huestacean.png
   '';
 
 }
