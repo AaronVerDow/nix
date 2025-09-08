@@ -155,15 +155,22 @@
           targets = [ "localhost:9100" ];
         }];
       }
+      {
+        job_name = "ha";
+        metrics_path = "/api/prometheus";
+        static_configs = [{
+          targets = [ "homeassistant.verdow.lan:8123" ];
+        }];
+      }
     ];
   };
 
   services.grafana = {
     enable = true;
-    port = 3000;
     settings = {
       server = {
         http_addr = "0.0.0.0";
+        http_port = 3000;
         domain = "localhost";
       };
     };
