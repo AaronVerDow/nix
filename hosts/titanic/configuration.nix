@@ -34,9 +34,6 @@
 
   environment.systemPackages = with pkgs; [
     docker-compose
-    prometheus
-    prometheus-systemd-exporter
-    grafana
   ];
 
   # not working with plex
