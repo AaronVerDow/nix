@@ -27,7 +27,9 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  documentation.man.generateCaches = true;
+
+  # required for apropos and qman, but makes builds longer
+  # documentation.man.generateCaches = true;
 
   nixpkgs = {
     overlays = [
