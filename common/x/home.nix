@@ -165,6 +165,9 @@ in
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ tor-browser ];
       })
+      (nix-run-desktop.launcher {
+        nativeBuildInputs = [ chromium ];
+      })
     ])
   ];
 
@@ -172,20 +175,6 @@ in
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
     };
-  };
-
-  # Install this as needed
-  xdg.desktopEntries.chromium-nix = {
-    name = "Chromium (Nix Shell)";
-    comment = "Open Chromium browser in a Nix shell";
-    exec = "nix-shell -p chromium --run chromium-browser";
-    icon = "web-browser";
-    terminal = false;
-    type = "Application";
-    categories = [
-      "Network"
-      "WebBrowser"
-    ];
   };
 
   home.pointerCursor = {
