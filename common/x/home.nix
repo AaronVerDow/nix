@@ -149,12 +149,15 @@ in
 
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ blender ];
+        copy_icons = false;
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ inkscape ];
+        copy_icons = false;
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ freecad ];
+        copy_icons = false;
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ drawing ];
@@ -164,9 +167,11 @@ in
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ tor-browser ];
+        copy_icons = false;
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ chromium ];
+        copy_icons = false;
       })
     ])
   ];
