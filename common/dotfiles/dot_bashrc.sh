@@ -92,9 +92,9 @@ commit() {
 
 diff() {
     if [ -z "$1" ]; then
-        git diff # there should be a better way to do this
+        git diff --color | diff-so-fancy
     elif [ -z "$2" ]; then
-        git diff "$1" 
+        git diff "$1" --color | diff-so-fancy
     else
         command diff --color=auto "$@"
     fi

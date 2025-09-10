@@ -149,12 +149,15 @@ in
 
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ blender ];
+        copy_icons = false;
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ inkscape ];
+        copy_icons = false;
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ freecad ];
+        copy_icons = false;
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ drawing ];
@@ -164,6 +167,11 @@ in
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ tor-browser ];
+        copy_icons = false;
+      })
+      (nix-run-desktop.launcher {
+        nativeBuildInputs = [ chromium ];
+        copy_icons = false;
       })
     ])
   ];
@@ -172,20 +180,6 @@ in
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
     };
-  };
-
-  # Install this as needed
-  xdg.desktopEntries.chromium-nix = {
-    name = "Chromium (Nix Shell)";
-    comment = "Open Chromium browser in a Nix shell";
-    exec = "nix-shell -p chromium --run chromium-browser";
-    icon = "web-browser";
-    terminal = false;
-    type = "Application";
-    categories = [
-      "Network"
-      "WebBrowser"
-    ];
   };
 
   home.pointerCursor = {

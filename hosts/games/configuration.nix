@@ -18,6 +18,9 @@
   hardware.graphics.enable = true;
   nixpkgs.config.cudaSupport = true;
 
+  boot.loader.timeout = 0;
+  boot.loader.systemd-boot.edk2-uefi-shell.enable = true;
+
   programs = {
     gamescope = {
       enable = true;

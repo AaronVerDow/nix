@@ -34,13 +34,14 @@
     (with pkgs; [
       unzip
       usbutils
-      # fancy-cat
       gh
       ripgrep
       nixfmt-rfc-style
       my_fancy-cat
       aider-chat-full
       qman
+      git-my
+      diff-so-fancy
 
       texliveFull
       nix-search-cli
