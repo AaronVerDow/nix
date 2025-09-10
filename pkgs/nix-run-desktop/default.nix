@@ -9,12 +9,15 @@ let
       nativeBuildInputs ? [ ],
       file_prefix ? "nixrd_",
       name_prefix ? "Nix Run",
+      copy_icons ? true,
       ...
     }@args:
     pkgs.stdenv.mkDerivation (
       {
-        name = if args ? name then args.name else 
-          if (builtins.length nativeBuildInputs > 0) then
+        name =
+          if args ? name then
+            args.name
+          else if (builtins.length nativeBuildInputs > 0) then
             let
               # this needs work
               firstPkg = builtins.elemAt nativeBuildInputs 0;
@@ -26,7 +29,8 @@ let
               version = builtins.elemAt matches 2;
             in
             "nix-run-desktop_${shortName}-${version}"
-          else "nix-run-desktop_EMPTY";
+          else
+            "nix-run-desktop_EMPTY";
         phases = [ "installPhase" ];
 
         nativeBuildInputs = nativeBuildInputs;
@@ -34,34 +38,40 @@ let
 
         installPhase = ''
           tmp=$( mktemp -d )
+          mkdir -p $tmp/share
           for pkg in ${toString nativeBuildInputs}; do
+
+            # get package name
             # there has to be a better way
             package_name=$( basename $pkg | cut -d- -f2- | sed 's/-[0-9].*//' )
-            mkdir -p $tmp/share
-            if [ -d "$pkg/share/icons" ]; then
+
+            # copy all icons
+            if ${if copy_icons then "true" else "false"} && [ -d "$pkg/share/icons" ]; then
               ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/icons $tmp/share
             fi
+            
+            # copy desktop files
             if [ -d "$pkg/share/applications" ]; then
               ${pkgs.rsync}/bin/rsync -rL --chmod=Du+w $pkg/share/applications $tmp/share
             fi
-
-            # add file_prefix to files to avoid collisions
-            find $tmp/share -type f | while read file; do
-              mv "$file" "$( dirname $file )/${file_prefix}$( basename $file )"
-            done
 
             # modify desktop entries
             find $tmp/share/applications -type f | while read file; do
                 sed -i 's/^Name=/Name=${name_prefix} /' "$file"
                 sed -i "s#^Exec=.*#Exec=${pkgs.nix-run-desktop}/bin/nix-run-desktop $package_name#" "$file"
-                sed -i "s/^Icon=/Icon=${file_prefix}/" "$file"
+                ${if copy_icons then "true" else "false"} && sed -i "s/^Icon=/Icon=${file_prefix}/" "$file"
                 sed -i '/TryExec/d' "$file"
             done
-
-            mkdir -p $out/share
-            ${pkgs.rsync}/bin/rsync -r $tmp/share/* $out/share
-            rm -r $tmp/share/*
           done
+
+          # add file_prefix to all files to avoid collisions
+          find $tmp/share -type f | while read file; do
+            mv "$file" "$( dirname $file )/${file_prefix}$( basename $file )"
+          done
+
+          mkdir -p $out/share
+          ${pkgs.rsync}/bin/rsync -r $tmp/share/* $out/share
+          rm -r $tmp/share/*
         '';
       }
       // (removeAttrs args [
