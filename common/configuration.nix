@@ -27,6 +27,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
 
   # required for apropos and qman, but makes builds longer
   # documentation.man.generateCaches = true;
