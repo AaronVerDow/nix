@@ -1,4 +1,11 @@
-{ inputs, outputs, pkgs, lib, ... }: {
+{
+  inputs,
+  outputs,
+  pkgs,
+  lib,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ../../common/configuration.nix
@@ -13,7 +20,7 @@
 
   hardware.nvidia-container-toolkit.enable = true;
   hardware.graphics.enable32Bit = true;
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.open = true; # required for RTX?
   hardware.graphics.enable = true;
   nixpkgs.config.cudaSupport = true;
@@ -22,11 +29,10 @@
     extraConfig = lib.mkForce ''
       interface_help_hidden: yes
       interface_branding:
+      term_font_scale: 2x2
       timeout: no
     '';
   };
-
-
 
   programs = {
     gamescope = {
@@ -58,6 +64,8 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
-    users = { averdow = import ./home.nix; };
+    users = {
+      averdow = import ./home.nix;
+    };
   };
 }

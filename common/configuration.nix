@@ -36,15 +36,18 @@
     extraConfig = ''
       interface_help_hidden: yes
       interface_branding:
+      term_font_scale: 2x2
     '';
     enableEditor = true;
-    additionalFiles = { "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi"; };
+    additionalFiles = {
+      "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi";
+    };
     style = {
       interface = {
         # branding = null; # broken
-        # helpHidden = true; # broken 
+        # helpHidden = true; # broken
       };
-      wallpapers = [ 
+      wallpapers = [
         ./boot.jpg
       ];
     };
