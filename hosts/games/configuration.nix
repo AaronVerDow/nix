@@ -19,7 +19,9 @@
   nixpkgs.config.cudaSupport = true;
 
   boot.loader.limine = {
-    extraConfig = ''
+    extraConfig = lib.mkForce ''
+      interface_help_hidden: yes
+      interface_branding:
       timeout: no
     '';
   };

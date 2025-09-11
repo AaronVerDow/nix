@@ -33,12 +33,16 @@
         protocol: efi
         path: boot():///limine/efi/memtest86/memtest86.efi
     '';
+    extraConfig = ''
+      interface_help_hidden: yes
+      interface_branding:
+    '';
     enableEditor = true;
     additionalFiles = { "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi"; };
     style = {
       interface = {
-        branding = null;
-        helpHidden = true;
+        # branding = null; # broken
+        # helpHidden = true; # broken 
       };
       wallpapers = [ 
         ./boot.jpg
