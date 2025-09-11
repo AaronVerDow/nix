@@ -11,5 +11,11 @@
     protonup-qt
     huestacean
   ];
+  programs.lutris = {
+    enable = true;
+    winePackages = [
+      pkgs.wine
+    ];
+  };
 
 }
