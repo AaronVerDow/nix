@@ -18,33 +18,10 @@
   hardware.graphics.enable = true;
   nixpkgs.config.cudaSupport = true;
 
-  boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.limine = {
-    enable = true;
-    efiSupport = true;
     extraConfig = ''
       timeout: no
     '';
-    extraEntries = ''
-      /Windows
-        protocol: bios
-        partition: uuid(FA220C37220BF801)
-      /memtest86
-        protocol: efi
-        path: boot():///limine/efi/memtest86/memtest86.efi
-    '';
-    enableEditor = true;
-    additionalFiles = { "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi"; };
-    style = {
-      interface = {
-        branding = null;
-        helpHidden = true;
-      };
-      wallpapers = [ 
-        ./boot.jpg
-      ];
-    };
-
   };
 
 

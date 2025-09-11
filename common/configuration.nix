@@ -25,9 +25,27 @@
     longitude = -87.6324;
   };
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.memtest86.enable = true;
+  boot.loader.limine = {
+    enable = true;
+    efiSupport = true;
+    extraEntries = ''
+      /memtest86
+        protocol: efi
+        path: boot():///limine/efi/memtest86/memtest86.efi
+    '';
+    enableEditor = true;
+    additionalFiles = { "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi"; };
+    style = {
+      interface = {
+        branding = null;
+        helpHidden = true;
+      };
+      wallpapers = [ 
+        ./boot.jpg
+      ];
+    };
+
+  };
 
   # required for apropos and qman, but makes builds longer
   # documentation.man.generateCaches = true;
