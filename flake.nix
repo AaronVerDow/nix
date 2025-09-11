@@ -118,6 +118,9 @@
             solaar.nixosModules.default
             ./hosts/games/configuration.nix
             ./modules/nixos/kanata
+            nixos-hardware.nixosModules.common-cpu-amd
+            nixos-hardware.nixosModules.common-cpu-amd-pstate
+            nixos-hardware.nixosModules.common-cpu-amd-zenpower
           ];
         };
       };
