@@ -29,7 +29,6 @@
     extraConfig = lib.mkForce ''
       interface_help_hidden: yes
       interface_branding:
-      term_font_scale: 2x2
       timeout: no
     '';
   };
