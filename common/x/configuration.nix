@@ -168,7 +168,26 @@ in
 
   services.xserver.enable = true;
   hardware.graphics.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
+
+  services.xserver.displayManager.lightdm = {
+    enable = true;
+    greeters.gtk = {
+      theme = {
+        name = "Adwaita-dark";
+        package = pkgs.gnome-themes-extra;
+      };
+      iconTheme = {
+        name = "candy-icons";
+        package = pkgs.candy-icons;
+      };
+      cursorTheme = {
+        name = "volantes_cursors";
+        package = pkgs.volantes-cursors;
+      };
+    };
+    background = "${../boot.jpg}";
+  };
+
   services.xserver.windowManager.awesome = {
     enable = true;
     luaModules = with pkgs.luaPackages; [
