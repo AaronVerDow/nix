@@ -128,6 +128,7 @@
         ];
       };
       networking.firewall.allowedTCPPorts = [ 8088 50000 ];
+      networking.nameservers = [ "8.8.8.8" ];
     };
     autoStart = true;
     restartIfChanged = true;
