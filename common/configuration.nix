@@ -189,6 +189,11 @@
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox
     NH_FLAKE = "/home/averdow/git/nix"; # used by nix helper
     MANPAGER = "nvim +Man!";
+    NIX_SHELL_PRESERVE_PROMPT = 1;
+    NIXPKGS_ALLOW_UNFREE = 1;
+    EDITOR = "nvim";
+    OLLAMA_API_BASE = "http://titanic-tail:11434";
+    OLLAMA_HOST = "http://titanic-tail:11434";
   };
 
   services.udev.packages = with pkgs; [ unstable.via ];
