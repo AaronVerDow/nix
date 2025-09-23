@@ -662,15 +662,17 @@ end)
 
 -- >>>
 
-awful.spawn("set_wallpaper")
 awful.spawn.single_instance("picom")
 awful.spawn.single_instance("flashfocus -t 250 -l never")
 awful.spawn.single_instance("copyq")
 
-if hostname ~= "games" then
+if hostname == "games" then
+    awful.spawn.with_shell("xrandr --output DP-1 --auto --pos 760x1440")
+else
     awful.spawn.single_instance("nm-applet")
     awful.spawn.with_shell("pgrep -a touchegg | grep client || touchegg --client")
     awful.spawn.with_shell("pgrep onboard || onboard")
 end
 
+awful.spawn("wallpaper_set")
 awful.spawn.with_shell("pgrep volumeicon || (sleep 5 && volumeicon)")

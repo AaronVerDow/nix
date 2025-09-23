@@ -136,13 +136,13 @@ in
         dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
       '')
 
-      (writeShellScriptBin "set_wallpaper" ''
+      (writeShellScriptBin "wallpaper_set" ''
         ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=0
         ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=1 || true
         ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=2 || true
       '')
 
-      (writeShellScriptBin "wallpaper" ''
+      (writeShellScriptBin "wallpaper_rotate" ''
         ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper
         set_wallpaper
       '')
@@ -157,6 +157,10 @@ in
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ freecad ];
+        copy_icons = false;
+      })
+      (nix-run-desktop.launcher {
+        nativeBuildInputs = [ obs-studio ];
         copy_icons = false;
       })
       (nix-run-desktop.launcher {

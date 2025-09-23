@@ -12,6 +12,12 @@
     ../../common/x/configuration.nix
     ../../common/cache_client.nix
   ];
+
+  fileSystems."/mnt/windows" = {
+    device = "/dev/nvme0n1p2";
+    fsType = "ntfs-3g";
+    options = [ "rw" "uid=1000" "gid=100" "dmask=022" "exec" ];
+  };
   networking.hostName = "games";
 
   powerManagement.enable = true;
@@ -44,10 +50,11 @@
     };
   };
   hardware.xone.enable = true;
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
-  # virtualisation.virtualbox.host.enableKvm = true;
-  virtualisation.virtualbox.host.addNetworkInterface = false;
+
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
+  # virtualisation.virtualbox.host.enableKvm = true; # broken?
+  # virtualisation.virtualbox.host.addNetworkInterface = false;
 
   services.kanata-config = {
     enable = true;
