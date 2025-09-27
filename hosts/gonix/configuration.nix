@@ -23,6 +23,8 @@ in
   };
 
   services.tailscale.enable = true;
+  
+  services.xserver.desktopManager.cinnamon.enable = true;
 
   # https://github.com/linux-surface/linux-surface/wiki/Surface-Laptop-Go-2
   services.thermald = {
