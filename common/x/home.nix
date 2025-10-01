@@ -36,7 +36,7 @@ in
 
       # Office & Productivity
       (discord.override {
-        withOpenASAR = false;
+        withOpenASAR = true;
         withVencord = true;
         vencord = vencord;
       })
