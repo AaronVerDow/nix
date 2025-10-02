@@ -26,37 +26,13 @@ in
   fonts.fontconfig.enable = true;
 
   programs.spicetify =
-    # let
-    # spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-    # in
+    let
+      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+    in
     {
       enable = true;
-      # transparency does not work
-      # theme = spicePkgs.themes.hazy;
-      theme = {
-        name = "hazy"; # text
-        injectCss = true;
-        injectThemeJs = true;
-        replaceColors = true;
-        overwriteAssets = true;
-        src = pkgs.fetchFromGitHub {
-          owner = "Astromations";
-          repo = "Hazy";
-          rev = "ded076a66f12fbd08b3ffa0fd399bbc2c08183c0";
-          hash = "sha256-pbl+b71IAObgZk8gVzYoPVaHkHRk4wL+fut6kJEzEOo=";
-        };
-        # https://github.com/kaan-w/nix-dotfiles/blob/0efbceff0bcd9d68e38c4ef5374b188ec78b8489/modules/home/spicetify.nix#L19
-        # background-image: url("${(builtins.elemAt (import ../../assets/wallpapers.nix) 32).url}");
-        # additionalCss = ''
-        # .Root__top-container {
-        # background-color: rgba(0, 0, 0, 0.7);
-        # background-size: cover;
-        # background-blend-mode: darken;
-        # background-image: ${./wallpaper.jpg};
-        # }
-        # '';
-      };
-
+      # https://github.com/Gerg-L/spicetify-nix/blob/master/docs/themes.md
+      theme = spicePkgs.themes.lucid;
     };
 
   home.packages = lib.mkMerge [
