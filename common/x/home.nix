@@ -19,10 +19,24 @@ in
   imports = [
     ./dconf/onboard.nix
     ./firefox/firefox.nix
+    inputs.spicetify-nix.homeManagerModules.default
   ];
 
   # allow fonts to be used from package list
   fonts.fontconfig.enable = true;
+
+  programs.spicetify =
+    let
+      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+    in
+    {
+      enable = true;
+      # https://github.com/Gerg-L/spicetify-nix/blob/master/docs/themes.md
+      theme = spicePkgs.themes.lucid;
+      enabledCustomApps = with spicePkgs.apps; [
+        newReleases
+      ];
+    };
 
   home.packages = lib.mkMerge [
     (with pkgs; [
@@ -36,7 +50,7 @@ in
 
       # Office & Productivity
       (discord.override {
-        withOpenASAR = false;
+        withOpenASAR = true;
         withVencord = true;
         vencord = vencord;
       })

@@ -49,7 +49,7 @@
         nvim-treesitter-parsers.python
 
         # lazy java setup
-        coc-java
+        # coc-java
         nvim-treesitter-parsers.java
 
         # plantuml
