@@ -24,12 +24,12 @@
 
   services.tailscale.enable = true;
 
-  hardware.nvidia-container-toolkit.enable = true;
   hardware.graphics.enable32Bit = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.open = true; # required for RTX?
   hardware.graphics.enable = true;
-  nixpkgs.config.cudaSupport = true;
+  # hardware.nvidia-container-toolkit.enable = true;
+  # nixpkgs.config.cudaSupport = true;
 
   boot.loader.limine = {
     extraConfig = lib.mkForce ''
