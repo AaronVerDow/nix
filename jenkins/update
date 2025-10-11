@@ -4,7 +4,10 @@ pipeline {
     stages {
         stage('Flake Update') {
             steps {
-                sh 'nix flake update'
+                sh ''' 
+		    git switch main
+		    nix flake update
+		'''
             }
         }
         stage('Games') {
