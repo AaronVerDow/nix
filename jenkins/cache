@@ -10,7 +10,7 @@ pipeline {
                         returnStdout: true
                     ).trim()
                     
-                    if (commitMessage.contains('auto flake update') {
+                    if (commitMessage.contains('auto flake update')) {
                         currentBuild.result = 'ABORTED'
                         error("Skipping flake update.")
                     }
