@@ -32,15 +32,17 @@ pipeline {
       }
         stage('Push Update') {
             steps {
-                sh '''
-                  git status
-		  git config --local user.email "jenkins@verdow.lan"
-		  git config --local user.name "Jenkins"
-		  git add flake.lock
-		  git commit -m "auto update flake"
-		  git status
-                  git push
-                '''
+		sshagent(['329fefc4-6b34-4c35-941a-ba5fd1736773']) {
+			sh '''
+			  git status
+			  git config --local user.email "jenkins@verdow.lan"
+			  git config --local user.name "Jenkins"
+			  git add flake.lock
+			  git commit -m "auto update flake"
+			  git status
+			  git push
+			'''
+		}
             }
         }
 
