@@ -17,5 +17,10 @@ pipeline {
                 sh 'nix build .#nixosConfigurations.gonix.config.system.build.toplevel'
             }
         }
-    }
+        stage('IdeaPad') {
+           steps {
+               sh 'nix build .#nixosConfigurations.ipad.config.system.build.toplevel'
+          }
+      }
+   }
 }
