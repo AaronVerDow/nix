@@ -5,7 +5,7 @@ vimUtils.buildVimPlugin {
   src = fetchFromGitHub {
     owner = "AaronVerDow";
     repo = "openscad-preview.nvim";
-    rev = "145d52e7252ec116c76dd51744f4c0c960aef218";
+    rev = "0d6b6e45830e45c4e5f9831204ec12f57a250cbb";
     hash = "sha256-ZCcy4fj7zVmjJmvFSgESir723NWq4ae1E7XAJ4ElRiI=";
   };
   meta = with lib; {
