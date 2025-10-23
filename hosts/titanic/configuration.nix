@@ -5,7 +5,7 @@
   imports = [ 
     ./hardware-configuration.nix
     ../../common/configuration.nix
-    ../../common/x/configuration.nix
+    # ../../common/x/configuration.nix
     ./selfhosted/selfhosted.nix
     ./x2goserver.nix
   ];
