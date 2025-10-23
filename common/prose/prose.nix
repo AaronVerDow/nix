@@ -8,6 +8,9 @@ let
         bookdown
         stringr
         tidyverse
+        plantuml
+        plantuml-c4
+        plantuml-server
     ]; };
 in
 {
@@ -19,6 +22,7 @@ in
         pandoc-mustache
         languagetool
         grammar
+        plantuml
         # rWrapper.override{packages = [ rPackages.bookdown ];}
 
 

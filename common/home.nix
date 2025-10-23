@@ -44,6 +44,7 @@
       diff-so-fancy
 
       texliveFull
+      texlivePackages.plantuml
       nix-search-cli
       mdcat
 
