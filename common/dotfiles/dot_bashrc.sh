@@ -15,7 +15,7 @@ fi
 PATH="$HOME/bin:$PATH:$HOME/.local/bin"
 
 instead_use() {
-    echo "Use $1!" | lolcat -a -d 24
+    echo "Use $1!" | lolcat -F 1.5
 }
 
 alias ip='ip -c'
@@ -34,8 +34,7 @@ which fdfind &> /dev/null && alias fd='fdfind --type f'
 vi() {
     if [[ -d ${!#} ]]; then
         instead_use cd
-        cd "$@" || return $? # extra return keeps shellcheck happy
-        return $?
+        return 1
     fi
 
     command nvim "$@"
