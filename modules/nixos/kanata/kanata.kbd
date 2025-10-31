@@ -11,8 +11,8 @@
   esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
   grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc                nlk  kp/  kp*  kp-
   tab  @diq w    e    r    t    y    u    i    o    @dip [    ]    \                   kp7  kp8  kp9  kp+
-  @cp  a    s    d    f    g    h    j    k    l    @vi  '    enter                    kp4  kp5  kp6
-  lsft z    x    c    v    b    n    m    ,    .    /              @cpsw     up        kp1  kp2  kp3  kprt
+  @cp  a    s    d    f    @emg h    j    k    l    @vi  '    enter                    kp4  kp5  kp6
+  lsft z    x    c    v    @emb n    @emm ,    .    /              @cpsw     up        kp1  kp2  kp3  kprt
   lctl lmet lalt           spc                 ralt rmet rctl      rctl lft  down rght kp0       kp.
 )
 
@@ -24,6 +24,16 @@
   _    _    del  _    _    @vib _    _    _    _    _              _         _         _    _    _    _
   _    _    _              _                   _    _    _         _    _    _    _    _         _
 )
+
+(deflayer megabonk
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _                   _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _                   _    _    _    _
+  rght _    _    _    rght @dmg _    _    _    _    _    _    _                        _    _    _
+  lft  _    _    _    _    @dmb _    @dmm _    _    _              _         _         _    _    _    _
+  _    _    _              _                   _    _    _         _    _    _    _    _         _
+)
+
 
 (deflayer disabled
   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
@@ -42,6 +52,15 @@
   viw  C-right
   doq  (chord enable_chord q)
   dop  (chord enable_chord p)
+
+  emm (chord enable_megabonk m)
+  emg (chord enable_megabonk g)
+  emb (chord enable_megabonk b)
+
+  dmm (chord disable_megabonk m)
+  dmg (chord disable_megabonk g)
+  dmb (chord disable_megabonk b)
+
   cpsw (tap-dance-eager 200 (
   	  rsft
 	  (caps-word 2000)
@@ -52,3 +71,17 @@
 (defchords enable_chord 500
   (q p) (layer-switch default)
 ) 
+
+(defchords disable_megabonk 500
+  (m) m
+  (g) g
+  (b) b
+  (m g b) (layer-switch default)
+)
+
+(defchords enable_megabonk 500
+  (m) m
+  (g) g
+  (b) b
+  (m g b) (layer-switch megabonk)
+)
