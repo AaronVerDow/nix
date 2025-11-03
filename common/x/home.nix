@@ -191,6 +191,10 @@ in
         nativeBuildInputs = [ chromium ];
         copy_icons = false;
       })
+      (nix-run-desktop.launcher {
+        nativeBuildInputs = [ openshot-qt ];
+        copy_icons = false;
+      })
     ])
   ];
 
