@@ -2,8 +2,9 @@ Rscript -e 'library(bookdown); render_book()'
 
 #cmd=evince
 cmd=fancy-cat
-file="$( pwd )/_book/_main.pdf"
+pdf="$( pwd )/_book/_main.pdf"
+# html="$( pwd )/_book/index.html"
 
-[ -f "$file" ] || return 1
-
-pgrep -a $cmd | grep -q "$file" || $cmd "$file" # &>> /dev/null &
+if [ -f "$pdf" ]; then
+    pgrep -a $cmd | grep -q "$pdf" || $cmd "$pdf" # &>> /dev/null &
+fi
