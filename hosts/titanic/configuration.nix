@@ -166,6 +166,12 @@
     ];
   };
 
+  services.esphome = {
+    enable = true;
+    openFirewall = true;
+    usePing = true;
+  };
+
   services.grafana = {
     enable = true;
     settings = {
