@@ -78,6 +78,7 @@
     host = "0.0.0.0";
     port = 11434;
     acceleration = "cuda";
+    openFirewall = true;
     environmentVariables = {
       # Recommended for aider
       "OLLAMA_CONTEXT_LENGTH" = "8192";
