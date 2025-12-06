@@ -167,11 +167,11 @@
     ];
   };
 
-  services.esphome = {
-    enable = true;
-    openFirewall = true;
-    usePing = true;
-  };
+  # services.esphome = {
+    # enable = true;
+    # openFirewall = true;
+    # usePing = true;
+  # };
 
   services.grafana = {
     enable = true;
@@ -184,7 +184,31 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8088 50000 9090 3000 9100 ];
+  # Wyoming services
+  services.wyoming = {
+    faster-whisper = {
+      servers = {
+        main = {
+          enable = true;
+          device = "cuda";
+          model = "large-v3";
+          uri = "tcp://0.0.0.0:10300";
+          language = "en";
+        };
+      };
+    };
+    piper = {
+      servers = {
+        main = {
+          enable = true;
+          voice = "en-us-ryan-medium";
+          uri = "tcp://0.0.0.0:10200";
+        };
+      };
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8088 50000 9090 3000 9100 10200 10300 ];
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
