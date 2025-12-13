@@ -73,6 +73,10 @@
       pager.branch = false;
       push.autoSetupRemote = true;
     };
+    diff-so-fancy.enable = true;
+    ignores = [
+      ".aider*"
+    ];
   };
 
   # Nicely reload system units when changing configs
