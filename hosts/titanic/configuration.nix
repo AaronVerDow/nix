@@ -167,11 +167,15 @@
     ];
   };
 
-  # services.esphome = {
-    # enable = true;
-    # openFirewall = true;
-    # usePing = true;
-  # };
+  nixpkgs.config.permittedInsecurePackages = [
+    "python3.12-ecdsa-0.19.1"
+  ];
+  services.esphome = {
+    package = pkgs.unstable.esphome;
+    enable = true;
+    openFirewall = true;
+    usePing = true;
+  };
 
   services.grafana = {
     enable = true;
