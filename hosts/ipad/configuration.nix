@@ -18,6 +18,8 @@
   # Secondary flag
   # 291a:a392
 
+  services.redshift.enable = true;
+
   services.tailscale.enable = true;
 
   services.kanata-config = {
