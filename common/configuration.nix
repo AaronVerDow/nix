@@ -33,11 +33,12 @@
         protocol: efi
         path: boot():///limine/efi/memtest86/memtest86.efi
     '';
-    extraConfig = ''
-      interface_help_hidden: yes
-      interface_branding:
-      term_font_scale: 2x2
-    '';
+    # 25.11 upgrade
+    # extraConfig = ''
+      # interface_help_hidden: yes
+      # interface_branding:
+      # term_font_scale: 2x2
+    # '';
     enableEditor = true;
     additionalFiles = {
       "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi";
@@ -180,10 +181,11 @@
     };
   };
 
-  services.logind.extraConfig = ''
+  # 25.11 upgrade
+  # services.logind.extraConfig = ''
     # don't shutdown when power button is short-pressed
-    HandlePowerKey="ignore";
-  '';
+    # HandlePowerKey="ignore";
+  # '';
 
   environment.sessionVariables = {
     MOZ_USE_XINPUT2 = "1"; # touchscreen support for firefox

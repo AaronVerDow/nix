@@ -65,7 +65,8 @@
   programs.home-manager.enable = true;
 
   programs.git = {
-    package = pkgs.gitAndTools.gitFull;
+    # 25.11
+    # package = pkgs.gitAndTools.gitFull;
     enable = true;
     userName = "Aaron VerDow";
     userEmail = "aaron@verdow.com";

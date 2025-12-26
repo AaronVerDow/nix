@@ -55,7 +55,7 @@ in
         vencord = vencord;
       })
       my_numworks # Calculator
-      onlyoffice-bin # Office suite
+      onlyoffice-desktopeditors # Office suite
       gimp
 
       # Terminal & System Utilities
@@ -83,7 +83,8 @@ in
       rofi # Application launcher
 
       # Input & Accessibility
-      barrier
+      # 25.11
+      # barrier # switch to input leap?
       onboard # On-screen keyboard
       touchegg # Touchscreen gestures
       unstable.restream
@@ -100,7 +101,7 @@ in
       courier-prime
       libertine
       merriweather
-      ubuntu_font_family
+      ubuntu-classic
       iosevka
       b612
       victor-mono
