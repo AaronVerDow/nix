@@ -169,6 +169,14 @@ in
   services.xserver.enable = true;
   hardware.graphics.enable = true;
 
+  # doesn't work 
+  services.xserver.inputClassSections = [ ''
+      Identifier "Overwatch Fix"
+      MatchProduct  "Logitech MX Master"
+      Option          "Emulate3Buttons"       "false"
+    ''
+  ];
+
   services.xserver.displayManager.lightdm = {
     enable = true;
     greeters.gtk = {
@@ -194,7 +202,6 @@ in
       awesome-wm-widgets
     ];
   };
-  services.redshift.enable = true;
   services.flatpak.enable = true;
 
   environment.systemPackages = with pkgs; [

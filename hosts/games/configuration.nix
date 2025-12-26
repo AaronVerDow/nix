@@ -14,9 +14,9 @@
   ];
 
   fileSystems."/mnt/windows" = {
-    device = "/dev/nvme0n1p2";
+    device = "/dev/nvme1n1p2";
     fsType = "ntfs-3g";
-    options = [ "rw" "uid=1000" "gid=100" "dmask=022" "exec" ];
+    options = [ "rw" "uid=1000" "gid=100" "dmask=022" "exec" "nofail" ];
   };
   networking.hostName = "games";
 
@@ -55,6 +55,8 @@
   # virtualisation.virtualbox.host.enableExtensionPack = true;
   # virtualisation.virtualbox.host.enableKvm = true; # broken?
   # virtualisation.virtualbox.host.addNetworkInterface = false;
+
+  # virtualisation.docker.enable = true;
 
   services.kanata-config = {
     enable = true;

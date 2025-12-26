@@ -22,6 +22,8 @@ in
     packageNames = [ "linux" ];
   };
 
+  services.redshift.enable = true;
+
   services.tailscale.enable = true;
 
   services.xserver.desktopManager.cinnamon.enable = false;
