@@ -68,19 +68,17 @@
   programs.home-manager.enable = true;
 
   programs.git = {
-    # 25.11
-    # package = pkgs.gitAndTools.gitFull;
     enable = true;
-    userName = "Aaron VerDow";
-    userEmail = "aaron@verdow.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Aaron VerDow";
+        email = "aaron@verdow.com";
+      };
       pager.branch = false;
       push.autoSetupRemote = true;
+      diff.soFancy = true;
+      core.excludesFile = "~/.gitignore_global";
     };
-    diff-so-fancy.enable = true;
-    ignores = [
-      ".aider*"
-    ];
   };
 
   # Nicely reload system units when changing configs
@@ -96,6 +94,10 @@
     ".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
     ".config/nixpkgs/config.nix".text = ''
       { allowUnfree = true; }
+    '';
+    # Global git ignore file
+    ".gitignore_global".text = ''
+      .aider*
     '';
   };
 
