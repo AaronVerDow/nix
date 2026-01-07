@@ -9,7 +9,7 @@
   home.packages = with pkgs; [
     unstable.r2modman
     protonup-qt
-    huestacean
+    # huestacean
     (writeShellScriptBin "undock" ''
       xrandr --output DP-1 --off
       wallpaper_set
