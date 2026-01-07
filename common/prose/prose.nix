@@ -19,7 +19,7 @@ in
         R-with-my-packages
         pandoc
         texliveFull
-        pandoc-mustache
+        # pandoc-mustache # broken due to future and python 3.13
         languagetool
         grammar
         plantuml

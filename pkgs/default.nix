@@ -9,7 +9,7 @@ pkgs: {
   coc-zig = pkgs.callPackage ./coc-zig { };
   restream-desktop = pkgs.callPackage ./restream-desktop { };
   my_numworks = pkgs.callPackage ./my_numworks { };
-  my_fancy-cat = pkgs.callPackage ./my_fancy-cat { };
+  # my_fancy-cat = pkgs.callPackage ./my_fancy-cat { };
   my_camset = pkgs.callPackage ./my_camset { };
   my_openscad = pkgs.callPackage ./my_openscad { };
   satisfactory-file-parser = pkgs.callPackage ./satisfactory-file-parser { };

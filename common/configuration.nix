@@ -25,7 +25,8 @@
     longitude = -87.6324;
   };
 
-  boot.loader.limine = {
+
+ boot.loader.limine = {
     enable = true;
     efiSupport = true;
     extraEntries = ''
@@ -70,6 +71,10 @@
     ];
     config = {
       allowUnfree = true;
+      permittedInsecurePackages = [
+        "python3.12-ecdsa-0.19.1"
+        "qtwebengine-5.15.19"
+      ];
     };
   };
 

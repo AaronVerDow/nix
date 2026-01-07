@@ -169,6 +169,7 @@
 
   nixpkgs.config.permittedInsecurePackages = [
     "python3.12-ecdsa-0.19.1"
+    "qtwebengine-5.15.19"
   ];
   # services.esphome = {
     # package = pkgs.unstable.esphome;
