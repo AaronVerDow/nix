@@ -77,6 +77,12 @@
             ./modules/nixos/kanata
           ];
         };
+        bedhtpc = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/bedhtpc/configuration.nix
+          ];
+        };
         titanic = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
