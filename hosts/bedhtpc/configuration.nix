@@ -9,15 +9,15 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../common/configuration.nix
+    ./minimal.nix
   ];
 
-  home-manager = {
-    extraSpecialArgs = { inherit inputs outputs; };
-    users = {
-      averdow = import ./home.nix;
-    };
-  };
+  # home-manager = {
+    # extraSpecialArgs = { inherit inputs outputs; };
+    # users = {
+      # averdow = import ./home.nix;
+    # };
+  # };
 
   services.cage = {
     enable = true;
