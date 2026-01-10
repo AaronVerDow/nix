@@ -14,6 +14,16 @@ in
     ../../common/cache_client.nix
     ../../common/x/configuration.nix
   ];
+
+
+  # https://github.com/NixOS/nixos-hardware/pull/1690
+  hardware.microsoft-surface.kernelVersion = "stable";
+
+  boot.kernelPatches = [{
+    name = "rust-1.91-fix";
+    patch = ./rust-fix.patch;
+  }];
+
   networking.hostName = "gonix";
 
   # cache kernel compiles
