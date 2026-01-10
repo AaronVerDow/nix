@@ -12,7 +12,7 @@
   # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    ./apparmor/apparmor_d_module.nix
+    # ./apparmor/apparmor_d_module.nix
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -65,9 +65,9 @@
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
 
-      (final: prev: {
-        apparmor-d = final.callPackage ./apparmor/apparmor-d_package.nix { };
-      })
+      # (final: prev: {
+        # apparmor-d = final.callPackage ./apparmor/apparmor-d_package.nix { };
+      # })
     ];
     config = {
       allowUnfree = true;
@@ -267,32 +267,32 @@
   security.apparmor.enable = false;
 
   # add a boot entry with apparmor enabled
-  specialisation = {
-    with-apparmor = {
-      configuration = {
-        security.apparmor.enable = lib.mkForce true;
-      };
-    };
-  };
+  # specialisation = {
+    # with-apparmor = {
+      # configuration = {
+        # security.apparmor.enable = lib.mkForce true;
+      # };
+    # };
+  # };
 
   services.dbus.apparmor = "enabled";
   security.auditd.enable = true;
 
   # security.apparmor.enable = lib.mkDefault true;
-  security.apparmor.enableCache = true;
-  security.apparmor.killUnconfinedConfinables = false;
+  # security.apparmor.enableCache = true;
+  # security.apparmor.killUnconfinedConfinables = false;
 
   security.audit.backlogLimit = 8192;
 
-  security.apparmor_d = {
-    enable = true;
-    profiles = {
-      discord = "enforce";
-      # can't download files in enforce mode
-      "firefox.apparmor.d" = "complain";
-      ollama = "enforce";
-    };
-  };
+  # security.apparmor_d = {
+    # enable = true;
+    # profiles = {
+      # discord = "enforce";
+      # # can't download files in enforce mode
+      # "firefox.apparmor.d" = "complain";
+      # ollama = "enforce";
+    # };
+  # };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
