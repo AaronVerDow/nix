@@ -19,5 +19,11 @@
     };
   };
 
+  services.cage = {
+    enable = true;
+    program = "${pkgs.plex-htpc}/bin/plex-htpc";
+    user = "averdow";
+  };
+
   system.stateVersion = "23.05"; # Did you read the comment?
 }
