@@ -9,47 +9,13 @@
   ...
 }:
 {
-  # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    # ./apparmor/apparmor_d_module.nix
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-
- boot.loader.limine = {
-    enable = true;
-    efiSupport = true;
-    # extraEntries = ''
-      # /memtest86
-        # protocol: efi
-        # path: boot():///limine/efi/memtest86/memtest86.efi
-    # '';
-    # 25.11 upgrade
-    # extraConfig = ''
-      # interface_help_hidden: yes
-      # interface_branding:
-      # term_font_scale: 2x2
-    # '';
-    # enableEditor = true;
-    # additionalFiles = {
-      # "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi";
-    # };
-    style = {
-      interface = {
-        # branding = null; # broken
-        # helpHidden = true; # broken
-      };
-      # wallpapers = [
-        # ./boot.jpg
-      # ];
-    };
-
-  };
-
-  # required for apropos and qman, but makes builds longer
-  # documentation.man.generateCaches = true;
+  boot.loader.systemd-boot.enable = true;
 
   nixpkgs = {
     overlays = [
