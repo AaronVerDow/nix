@@ -57,7 +57,7 @@
       '')
 
       (writeShellScriptBin "pkg" ''
-        nom shell nixpkgs#$1 || nix-search $1
+        nom shell --impure nixpkgs#$1 || nix-search $1
       '')
 
       (writeShellScriptBin "eternal" (builtins.readFile ./dotfiles/bin/eternal.sh))
