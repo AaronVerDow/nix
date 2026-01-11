@@ -49,6 +49,7 @@ in
       openscad-post-processor
 
       # Office & Productivity
+      # if this breaks after an upate, remove ~/.config/discord
       (discord.override {
         withOpenASAR = true;
         withVencord = true;
