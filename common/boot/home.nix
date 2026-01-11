@@ -9,11 +9,6 @@
   ...
 }:
 {
-  imports = [
-    ./nvim/nvim.nix
-    ./prose/prose.nix
-  ];
-
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
@@ -35,33 +30,14 @@
 
   home.packages = lib.mkMerge [
     (with pkgs; [
-      unzip
-      usbutils
-      gh
-      ripgrep
-      nixfmt-rfc-style
-      # fancy-cat
-      aider-chat-full
-      qman
-      git-my
-      diff-so-fancy
-
-      texliveFull
-      texlivePackages.plantuml
-      nix-search-cli
-      mdcat
-
       (writeShellScriptBin "my_ping" ''
         gateway=$( ip route | grep default | awk '{ print $3}' )
         sudo ${pkgs.liboping}/bin/noping $gateway modem public
       '')
-
       (writeShellScriptBin "pkg" ''
         nom shell --impure nixpkgs#$1 || nix-search $1
       '')
-
       (writeShellScriptBin "eternal" (builtins.readFile ./dotfiles/bin/eternal.sh))
-
     ])
   ];
 
@@ -91,7 +67,6 @@
     ".dir_colors".source = ./dotfiles/dot_dir_colors.sh;
     ".bashrc".source = ./dotfiles/dot_bashrc.sh;
     ".bash_profile".source = ./dotfiles/dot_bash_profile.sh;
-    ".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
     ".config/nixpkgs/config.nix".text = ''
       { allowUnfree = true; }
     '';
