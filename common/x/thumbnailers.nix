@@ -1,0 +1,217 @@
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  # used for text file thumbnails
+  basicNeovim = pkgs.neovim.override {
+    configure = {
+      packages.myVimPackage = with pkgs.vimPlugins; {
+        start = [ vim-humanoid-colorscheme ];
+        opt = [ ];
+      };
+    };
+  };
+
+  thumbs-webp = pkgs.writeShellScriptBin "thumbs-webp" ''
+    set -euo pipefail
+    echo "$0 $@"
+    PATH="${pkgs.busybox}/bin:$PATH"
+
+    INPUT=$1
+    OUTPUT=$2
+    SIZE="''${3:-256}"
+
+    TEMP=$(mktemp) 
+    if ${pkgs.libwebp}/bin/webpmux -get frame 1 "$INPUT" -o "$TEMP"; then
+      ${pkgs.imagemagick}/bin/magick "$TEMP" -thumbnail "$SIZE" "$OUTPUT"
+    else
+      ${pkgs.imagemagick}/bin/magick $INPUT -thumbnail "$SIZE" "$OUTPUT"
+    fi
+    [ -f "$TEMP" ] && rm "$tempfile"
+  '';
+
+  thumbs-openscad = pkgs.writeShellScriptBin "thumbs-openscad" ''
+    set -euo pipefail
+    echo "$0 $@"
+    PATH="${pkgs.busybox}/bin:$PATH"
+
+    INPUT=$1
+    OUTPUT=$2
+    SIZE="''${3:-256}"
+
+    TEMP=$(mktemp --directory --tmpdir tumbler-scad-XXXXXX)
+    ${pkgs.openscad}/bin/openscad $INPUT --viewall --colorscheme "Tomorrow Night" --autocenter --imgsize "$SIZE,$SIZE" -o "$TEMP/scad.png" 
+    ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#1d1f21" "$OUTPUT"
+    rm -rf "$TEMP"
+  '';
+
+  thumbs-stl = pkgs.writeShellScriptBin "thumbs-stl" ''
+    set -euo pipefail
+    echo "$0 $@"
+    PATH="${pkgs.busybox}/bin:$PATH"
+
+    INPUT=$1
+    OUTPUT=$2
+    SIZE="''${3:-256}"
+     
+    TEMP=$(mktemp --directory --tmpdir tumbler-stl-XXXXXX)
+    cp "$INPUT" "$TEMP/source.stl"
+    echo 'import("source.stl", convexity=10);' > "$TEMP/thumbnail.scad"
+    ${pkgs.openscad}/bin/openscad --viewall --autocenter --imgsize "$SIZE,$SIZE" -o "$TEMP/scad.png" "$TEMP/thumbnail.scad"
+    ${pkgs.imagemagick}/bin/magick "$TEMP/scad.png" -transparent "#FFFFE5" "$OUTPUT"
+    rm -rf "$TEMP"
+  '';
+
+  thumbs-text = pkgs.writeShellScriptBin "thumbs-text" ''
+    set -euo pipefail
+    echo "$0 $@"
+    PATH="${pkgs.busybox}/bin:$PATH"
+
+    FILE="$1"
+    OUTPUT="$2"
+    SIZE="''${3:-256}"
+
+    SCREEN="800x800x24" # not sure if this changes anything
+    TERM_SIZE="80x30"
+    FOREGROUND=white
+    BACKGROUND=black
+    FONT="Monospace:style=Bold"
+    COLORSCHEME=humanoid
+
+    find_display() {
+      for d in {99..110}; do
+        [ -e "/tmp/.X$d-lock" ] && continue 
+        echo ":$d"
+        return 0
+      done
+      echo "No available X display found" >&2
+      return 1
+    }
+    DISPLAY=$(find_display)
+    export DISPLAY
+
+    XTERM_PID=""
+    XVFB_PID=""
+    cleanup() {
+      kill $XTERM_PID || true
+      kill $XVFB_PID || true
+    }
+    trap cleanup EXIT
+
+    ${pkgs.xorg.xvfb}/bin/Xvfb "$DISPLAY" -screen 0 $SCREEN &
+    XVFB_PID=$!
+
+    ${pkgs.xterm}/bin/xterm -geometry $TERM_SIZE -fg $FOREGROUND -bg $BACKGROUND -fa $FONT -e ${basicNeovim}/bin/nvim -R -u NONE -c "syntax on" -c "colorscheme $COLORSCHEME" "$FILE" &
+    XTERM_PID=$!
+
+    WINDOW_ID=""
+    for i in {1..10}; do
+        WINDOW_ID=$(${pkgs.xorg.xwininfo}/bin/xwininfo -root -tree | grep -m1 "XTerm" | awk '{print $1}' || true)
+        sleep 0.2
+        [ -n "$WINDOW_ID" ] && break
+    done
+
+    sleep 0.5
+
+    ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" | ${pkgs.imagemagick}/bin/magick xwd:- -transparent "#232629" -thumbnail "$SIZE" "$OUTPUT"
+
+  '';
+
+  thumbs-xcf = pkgs.writeShellScriptBin "thumbs-xcf" ''
+    set -euo pipefail
+    echo "$0 $@"
+
+    INPUT=$1
+    OUTPUT=$2
+    SIZE="''${3:-256}"
+
+    ${pkgs.gimp}/bin/gimp -i -d -f -s -b - <<EOF
+    (let* ((in  "$INPUT")
+           (out "$OUTPUT")
+           (size $SIZE)
+           (img  (car (gimp-file-load RUN-NONINTERACTIVE in in)))
+           (w    (car (gimp-image-width  img)))
+           (h    (car (gimp-image-height img)))
+           (scale (if (> w h) (/ size w) (/ size h)))
+           (neww (inexact->exact (ceiling (* w scale))))
+           (newh (inexact->exact (ceiling (* h scale))))
+           (layer (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE))))
+      (gimp-image-scale img neww newh)
+      ;; file-png-save: (run-mode image drawable filename raw-filename
+      ;;                        interlace compression bkgd gama offs phys time)
+      (file-png-save RUN-NONINTERACTIVE img layer out out
+                     0         ; interlace off
+                     9         ; compression (0..9)
+                     0 0 0 0 0 ; no extra chunks
+      )
+      (gimp-image-delete img)
+    )
+    (gimp-quit 0)
+    EOF
+  '';
+
+in
+{
+  environment.systemPackages = with pkgs; [
+    # Thumbnailer packages
+    ffmpeg-headless
+    ffmpegthumbnailer
+    imagemagick
+    ghostscript # required by imagemagick to convert pdf files
+
+    # https://docs.xfce.org/xfce/tumbler/available_plugins#customized_thumbnailer_for_text-based_documents
+
+    # this never fires for some reason
+    (pkgs.writeTextDir "share/thumbnailers/imagemagick-webp.thumbnailer" ''
+      [Thumbnailer Entry]
+      Exec=${thumbs-webp}/bin/thumbs-webp %i %o %s
+      MimeType=image/webp;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/nvim-text.thumbnailer" ''
+      [Thumbnailer Entry]
+      Exec=${thumbs-text}/bin/thumbs-text %i %o %s
+      MimeType=text/plain;text/html;text/css;application/x-shellscript;text/x-sh;text/x-python;application/json;text/x-yaml;text/markdown;text/x-markdown;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/imagemagick-pdf.thumbnailer" ''
+      [Thumbnailer Entry]
+      Exec=${pkgs.imagemagick}/bin/convert %i[0] -background "#FFFFFF" -flatten -thumbnail %s %o
+      MimeType=application/pdf;application/x-pdf;image/pdf;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/openscad-stl.thumbnailer" ''
+      [Thumbnailer Entry]
+      Exec=${thumbs-stl}/bin/thumbs-stl %i %o %s
+      MimeType=model/stl;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/openscad-scad.thumbnailer" ''
+      [Thumbnailer Entry]
+      Exec=${thumbs-openscad}/bin/thumbs-openscad %i %o %s
+      MimeType=application/x-openscad;
+    '')
+
+    (pkgs.writeTextDir "share/thumbnailers/gimp-xcf.thumbnailer" ''
+      [Thumbnailer Entry]
+      Exec=${thumbs-xcf}/bin/thumbs-xcf %i %o %s
+      MimeType=image/x-xcf;
+    '')
+
+    (pkgs.writeTextDir "share/mime/packages/openscad.xml" ''
+      <?xml version="1.0" encoding="UTF-8"?>
+      <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+        <mime-type type="application/x-openscad">
+          <comment>OpenSCAD 3D model</comment>
+          <glob pattern="*.scad"/>
+          <sub-class-of type="text/plain"/>
+        </mime-type>
+      </mime-info>
+    '')
+  ];
+}
