@@ -17,7 +17,6 @@ let
 in
 {
   imports = [
-    ./dconf/onboard.nix
     ./firefox/firefox.nix
     inputs.spicetify-nix.homeManagerModules.default
   ];
@@ -40,10 +39,6 @@ in
 
   home.packages = lib.mkMerge [
     (with pkgs; [
-      # Development Tools
-      unstable.code-cursor
-      satisfactory-file-parser # TypeScript parser for Satisfactory save/blueprint files
-
       # Creative & Design Applications
       my_openscad # Programmatic CAD modeling
       openscad-post-processor
@@ -67,7 +62,6 @@ in
       wavemon # Wireless monitoring
       xclip # Clipboard manager
       xorg.xkill # X11 window killer
-      xrotate # Custom rotation package
 
       # System Monitoring & Control
       acpi # Battery information
@@ -78,15 +72,10 @@ in
       # Window Management & Desktop Environment
       flashfocus # Focus animations
       nitrogen # Wallpaper manager
-      # picom-pijulius # Compositor
       picom
       rofi # Application launcher
 
-      # Input & Accessibility
-      # 25.11
       # barrier # switch to input leap?
-      onboard # On-screen keyboard
-      touchegg # Touchscreen gestures
       unstable.restream
       restream-desktop # Desktop entry for restream preview
 
@@ -125,30 +114,8 @@ in
         fi
       '')
 
-      (writeShellScriptBin "cursor-detached" ''
-        # Find git repo root if it exists
-        GIT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
-        if [ -n "$GIT_ROOT" ]; then
-          cd "$GIT_ROOT"
-          # CLI args are not passed properly through NixOS wrapper
-          ${pkgs.unstable.code-cursor}/bin/cursor "$GIT_ROOT" "$@" &> /dev/null &
-        else
-          ${pkgs.unstable.code-cursor}/bin/cursor "$@" &> /dev/null &
-        fi
-        disown
-      '')
-
       (writeShellScriptBin "my_run" ''
         ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi
-      '')
-
-      (writeShellScriptBin "my_touchrun" ''
-        # need to add this to dotfiles still
-        ${pkgs.rofi}/bin/rofi -show drun -theme ~/.config/rofi/touchscreen/touch.rasi
-      '')
-
-      (writeShellScriptBin "onboard_toggle" ''
-        dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
       '')
 
       (writeShellScriptBin "wallpaper_set" ''
@@ -241,17 +208,11 @@ in
   home.file = {
     ".config/picom/picom.conf".source = ../dotfiles/dot_config/picom/picom.conf;
     ".config/awesome/rc.lua".source = ../dotfiles/dot_config/awesome/rc.lua;
-    ".config/touchegg/touchegg.conf".source = ../dotfiles/dot_config/touchegg/touchegg.conf;
     ".config/rofi/config.rasi".source = ../dotfiles/dot_config/rofi/config.rasi;
-    ".config/rofi/touchscreen".source = ../dotfiles/dot_config/rofi/touchscreen;
     ".config/kitty/kitty.conf".source = ../dotfiles/dot_config/kitty/kitty.conf;
     ".config/volumeicon/volumeicon".source = ../dotfiles/dot_config/volumeicon/volumeicon;
     ".config/Vencord/themes/ClearVision-v7-Sapphire-Vencord.css".source =
       ../dotfiles/dot_config/Vencord/themes/ClearVision-v7-Sapphire-Vencord.css;
-    ".local/share/onboard/layouts/full.onboard".source =
-      ../dotfiles/dot_local/share/onboard/layouts/full.onboard;
-    ".local/share/onboard/layouts/full.svg".source =
-      ../dotfiles/dot_local/share/onboard/layouts/full.svg;
   };
 
   home.activation.copyRofiConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
