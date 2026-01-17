@@ -69,7 +69,7 @@ in
     };
 
     # Disable screensaver and DPMS to prevent display from turning off
-    xserverConfig = ''
+    config = ''
       Section "Monitor"
           Identifier "Monitor0"
           Option "DPMS" "false"
