@@ -28,10 +28,10 @@ in
   networking.hostName = "bedhtpc";
 
   # home-manager = {
-    # extraSpecialArgs = { inherit inputs outputs; };
-    # users = {
-      # averdow = import ./home.nix;
-    # };
+  # extraSpecialArgs = { inherit inputs outputs; };
+  # users = {
+  # averdow = import ./home.nix;
+  # };
   # };
 
   # services.xserver.enable = true;
@@ -40,9 +40,9 @@ in
   # services.xserver.displayManager.autoLogin.user = "averdow";
 
   # services.cage = {
-    # enable = true;
-    # program = "${pkgs.plex-htpc}/bin/plex-htpc";
-    # user = "averdow";
+  # enable = true;
+  # program = "${pkgs.plex-htpc}/bin/plex-htpc";
+  # user = "averdow";
   # };
 
   services.xserver = {
@@ -67,6 +67,21 @@ in
         enable = true;
       };
     };
+
+    # Disable screensaver and DPMS to prevent display from turning off
+    xserverConfig = ''
+      Section "Monitor"
+          Identifier "Monitor0"
+          Option "DPMS" "false"
+      EndSection
+
+      Section "Screen"
+          Identifier "Screen0"
+          Device "Card0"
+          Monitor "Monitor0"
+          Option "AllowMouseOpenFail" "true"
+      EndSection
+    '';
   };
 
   systemd.services."display-manager".after = [
