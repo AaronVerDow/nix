@@ -25,7 +25,6 @@ in
         plantuml
         # rWrapper.override{packages = [ rPackages.bookdown ];}
 
-
         (writeShellApplication {
             name = "wcgraph";
             runtimeInputs = with pkgs; [ 

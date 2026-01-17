@@ -87,14 +87,7 @@ in
       arc-icon-theme # Icon theme
       sweet-folders
       candy-icons
-      courier-prime
-      libertine
-      merriweather
       ubuntu-classic
-      iosevka
-      b612
-      victor-mono
-      google-fonts
 
       flatpak
       gamemode
@@ -130,37 +123,11 @@ in
       '')
 
       (nix-run-desktop.launcher {
-        nativeBuildInputs = [ blender ];
-        copy_icons = false;
-      })
-      (nix-run-desktop.launcher {
-        nativeBuildInputs = [ inkscape ];
-        copy_icons = false;
-      })
-      (nix-run-desktop.launcher {
-        nativeBuildInputs = [ freecad ];
-        copy_icons = false;
-      })
-      (nix-run-desktop.launcher {
-        nativeBuildInputs = [ obs-studio ];
-        copy_icons = false;
-      })
-      (nix-run-desktop.launcher {
-        nativeBuildInputs = [ drawing ];
-      })
-      (nix-run-desktop.launcher {
-        nativeBuildInputs = [ via ];
-      })
-      (nix-run-desktop.launcher {
         nativeBuildInputs = [ tor-browser ];
         copy_icons = false;
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ chromium ];
-        copy_icons = false;
-      })
-      (nix-run-desktop.launcher {
-        nativeBuildInputs = [ openshot-qt ];
         copy_icons = false;
       })
     ])
