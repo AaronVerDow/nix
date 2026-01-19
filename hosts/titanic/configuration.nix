@@ -173,8 +173,9 @@
   ];
 
   services.esphome = {
-    package = pkgs.unstable.esphome;
-    enable = false;
+    # package = pkgs.unstable.esphome;
+    enable = true;
+    address = "0.0.0.0";
     openFirewall = true;
     usePing = true;
   };
