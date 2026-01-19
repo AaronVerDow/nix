@@ -171,12 +171,13 @@
     "python3.12-ecdsa-0.19.1"
     "qtwebengine-5.15.19"
   ];
-  # services.esphome = {
-    # package = pkgs.unstable.esphome;
-    # enable = false;
-    # openFirewall = true;
-    # usePing = true;
-  # };
+
+  services.esphome = {
+    package = pkgs.unstable.esphome;
+    enable = false;
+    openFirewall = true;
+    usePing = true;
+  };
 
   services.grafana = {
     enable = true;
