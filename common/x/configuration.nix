@@ -166,11 +166,15 @@ in
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.cups-brother-hll2340dw ];
 
+  # required for printing from firefox
+  services.avahi.enable = true;
+
   services.xserver.enable = true;
   hardware.graphics.enable = true;
 
-  # doesn't work 
-  services.xserver.inputClassSections = [ ''
+  # doesn't work
+  services.xserver.inputClassSections = [
+    ''
       Identifier "Overwatch Fix"
       MatchProduct  "Logitech MX Master"
       Option          "Emulate3Buttons"       "false"
