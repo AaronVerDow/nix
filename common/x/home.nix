@@ -85,7 +85,7 @@ in
 
       # Input & Accessibility
       # 25.11
-      # barrier # switch to input leap?
+      input-leap
       onboard # On-screen keyboard
       touchegg # Touchscreen gestures
       unstable.restream
