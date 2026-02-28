@@ -1,18 +1,18 @@
 # TODO: define profile and copy mozilla dotfiles
 { config, pkgs, ... }:
-  # https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265
-  let
-    lock-false = {
-      Value = false;
-      Status = "locked";
-    };
-    lock-true = {
-      Value = true;
-      Status = "locked";
-    };
-    userChrome = builtins.readFile ./userChrome.css;
-    userContent = builtins.readFile ./userContent.css;
-  in
+# https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265
+let
+  lock-false = {
+    Value = false;
+    Status = "locked";
+  };
+  lock-true = {
+    Value = true;
+    Status = "locked";
+  };
+  userChrome = builtins.readFile ./userChrome.css;
+  userContent = builtins.readFile ./userContent.css;
+in
 {
   programs = {
     firefox = {
@@ -28,13 +28,13 @@
         };
       };
 
-      /* ---- POLICIES ---- */
+      # ---- POLICIES ----
       # Check about:policies#documentation for options.
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
         EnableTrackingProtection = {
-          Value= true;
+          Value = true;
           Locked = true;
           Cryptomining = true;
           Fingerprinting = true;
@@ -50,7 +50,7 @@
         DisplayMenuBar = "default-off"; # alternatives: "always", "never" or "default-on"
         SearchBar = "unified"; # alternative: "separate"
 
-        /* ---- EXTENSIONS ---- */
+        # ---- EXTENSIONS ----
         # Check about:support for extension/add-on ID strings.
         # Valid strings for installation_mode are "allowed", "blocked",
         # "force_installed" and "normal_installed".
@@ -73,11 +73,14 @@
             installation_mode = "force_installed";
           };
         };
-  
-        /* ---- PREFERENCES ---- */
+
+        # ---- PREFERENCES ----
         # Check about:config for options.
-        Preferences = { 
-          "browser.contentblocking.category" = { Value = "strict"; Status = "locked"; };
+        Preferences = {
+          "browser.contentblocking.category" = {
+            Value = "strict";
+            Status = "locked";
+          };
           "extensions.pocket.enabled" = lock-false;
           "extensions.screenshots.disabled" = lock-true;
           "browser.topsites.contile.enabled" = lock-false;
@@ -95,6 +98,7 @@
           "browser.newtabpage.activity-stream.showSponsored" = lock-false;
           "browser.newtabpage.activity-stream.system.showSponsored" = lock-false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
+          "browser.urlbar.suggest.quicksuggest.sponsored" = lock-false;
 
           # disable pinch zoom on touchsreen, too sensitive and causes chaos
           apz.allow_zooming = lock-false;
