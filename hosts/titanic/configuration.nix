@@ -83,6 +83,7 @@
       # Recommended for aider
       "OLLAMA_CONTEXT_LENGTH" = "8192";
     };
+    package = pkgs.unstable.ollama-cuda;
   };
 
   services.samba = {
