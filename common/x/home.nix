@@ -58,6 +58,7 @@ in
       my_numworks # Calculator
       onlyoffice-desktopeditors # Office suite
       gimp
+      evince
 
       # Terminal & System Utilities
       arandr # Screen layout configuration

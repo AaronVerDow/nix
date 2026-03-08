@@ -35,6 +35,7 @@
 
   home.packages = lib.mkMerge [
     (with pkgs; [
+      zip
       unzip
       usbutils
       gh
