@@ -132,6 +132,9 @@
         "audio"
         "docker"
         "dialout"
+        "zfs"
+        "disk"
+        "libvirtd"
       ];
       packages = with pkgs; [
         neofetch
@@ -201,6 +204,9 @@
     EDITOR = "nvim";
     OLLAMA_API_BASE = "http://titanic-tail:11434";
     OLLAMA_HOST = "http://titanic-tail:11434";
+    ANTHROPIC_BASE_URL="http://titanic-tail:11434"
+    ANTHROPIC_AUTH_TOKEN="ollama"
+    ANTHROPIC_API_KEY=""
   };
 
   services.udev.packages = with pkgs; [ unstable.via ];
