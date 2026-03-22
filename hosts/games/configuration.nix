@@ -13,11 +13,11 @@
     ../../common/cache_client.nix
   ];
 
-  fileSystems."/mnt/windows" = {
-    device = "/dev/nvme1n1p2";
-    fsType = "ntfs-3g";
-    options = [ "rw" "uid=1000" "gid=100" "dmask=022" "exec" "nofail" ];
-  };
+  # fileSystems."/mnt/windows" = {
+    # device = "/dev/nvme1n1p2";
+    # fsType = "ntfs-3g";
+    # options = [ "rw" "uid=1000" "gid=100" "dmask=022" "exec" "nofail" ];
+  # };
   networking.hostName = "games";
 
   powerManagement.enable = true;
