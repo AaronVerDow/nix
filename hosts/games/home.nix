@@ -11,11 +11,13 @@
     protonup-qt
     # huestacean
     (writeShellScriptBin "undock" ''
-      xrandr --output DP-1 --off
+      xrandr --output DP-0 --mode 3440x1440 --rate 239.98
+      xrandr --output HDMI-0 --off
       wallpaper_set
     '')
     (writeShellScriptBin "dual" ''
-      xrandr --output DP-1 --auto --pos 760x1440
+      xrandr --output DP-0 --mode 3440x1440 --rate 239.98
+      xrandr --output HDMI-0 --auto --pos 760x1440
       wallpaper_set
     '')
   ];
