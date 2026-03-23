@@ -160,9 +160,9 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     if s.geometry.width >= s.geometry.height then
-        s.mywibox = awful.wibar({ position = "bottom", ontop=true, screen = s })
+        s.mywibox = awful.wibox({ position = "bottom", ontop=true, screen = s })
     else
-        s.mywibox = awful.wibar({ position = "top", ontop=true, screen = s })
+        s.mywibox = awful.wibox({ position = "top", ontop=true, screen = s })
     end
 
     -- Add widgets to the wibox
