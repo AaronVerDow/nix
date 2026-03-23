@@ -244,6 +244,7 @@ in
   };
 
   home.file = {
+    "bin/autohidewibox.py".source = ./scripts/autohidewibox.py;
     ".config/picom/picom.conf".source = ../dotfiles/dot_config/picom/picom.conf;
     ".config/awesome/rc.lua".source = ../dotfiles/dot_config/awesome/rc.lua;
     ".config/touchegg/touchegg.conf".source = ../dotfiles/dot_config/touchegg/touchegg.conf;
