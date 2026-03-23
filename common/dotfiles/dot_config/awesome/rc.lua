@@ -673,6 +673,6 @@ else
     awful.spawn.with_shell("pgrep -a touchegg | grep client || touchegg --client")
     awful.spawn.with_shell("pgrep onboard || onboard")
 end
-awful.spawn.with_shell("autohidewibar.py")
+awful.spawn.with_shell("autohidewibox.py")
 awful.spawn("wallpaper_set")
 awful.spawn.with_shell("pgrep volumeicon || (sleep 5 && volumeicon)")
