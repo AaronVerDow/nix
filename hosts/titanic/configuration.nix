@@ -34,6 +34,11 @@
 
   environment.systemPackages = with pkgs; [
     docker-compose
+    # unstable.cockpit-machines
+    # unstable.cockpit-zfs
+    # unstable.cockpit-files
+    # unstable.cockpit-podman
+    libvirt
   ];
 
   # not working with plex
@@ -42,6 +47,11 @@
   virtualisation.docker = {
     enable = true;
     # enableNvidia = true;
+  };
+
+  virtualisation.libvirtd = {
+    enable = true;
+    # allowedBridges = [ "virbr0" ];
   };
 
   services.x2goserver = {
@@ -84,6 +94,27 @@
       "OLLAMA_CONTEXT_LENGTH" = "8192";
     };
     package = pkgs.unstable.ollama-cuda;
+  };
+
+  # manpage
+  services.llama-swap = {
+    enable = true;
+    openFirewall = true;
+    port = 11433;
+    package = pkgs.unstable.llama-swap;
+    settings = let
+      llama-cpp = pkgs.unstable.llama-cpp.override { cudaSupport = true;};
+      llama-server = lib.getExe' llama-cpp "llama-server";
+    in {
+      models = {
+        "code-slow" = {
+          cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3-Coder-30B-A3B-Instruct-UD-Q6_K_XL.gguf -ngl 0 --no-webui";
+        };
+        "reason-fast" = {
+          cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled.i1-Q4_K_S.gguf -ngl 0 --no-webui";
+        };
+      };
+    };
   };
 
   services.samba = {
