@@ -27,15 +27,15 @@ pipeline {
                 sh 'nix build .?submodules=1#nixosConfigurations.titanic.config.system.build.toplevel'
             }
         }
+        stage('IdeaPad') {
+           steps {
+               sh 'nix build .#nixosConfigurations.ipad.config.system.build.toplevel'
+          }
+        }
         stage('Gonix') {
             steps {
                 sh 'nix build .#nixosConfigurations.gonix.config.system.build.toplevel'
             }
         }
-        stage('IdeaPad') {
-           steps {
-               sh 'nix build .#nixosConfigurations.ipad.config.system.build.toplevel'
-          }
-      }
    }
 }
