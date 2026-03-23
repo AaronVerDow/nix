@@ -160,9 +160,9 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     if s.geometry.width >= s.geometry.height then
-        s.mywibox = awful.wibar({ position = "bottom", ontop=true, restrict_workarea = false, screen = s })
+        s.mywibox = awful.wibar({ position = "bottom", ontop=true, type = "toolbar", screen = s })
     else
-        s.mywibox = awful.wibar({ position = "top", ontop=true, restrict_workarea = false, screen = s })
+        s.mywibox = awful.wibar({ position = "top", ontop=true, type = "toolbar", screen = s })
     end
 
     -- Add widgets to the wibox
@@ -673,6 +673,6 @@ else
     awful.spawn.with_shell("pgrep -a touchegg | grep client || touchegg --client")
     awful.spawn.with_shell("pgrep onboard || onboard")
 end
-awful.spawn.with_shell("autohidewibox.py")
+awful.spawn.with_shell("/home/averdow/bin/autohidewibox.py")
 awful.spawn("wallpaper_set")
 awful.spawn.with_shell("pgrep volumeicon || (sleep 5 && volumeicon)")
