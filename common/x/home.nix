@@ -155,14 +155,16 @@ in
       '')
 
       (writeShellScriptBin "wallpaper_set" ''
-        ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=0
-        ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=1 || true
-        ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=2 || true
+        # ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=0
+        # ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=1 || true
+        # ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=2 || true
+        esshader --fullscreen --source ~/.config/wallpaper.glsl
       '')
 
       (writeShellScriptBin "wallpaper_rotate" ''
-        ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper
-        set_wallpaper
+        # ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper
+        ln -sf $( find ~/git/nix/common/x/wallpapers -type f | shuf -n 1 ) ~/.config/wallpaper.glsl
+        wallpaper_set
       '')
 
       (nix-run-desktop.launcher {
