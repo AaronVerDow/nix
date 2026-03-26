@@ -83,9 +83,7 @@ in
       # picom-pijulius # Compositor
       picom
       rofi # Application launcher
-      mpv
-      xwinwrap
-      eza
+      esshader
 
       # Input & Accessibility
       # 25.11
