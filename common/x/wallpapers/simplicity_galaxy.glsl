@@ -49,7 +49,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     vec2 uv = 2. * fragCoord.xy / iResolution.xy - 1.;
 	vec2 uvs = uv * iResolution.xy / max(iResolution.x, iResolution.y);
 	vec3 p = vec3(uvs / 4., 0) + vec3(1., -1.3, 0.);
-	p += .2 * vec3(sin(iTime / 16.), sin(iTime / 12.),  sin(iTime / 128.));
+	p += .2 * vec3(sin(iTime / 64.), sin(iTime / 48.),  sin(iTime / 512.));
 	
 	float freqs[4];
 	//Sound
@@ -63,7 +63,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 	
     //Second Layer
 	vec3 p2 = vec3(uvs / (4.+sin(iTime*0.11)*0.2+0.2+sin(iTime*0.15)*0.3+0.4), 1.5) + vec3(2., -1.3, -1.);
-	p2 += 0.25 * vec3(sin(iTime / 16.), sin(iTime / 12.),  sin(iTime / 128.));
+	p2 += 0.25 * vec3(sin(iTime / 64.), sin(iTime / 48.),  sin(iTime / 512.));
 	float t2 = field2(p2,freqs[3]);
 	vec4 c2 = mix(.4, 1., v) * vec4(1.3 * t2 * t2 * t2 ,1.8  * t2 * t2 , t2* freqs[0], t2);
 	
