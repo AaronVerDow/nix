@@ -158,12 +158,15 @@ in
         # ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=0
         # ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=1 || true
         # ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=2 || true
-        esshader --fullscreen --source ~/.config/wallpaper.glsl
+        killall esshader
+        nohup esshader --fullscreen --source ~/.config/wallpaper.glsl &>/dev/null &
       '')
 
       (writeShellScriptBin "wallpaper_rotate" ''
         # ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper
-        ln -sf $( find ~/git/nix/common/x/wallpapers -type f | shuf -n 1 ) ~/.config/wallpaper.glsl
+        file=$( find ~/git/nix/common/x/wallpapers -type f | shuf -n 1 ) 
+        echo "$file"
+        ln -sf "$file" ~/.config/wallpaper.glsl
         wallpaper_set
       '')
 
