@@ -535,6 +535,43 @@ awful.rules.rules = {
             height = 600
         }
     },
+
+        -- esshader background rule
+    {
+        rule = { class = "esshader" },
+        properties = {
+            -- Window behavior
+            floating = true,
+            sticky = true,           -- Visible on all tags
+            ontop = false,           -- Not on top of windows
+            below = true,            -- Push to bottom layer
+            focusable = false,       -- Can't receive focus
+            skip_taskbar = true,     -- Hide from taskbar
+            border_width = 0,        -- No border
+            titlebars_enabled = false,
+            
+            -- Visual properties
+            opacity = 1.0,           -- Fully opaque
+            
+            -- Optional: Pin to specific tag
+            -- tag = bg_tag,          -- Uncomment to pin to bg tag only
+        },
+        callback = function(c)
+            -- Force window to bottom of stack
+            c:lower()
+            
+            -- Remove from all other tags if using bg_tag
+            -- c:tags = { bg_tag }
+            
+            -- Maximize to full screen
+            c:geometry({
+                x = 0,
+                y = 0,
+                width = screen.primary.geometry.width,
+                height = screen.primary.geometry.height
+            })
+        end
+    }
 }
 -- >>>
 
