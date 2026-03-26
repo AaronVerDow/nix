@@ -109,8 +109,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 	vec3 hsv2 = rgb2hsv(baseColor2);
 	
 	// Shift hue over time while keeping intensity and saturation
-	hsv1.x += iTime * 0.1; // Slow hue rotation
-	hsv2.x += iTime * 0.15; // Different speed for second layer
+	hsv1.x += iTime * 0.01; // Slow hue rotation
+	hsv2.x += iTime * 0.015; // Different speed for second layer
 	
 	// Convert back to RGB
 	vec3 finalColor1 = hsv2rgb(hsv1);
