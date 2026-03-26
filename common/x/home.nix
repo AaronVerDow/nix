@@ -164,7 +164,8 @@ in
 
       (writeShellScriptBin "wallpaper_rotate" ''
         # ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper
-        file=$( find ~/git/nix/common/x/wallpapers -type f | shuf -n 1 ) 
+        file="$1"
+        [ -z "$file" ] && file=$( find ~/git/nix/common/x/wallpapers -type f | shuf -n 1 ) 
         echo "$file"
         ln -sf "$file" ~/.config/wallpaper.glsl
         wallpaper_set
