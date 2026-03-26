@@ -44,6 +44,25 @@ vec3 nrand3( vec2 co )
 	return c;
 }
 
+// Convert RGB to HSV
+vec3 rgb2hsv(vec3 c)
+{
+    vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+    vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+    vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+    
+    float d = q.x - min(q.w, q.y);
+    float e = 1.0e-10;
+    return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+}
+
+// Convert HSV to RGB
+vec3 hsv2rgb(vec3 c)
+{
+    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     vec2 uv = 2. * fragCoord.xy / iResolution.xy - 1.;
@@ -81,5 +100,21 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 	vec3 rnd2 = nrand3( seed2 );
 	starcolor += vec4(pow(rnd2.y,40.0));
 	
-	fragColor = mix(freqs[3]-.3, 1., v) * vec4(1.5*freqs[2] * t * t* t , 1.2*freqs[1] * t * t, freqs[3]*t, 1.0)+c2+starcolor;
+	// Create color with hue shift but constant intensity
+	vec3 baseColor1 = vec3(1.5*freqs[2] * t * t* t , 1.2*freqs[1] * t * t, freqs[3]*t);
+	vec3 baseColor2 = vec3(1.3 * t2 * t2 * t2 ,1.8  * t2 * t2 , t2* freqs[0]);
+	
+	// Convert to HSV for hue manipulation
+	vec3 hsv1 = rgb2hsv(baseColor1);
+	vec3 hsv2 = rgb2hsv(baseColor2);
+	
+	// Shift hue over time while keeping intensity and saturation
+	hsv1.x += iTime * 0.1; // Slow hue rotation
+	hsv2.x += iTime * 0.15; // Different speed for second layer
+	
+	// Convert back to RGB
+	vec3 finalColor1 = hsv2rgb(hsv1);
+	vec3 finalColor2 = hsv2rgb(hsv2);
+	
+	fragColor = mix(freqs[3]-.3, 1., v) * vec4(finalColor1, 1.0) + vec4(finalColor2, t2) + starcolor;
 }
