@@ -378,7 +378,9 @@ clientkeys = gears.table.join(
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end ,
-        {description = "(un)maximize horizontally", group = "client"})
+        {description = "(un)maximize horizontally", group = "client"}),
+    awful.key({ modkey }, "=", function () beautiful.useless_gap = beautiful.useless_gap + 2; awful.layout.arrange(mouse.screen) end),
+    awful.key({ modkey }, "-", function () beautiful.useless_gap = math.max(0, beautiful.useless_gap - 2); awful.layout.arrange(mouse.screen) end)
 )
 
 -- Bind all key numbers to tags.
