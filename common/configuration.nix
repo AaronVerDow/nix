@@ -202,10 +202,10 @@
     NIX_SHELL_PRESERVE_PROMPT = 1;
     NIXPKGS_ALLOW_UNFREE = 1;
     EDITOR = "nvim";
-    OLLAMA_API_BASE = "http://titanic-tail:11434";
-    OLLAMA_HOST = "http://titanic-tail:11434";
+    OPENAI_API_BASE="http://titanic-tail:11433/v1";
+    OPENAI_API_KEY="{{ secrets.openai_key }}";
     ANTHROPIC_BASE_URL="http://titanic-tail:11433";
-    ANTHROPIC_AUTH_TOKEN="ollama";
+    ANTHROPIC_AUTH_TOKEN="{{ secrets.anthropic_token }}";
     ANTHROPIC_API_KEY="";
   };
 
