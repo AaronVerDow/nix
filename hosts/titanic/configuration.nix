@@ -83,20 +83,7 @@
   hardware.nvidia.open = true; # required for RTX?
   hardware.graphics.enable = true;
   nixpkgs.config.cudaSupport = true;
-  services.ollama = {
-    enable = true;
-    host = "0.0.0.0";
-    port = 11434;
-    acceleration = "cuda";
-    openFirewall = true;
-    environmentVariables = {
-      # Recommended for aider
-      "OLLAMA_CONTEXT_LENGTH" = "8192";
-    };
-    package = pkgs.unstable.ollama-cuda;
-  };
 
-  # manpage
   services.llama-swap = {
     enable = true;
     openFirewall = true;
