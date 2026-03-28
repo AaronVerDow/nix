@@ -41,7 +41,6 @@ in
   home.packages = lib.mkMerge [
     (with pkgs; [
       # Development Tools
-      unstable.code-cursor
       satisfactory-file-parser # TypeScript parser for Satisfactory save/blueprint files
 
       # Creative & Design Applications
@@ -126,19 +125,6 @@ in
           ${pkgs.xdotool}/bin/xdotool windowmap "$WINDOW_ID"
           ${pkgs.xdotool}/bin/xdotool windowactivate "$WINDOW_ID"
         fi
-      '')
-
-      (writeShellScriptBin "cursor-detached" ''
-        # Find git repo root if it exists
-        GIT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
-        if [ -n "$GIT_ROOT" ]; then
-          cd "$GIT_ROOT"
-          # CLI args are not passed properly through NixOS wrapper
-          ${pkgs.unstable.code-cursor}/bin/cursor "$GIT_ROOT" "$@" &> /dev/null &
-        else
-          ${pkgs.unstable.code-cursor}/bin/cursor "$@" &> /dev/null &
-        fi
-        disown
       '')
 
       (writeShellScriptBin "my_run" ''
