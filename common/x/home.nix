@@ -100,14 +100,14 @@ in
       arc-icon-theme # Icon theme
       sweet-folders
       candy-icons
-      courier-prime
-      libertine
-      merriweather
+      # courier-prime
+      # libertine
+      # merriweather
       ubuntu-classic
-      iosevka
-      b612
-      victor-mono
-      google-fonts
+      # iosevka
+      # b612
+      # victor-mono
+      # google-fonts
 
       flatpak
       gamemode
