@@ -46,6 +46,7 @@ in
       # Creative & Design Applications
       my_openscad # Programmatic CAD modeling
       openscad-post-processor
+      mermaid-cli
 
       # Office & Productivity
       # if this breaks after an upate, remove ~/.config/discord
