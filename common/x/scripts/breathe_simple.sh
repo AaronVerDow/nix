@@ -4,7 +4,7 @@
 # This creates a "breathe" effect by smoothly varying the gap size
 
 GAP_MIN=10
-GAP_MAX=30
+GAP_MAX=50
 SLEEP_TIME=180
 STEP_SIZE=1
 
