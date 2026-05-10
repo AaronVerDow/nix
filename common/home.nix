@@ -97,6 +97,7 @@
     ".config/nixpkgs/config.nix".text = ''
       { allowUnfree = true; }
     '';
+    ".config/opencode/opencode.json".source = ./dotfiles/dot_config/opencode/opencode.json;
     # Global git ignore file
     ".gitignore_global".text = ''
       .aider*
