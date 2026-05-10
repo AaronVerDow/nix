@@ -17,7 +17,7 @@
     plugins =
       with pkgs.vimPlugins;
       [
-        vim-sleuth # auto detect tab stop
+        # vim-sleuth # auto detect tab stop
         coc-nvim
         rainbow-delimiters-nvim
         nvim-treesitter
@@ -77,12 +77,12 @@
       let
         file = builtins.readFile ./init.lua;
       in
-      ''${file}'';
+      "${file}";
     extraConfig =
       let
         file = builtins.readFile ./init.vim;
       in
-      ''${file}'';
+      "${file}";
   };
 
   home.file.".config/nvim/coc-settings.json" = {

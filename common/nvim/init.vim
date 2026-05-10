@@ -57,6 +57,11 @@ endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
+augroup RmdSettings
+    autocmd!
+    autocmd FileType rmd setlocal tabstop=6 shiftwidth=6 softtabstop=6 expandtab
+augroup END
+
 autocmd FileType markdown,rmd call SetupMarkdown()
 function! SetupMarkdown()
   Goyo
