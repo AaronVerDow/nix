@@ -43,7 +43,7 @@
       nixfmt-rfc-style
       # fancy-cat
       aider-chat-full
-      claude-code
+      opencode
       qman
       git-my
       diff-so-fancy
