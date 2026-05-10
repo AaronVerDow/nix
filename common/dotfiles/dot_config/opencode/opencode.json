@@ -11,6 +11,18 @@
         "code-slow": {
           "name": "code-slow"
         },
+        "code-med": {
+          "name": "code-med"
+        },
+        "code-fast": {
+          "name": "code-fast"
+        },
+        "reason-slow": {
+          "name": "reason-slow"
+        },
+        "reason-med": {
+          "name": "reason-med"
+        },
         "reason-fast": {
           "name": "reason-fast"
         }
