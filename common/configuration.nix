@@ -225,6 +225,9 @@
     # K11 Max
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="0ab3", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
 
+    # K2
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="024f", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+
     # Kanata
     KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
   '';
