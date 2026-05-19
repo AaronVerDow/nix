@@ -20,6 +20,8 @@
     enable = true;
   };
 
+  jovian.devices.steamdeck.enable = true;
+
   nix = {
     distributedBuilds = true;
     buildMachines = [

@@ -32,7 +32,7 @@ in
     {
       enable = true;
       # https://github.com/Gerg-L/spicetify-nix/blob/master/docs/themes.md
-      theme = spicePkgs.themes.lucid;
+      # theme = spicePkgs.themes.lucid;
       enabledCustomApps = with spicePkgs.apps; [
         newReleases
       ];
