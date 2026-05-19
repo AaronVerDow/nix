@@ -104,6 +104,14 @@
             nixos-hardware.nixosModules.lenovo-ideapad-16ahp9
           ];
         };
+        snix = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            solaar.nixosModules.default
+            ./hosts/snix/configuration.nix
+            ./modules/nixos/kanata
+          ];
+        };
         gonix = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
