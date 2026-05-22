@@ -65,6 +65,7 @@ in
       my_camset # Camera settings utility
       copyq # Clipboard manager
       kitty # Terminal emulator
+      cool-retro-term
       mlterm # Alternative terminal
       wavemon # Wireless monitoring
       xclip # Clipboard manager
