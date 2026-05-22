@@ -17,6 +17,11 @@ pipeline {
                 }
             }
         }
+        stage('SteamDeck') {
+            steps {
+                sh 'nix build .#nixosConfigurations.snix.config.system.build.toplevel'
+            }
+        }
         stage('Games') {
             steps {
                 sh 'nix build .#nixosConfigurations.games.config.system.build.toplevel'
