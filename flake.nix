@@ -107,7 +107,7 @@
             nixos-hardware.nixosModules.lenovo-ideapad-16ahp9
           ];
         };
-        snix = nixpkgs-unstable.lib.nixosSystem {
+        snix = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
             solaar.nixosModules.default

@@ -20,7 +20,14 @@
     enable = true;
   };
 
-  jovian.devices.steamdeck.enable = true;
+  jovian.devices.steamdeck.enable = false;
+  jovian.devices.steamdeck.enableControllerUdevRules = true;
+  jovian.devices.steamdeck.enableDefaultStage1Modules = true;
+  jovian.devices.steamdeck.enableKernelPatches = true;
+  jovian.devices.steamdeck.enableOsFanControl = true;
+  jovian.devices.steamdeck.enablePerfControlUdevRules = true;
+  jovian.devices.steamdeck.enableXorgRotation = true;
+  jovian.hardware.has.amd.gpu = true;
 
   nix = {
     distributedBuilds = true;
