@@ -47,6 +47,7 @@
       qman
       git-my
       diff-so-fancy
+      moreutils
 
       texliveFull
       texlivePackages.plantuml

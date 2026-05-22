@@ -25,15 +25,18 @@
       #url = "github:Svenum/Solaar-Flake/main"; # Uncomment line for latest unstable version
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    jovian-nixos.url = "github:jovian-experiments/jovian-nixos";
   };
 
   outputs =
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       home-manager,
       nixos-hardware,
       solaar,
+      jovian-nixos,
       ...
     }@inputs:
     let
@@ -102,6 +105,15 @@
             ./hosts/ipad/configuration.nix
             ./modules/nixos/kanata
             nixos-hardware.nixosModules.lenovo-ideapad-16ahp9
+          ];
+        };
+        snix = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            solaar.nixosModules.default
+            ./hosts/snix/configuration.nix
+            ./modules/nixos/kanata
+	    jovian-nixos.nixosModules.default
           ];
         };
         gonix = nixpkgs.lib.nixosSystem {
