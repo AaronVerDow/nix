@@ -27,6 +27,8 @@
   jovian.devices.steamdeck.enableOsFanControl = true;
   jovian.devices.steamdeck.enablePerfControlUdevRules = true;
   jovian.devices.steamdeck.enableXorgRotation = true;
+  jovian.steamos.enableBluetoothConfig = true;
+  jovian.steamos.enableZram = true;
   jovian.hardware.has.amd.gpu = true;
 
   nix = {
