@@ -110,7 +110,10 @@
     package = pkgs.unstable.llama-swap;
     settings =
       let
-        llama-cpp = pkgs.unstable.llama-cpp.override { cudaSupport = true; };
+        llama-cpp = pkgs.unstable.llama-cpp.override { 
+		cudaSupport = true; 
+	        blasSupport = true;
+	};
         llama-server = lib.getExe' llama-cpp "llama-server";
       in
       {
