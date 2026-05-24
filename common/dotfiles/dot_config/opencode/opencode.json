@@ -27,6 +27,13 @@
           "name": "reason-fast"
         }
       }
+    },
+    "ollama": {
+      "npm": "@ollama/ollama",
+      "name": "ollama",
+      "options": {
+        "baseURL": "http://titanic-tail:11434/v1"
+      }
     }
   }
 }
