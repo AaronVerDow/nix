@@ -1,8 +1,14 @@
-{ inputs, outputs, pkgs, lib, ... }:
+{
+  inputs,
+  outputs,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   disabledModules = [ "services/networking/x2goserver.nix" ];
-  imports = [ 
+  imports = [
     ./hardware-configuration.nix
     ../../common/configuration.nix
     # ../../common/x/configuration.nix
@@ -79,7 +85,7 @@
   # Required to serve as a remote nix builder
   services.openssh.settings.PermitRootLogin = lib.mkForce "prohibit-password";
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.open = true; # required for RTX?
   hardware.graphics.enable = true;
   nixpkgs.config.cudaSupport = true;
@@ -102,22 +108,27 @@
     openFirewall = true;
     port = 11433;
     package = pkgs.unstable.llama-swap;
-    settings = let
-      llama-cpp = pkgs.unstable.llama-cpp.override { cudaSupport = true;};
-      llama-server = lib.getExe' llama-cpp "llama-server";
-    in {
-      models = {
-        "code-med" = {
-          cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3-Coder-30B-A3B-Instruct-UD-Q6_K_XL.gguf -ngl 0 --no-webui";
-        };
-        "reason-fast" = {
-          cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-9B-DeepSeek-V4-Flash-Q8_0.gguf -ngl 0 --no-webui";
-        };
-        "reason-med" = {
-          cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled.i1-Q4_K_S.gguf -ngl 0 --no-webui";
+    settings =
+      let
+        llama-cpp = pkgs.unstable.llama-cpp.override { 
+		cudaSupport = true; 
+	        blasSupport = true;
+	};
+        llama-server = lib.getExe' llama-cpp "llama-server";
+      in
+      {
+        models = {
+          "code-med" = {
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3-Coder-30B-A3B-Instruct-UD-Q6_K_XL.gguf --no-webui";
+          };
+          "reason-fast" = {
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-9B-DeepSeek-V4-Flash-Q8_0.gguf -c 32768 --no-webui";
+          };
+          "reason-med" = {
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled.i1-Q4_K_S.gguf -c 16384 --no-webui";
+          };
         };
       };
-    };
   };
 
   services.samba = {
@@ -154,24 +165,32 @@
 
   networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
   containers.jenkins = {
-    config = { pkgs, ... }: {
-      services.jenkins = {
-        enable = true;
-        port = 8088;
-        extraJavaOptions = [
-          "-Djenkins.model.Jenkins.slaveAgentPort=50000"  # For JNLP agents
-          "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
+    config =
+      { pkgs, ... }:
+      {
+        services.jenkins = {
+          enable = true;
+          port = 8088;
+          extraJavaOptions = [
+            "-Djenkins.model.Jenkins.slaveAgentPort=50000" # For JNLP agents
+            "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
+          ];
+        };
+        networking.firewall.allowedTCPPorts = [
+          8088
+          50000
         ];
+        networking.nameservers = [ "8.8.8.8" ];
       };
-      networking.firewall.allowedTCPPorts = [ 8088 50000 ];
-      networking.nameservers = [ "8.8.8.8" ];
-    };
     autoStart = true;
     restartIfChanged = true;
     privateNetwork = false;
     bindMounts = {
       # "/nix" = { hostPath = "/nix"; };
-      "/var/lib/jenkins" = { hostPath = "/home/averdow/services/jenkins"; isReadOnly = false; }; 
+      "/var/lib/jenkins" = {
+        hostPath = "/home/averdow/services/jenkins";
+        isReadOnly = false;
+      };
     };
   };
 
@@ -188,16 +207,20 @@
     scrapeConfigs = [
       {
         job_name = "node";
-        static_configs = [{
-          targets = [ "localhost:9100" ];
-        }];
+        static_configs = [
+          {
+            targets = [ "localhost:9100" ];
+          }
+        ];
       }
       {
         job_name = "ha";
         metrics_path = "/api/prometheus";
-        static_configs = [{
-          targets = [ "homeassistant.verdow.lan:8123" ];
-        }];
+        static_configs = [
+          {
+            targets = [ "homeassistant.verdow.lan:8123" ];
+          }
+        ];
       }
     ];
   };
@@ -250,7 +273,22 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 8080 443 135 32400 9080 80 5000 8088 50000 9090 3000 9100 10200 10300 ];
+  networking.firewall.allowedTCPPorts = [
+    8080
+    443
+    135
+    32400
+    9080
+    80
+    5000
+    8088
+    50000
+    9090
+    3000
+    9100
+    10200
+    10300
+  ];
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
@@ -258,6 +296,6 @@
       averdow = import ./home.nix;
     };
   };
-  
+
   system.stateVersion = "23.05"; # Did you read the comment?
 }

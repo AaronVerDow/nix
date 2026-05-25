@@ -29,10 +29,14 @@
       }
     },
     "ollama": {
-      "npm": "@ollama/ollama",
-      "name": "ollama",
+      "npm": "@ai-sdk/openai-compatible",
       "options": {
         "baseURL": "http://titanic-tail:11434/v1"
+      },
+      "models": {
+        "gemma4": {
+          "tools": true
+        }
       }
     }
   }
