@@ -48,6 +48,7 @@
       git-my
       diff-so-fancy
       moreutils
+      manix
 
       texliveFull
       texlivePackages.plantuml
