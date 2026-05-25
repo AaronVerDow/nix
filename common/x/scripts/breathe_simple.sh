@@ -3,8 +3,8 @@
 # Script to periodically adjust AwesomeWM gaps between 10 and 20
 # This creates a "breathe" effect by smoothly varying the gap size
 
-GAP_MIN=10
-GAP_MAX=50
+GAP_MIN=20
+GAP_MAX=80
 SLEEP_TIME=180
 STEP_SIZE=1
 
