@@ -27,6 +27,7 @@
 
 default {
  shader ~/.config/wallpaper.glsl
+ shader_speed 0.5
  # path ~/git/wallpapers/pics
 }
 
