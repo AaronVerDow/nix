@@ -122,10 +122,10 @@
             cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3-Coder-30B-A3B-Instruct-UD-Q6_K_XL.gguf --no-webui";
           };
           "reason-fast" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-9B-DeepSeek-V4-Flash-Q8_0.gguf --no-webui";
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-9B-DeepSeek-V4-Flash-Q8_0.gguf -c 32768 --no-webui";
           };
           "reason-med" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled.i1-Q4_K_S.gguf --no-webui";
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled.i1-Q4_K_S.gguf -c 16384 --no-webui";
           };
         };
       };
