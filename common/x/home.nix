@@ -85,6 +85,7 @@ in
       picom
       rofi # Application launcher
       esshader
+      unstable.neowall
 
       # Input & Accessibility
       # 25.11
@@ -143,11 +144,15 @@ in
       '')
 
       (writeShellScriptBin "wallpaper_set" ''
-        # ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=0
-        # ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=1 || true
-        # ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=2 || true
         killall esshader
-        nohup esshader --fullscreen --source ~/.config/wallpaper.glsl &>/dev/null &
+        # Get all connected outputs and spawn esshader on each
+        xrandr --query | grep connected | while read -r line; do
+          output=$(echo "$line" | awk '{print $1}')
+          dims=$(echo "$line" | grep -oP '\d+\sx\s\d+')
+          width=$(echo "$dims" | awk -F'x' '{print $1}')
+          height=$(echo "$dims" | awk -F'x' '{print $2}')
+          [ -n "$width" ] && nohup esshader --width $width --height $height --source ~/.config/wallpaper.glsl &>/dev/null &
+        done
       '')
 
       (writeShellScriptBin "wallpaper_rotate" ''
@@ -244,6 +249,7 @@ in
     ".config/rofi/touchscreen".source = ../dotfiles/dot_config/rofi/touchscreen;
     ".config/kitty/kitty.conf".source = ../dotfiles/dot_config/kitty/kitty.conf;
     ".config/volumeicon/volumeicon".source = ../dotfiles/dot_config/volumeicon/volumeicon;
+    ".config/neowall/config.vibe".source = ../dotfiles/dot_config/neowall/config.vibe;
     ".config/Vencord/themes/ClearVision-v7-Sapphire-Vencord.css".source =
       ../dotfiles/dot_config/Vencord/themes/ClearVision-v7-Sapphire-Vencord.css;
     ".local/share/onboard/layouts/full.onboard".source =

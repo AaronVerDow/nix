@@ -1,0 +1,41 @@
+# NeoWall Configuration
+# This is a minimal fallback config
+#
+# IMPORTANT: 'path' and 'shader' are MUTUALLY EXCLUSIVE
+# - Use 'path' for images (PNG, JPEG)
+# - Use 'shader' for GLSL shaders
+# - DO NOT use both in the same config block
+#
+# Image example:
+#   default {
+#     path ~/Pictures/wallpaper.png
+#     mode fill
+#   }
+#
+# Shader example:
+#   default {
+#     shader ~/.config/neowall/shaders/plasma.glsl
+#     shader_speed 1.0
+#   }
+#
+# Directory cycling (add / at end or specify duration):
+#   default {
+#     path ~/Pictures/Wallpapers/
+#     duration 300
+#     transition fade
+#   }
+
+default {
+ shader ~/.config/wallpaper.glsl
+ # path ~/git/wallpapers/pics
+}
+
+# output {
+  # DP-1 {
+    # shader ~/.config/wallpaper.glsl
+    # path ~/git/wallpapers/pics
+  # }
+  # eDP-1 {
+   #  shader ~/.config/wallpaper.glsl
+ #  }
+# }
