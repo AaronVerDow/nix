@@ -3,6 +3,17 @@
 //Inspired by JoshP's Simplicity shader: https://www.shadertoy.com/view/lslGWr
 
 // http://www.fractalforums.com/new-theories-and-research/very-simple-formula-for-fractal-patterns/
+//
+// GALAXY DUST CONTROLS:
+// fieldStrength (line 7): 3-8 range. Lower = fewer dust points, more black space.
+// colorScale (line 20): 1-5 range. Controls how much color each point contributes.
+// iteration count (lines 12,31): 10-30 range. Higher = more detail, lower = simpler.
+// w decay (line 15): 5-10 range. Lower denominator = faster falloff, less outer dust.
+// accum divisor (line 9): 2-8 range. Higher = faster falloff, less overall density.
+
+// STAR CONTROLS:
+// pow() exponent (lines 100,106): 30-60 range. Higher = fewer bright stars.
+// seed multiplier (line 97): 0.5-2.0 range. Higher = more stars, lower = fewer.
 float field(in vec3 p,float s) {
 	// fieldStrength: lower = less galaxy dust/points (reduces quantity of colors)
 	float strength = 5. + .015 * log(1.e-6 + fract(sin(iTime) * 4373.11));
