@@ -4,7 +4,8 @@
 
 // http://www.fractalforums.com/new-theories-and-research/very-simple-formula-for-fractal-patterns/
 float field(in vec3 p,float s) {
-	float strength = 7. + .03 * log(1.e-6 + fract(sin(iTime) * 4373.11));
+	// fieldStrength: lower = less galaxy dust/points (reduces quantity of colors)
+	float strength = 5. + .015 * log(1.e-6 + fract(sin(iTime) * 4373.11));
 	float accum = s/4.;
 	float prev = 0.;
 	float tw = 0.;
@@ -16,12 +17,14 @@ float field(in vec3 p,float s) {
 		tw += w;
 		prev = mag;
 	}
-	return max(0., 5. * accum / tw - .7);
+	// colorScale: lower = less intense color contribution from dust
+	return max(0., 3. * accum / tw - .7);
 }
 
 // Less iterations for second layer
 float field2(in vec3 p, float s) {
-	float strength = 7. + .03 * log(1.e-6 + fract(sin(iTime) * 4373.11));
+	// fieldStrength: lower = less galaxy dust/points (reduces quantity of colors)
+	float strength = 5. + .015 * log(1.e-6 + fract(sin(iTime) * 4373.11));
 	float accum = s/4.;
 	float prev = 0.;
 	float tw = 0.;
@@ -33,7 +36,7 @@ float field2(in vec3 p, float s) {
 		tw += w;
 		prev = mag;
 	}
-	return max(0., 5. * accum / tw - .7);
+	return max(0., 3. * accum / tw - .7);
 }
 
 vec3 nrand3( vec2 co )
@@ -87,18 +90,20 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 	vec4 c2 = mix(.4, 1., v) * vec4(1.3 * t2 * t2 * t2 ,1.8  * t2 * t2 , t2* freqs[0], t2);
 	
 	
-	//Let's add some stars
+	// Let's add some stars
 	//Thanks to http://glsl.heroku.com/e#6904.0
-	vec2 seed = p.xy * 2.0;	
+	// pow() exponent: higher = fewer stars (more black space)
+	// iResolution.x: lower = fewer stars overall
+	vec2 seed = p.xy * 1.25;	
 	seed = floor(seed * iResolution.x);
 	vec3 rnd = nrand3( seed );
-	vec4 starcolor = vec4(pow(rnd.y,40.0));
+	vec4 starcolor = vec4(pow(rnd.y,45.0));
 	
 	//Second Layer
 	vec2 seed2 = p2.xy * 2.0;
 	seed2 = floor(seed2 * iResolution.x);
 	vec3 rnd2 = nrand3( seed2 );
-	starcolor += vec4(pow(rnd2.y,40.0));
+	starcolor += vec4(pow(rnd2.y,48.0));
 	
 	// Create color with hue shift but constant intensity
 	vec3 baseColor1 = vec3(1.5*freqs[2] * t * t* t , 1.2*freqs[1] * t * t, freqs[3]*t);
