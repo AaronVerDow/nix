@@ -20,6 +20,8 @@
     enable = true;
   };
 
+  boot.loader.limine.extraConfig = "fbcon=rotate:1";
+
   jovian.devices.steamdeck.enable = false;
   jovian.devices.steamdeck.enableControllerUdevRules = true;
   jovian.devices.steamdeck.enableDefaultStage1Modules = true;
