@@ -707,6 +707,7 @@ awful.spawn.single_instance("copyq")
 
 if hostname == "games" then
     awful.spawn.with_shell("xrandr --output DP-1 --auto --pos 760x1440")
+    awful.spawn.with_shell("breathe_simple.sh")
 else
     awful.spawn.single_instance("nm-applet")
     awful.spawn.with_shell("pgrep -a touchegg | grep client || touchegg --client")
@@ -715,4 +716,3 @@ end
 awful.spawn.with_shell("/home/averdow/bin/autohidewibox.py")
 awful.spawn("wallpaper_set")
 awful.spawn.with_shell("pgrep volumeicon || (sleep 5 && volumeicon)")
-awful.spawn.with_shell("breathe_simple.sh")
