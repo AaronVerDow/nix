@@ -8,23 +8,26 @@
         "baseURL": "http://titanic-tail:11433/v1"
       },
       "models": {
-        "code-slow": {
-          "name": "code-slow"
-        },
         "code-med": {
           "name": "code-med"
         },
-        "code-fast": {
-          "name": "code-fast"
-        },
-        "reason-slow": {
-          "name": "reason-slow"
+        "reason-fast": {
+          "name": "reason-fast"
         },
         "reason-med": {
           "name": "reason-med"
         },
-        "reason-fast": {
-          "name": "reason-fast"
+        "qwen3-coder-30b": {
+          "name": "qwen3-coder-30b"
+        },
+        "qwen3.5-9b": {
+          "name": "qwen3.5-9b"
+        },
+        "qwen3.5-27b": {
+          "name": "qwen3.5-27b"
+        },
+        "gemma4-26b": {
+          "name": "gemma4-26b"
         }
       }
     },
