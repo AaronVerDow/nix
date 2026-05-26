@@ -215,6 +215,9 @@ in
     imagemagick
     ghostscript # required by imagemagick to convert pdf files
 
+    # breathe-simple script
+    (pkgs.writeTextDir "bin/breathe_simple.sh" "$(cat ../../../../../common/x/scripts/breathe_simple.sh)")
+
     # https://docs.xfce.org/xfce/tumbler/available_plugins#customized_thumbnailer_for_text-based_documents
 
     # this never fires for some reason

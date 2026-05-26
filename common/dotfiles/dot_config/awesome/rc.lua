@@ -715,3 +715,4 @@ end
 awful.spawn.with_shell("/home/averdow/bin/autohidewibox.py")
 awful.spawn("wallpaper_set")
 awful.spawn.with_shell("pgrep volumeicon || (sleep 5 && volumeicon)")
+awful.spawn.with_shell("breathe_simple.sh")
