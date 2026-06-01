@@ -1,32 +1,38 @@
-{ pkgs, setuptools ? import <nixpkgs> {} }:
+{ pkgs }:
 
 pkgs.python3.pkgs.buildPythonPackage rec {
-  pname = "pdfCropMargins"; # Replace with your package name
-  version = "2.2.1"; # Replace with your target version
+  pname = "pdfCropMargins";
+  version = "2.2.1";
 
-  src = pkgs.python3.pkgs.fetchPypi {
-    inherit pname version;
-    # Replace this hash with the correct one or use lib.fakeHash
-    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; 
+  src = pkgs.fetchFromGitHub {
+    owner = "abarker";
+    repo = "pdfCropMargins";
+    rev = "refs/tags/release_${version}";
+    hash = "sha256-MPid0TcYg8TyFrTmDQD56j4GZpX8OmIzKpRidU/l5Go=";
   };
 
-  # Build-time dependencies (e.g. setuptools, hatchling, flit)
+  # Use pyproject.toml build
+  format = "pyproject";
+
+  # Build-time dependencies
   nativeBuildInputs = with pkgs.python3.pkgs; [
     setuptools
     wheel
   ];
 
-  # Runtime dependencies (other python modules)
-  # propagatedBuildInputs = with pkgs.python3.pkgs; [
-    # idna
-    # certifi
-  # ];
+  # Runtime dependencies
+  propagatedBuildInputs = with pkgs.python3.pkgs; [
+    # PyMuPDF  # Required for pdfCropMargins v2.x
+    pymupdf
+    pillow
+  ];
 
-  # Disable tests if they require internet access or fail due to paths
-  doCheck = false; 
+  doCheck = false;
 
   meta = {
-    description = "Python HTTP for Humans";
-    homepage = "https://readthedocs.io";
+    description = "Crop white margins from PDF files automatically";
+    homepage = "https://github.com/abarker/pdfCropMargins";
+    license = pkgs.lib.licenses.gpl3Only;
+    maintainers = [];
   };
 }
