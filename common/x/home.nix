@@ -59,6 +59,7 @@ in
       onlyoffice-desktopeditors # Office suite
       gimp
       evince
+      pdfCropMargins
 
       # Terminal & System Utilities
       arandr # Screen layout configuration
