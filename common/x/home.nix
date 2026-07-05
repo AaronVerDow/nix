@@ -60,6 +60,7 @@ in
       gimp
       evince
       pdfCropMargins
+      pgadmin4-desktopmode
 
       # Terminal & System Utilities
       arandr # Screen layout configuration
