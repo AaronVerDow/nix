@@ -38,6 +38,24 @@
     controllerUrl = "http://127.0.0.1:8088";
   };
 
+  # for school
+  services.postgresql = {
+    enable = true;
+    authentication = pkgs.lib.mkOverride 10 ''
+      #type database  DBuser  auth-method
+      local all       all     trust
+    '';
+  };
+  services.pgadmin = {
+    enable = true;
+    openFirewall = true;
+    initialEmail = "aaron@verdow.com";
+    initialPasswordFile = "/home/averdow/git/nix/hosts/titanic/selfhosted/pgpass";
+    settings = {
+      DEFAULT_SERVER = "0.0.0.0";
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     docker-compose
     # unstable.cockpit-machines
@@ -93,13 +111,12 @@
     enable = true;
     host = "0.0.0.0";
     port = 11434;
-    acceleration = "cuda";
+    package = pkgs.ollama-cuda;
     openFirewall = true;
     environmentVariables = {
       # Recommended for aider
       "OLLAMA_CONTEXT_LENGTH" = "8192";
     };
-    package = pkgs.unstable.ollama-cuda;
   };
 
   # manpage
@@ -184,7 +201,10 @@
           8088
           50000
         ];
-        networking.nameservers = [ "8.8.8.8" ];
+	networking = {
+          useHostResolvConf = false;
+          nameservers = [ "8.8.8.8" ];
+	};
       };
     autoStart = true;
     restartIfChanged = true;
@@ -243,7 +263,7 @@
   };
 
   services.grafana = {
-    enable = true;
+    enable = false;
     settings = {
       server = {
         http_addr = "0.0.0.0";
