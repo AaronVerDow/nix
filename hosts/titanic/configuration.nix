@@ -38,24 +38,6 @@
     controllerUrl = "http://127.0.0.1:8088";
   };
 
-  # for school
-  services.postgresql = {
-    enable = true;
-    authentication = pkgs.lib.mkOverride 10 ''
-      #type database  DBuser  auth-method
-      local all       all     trust
-    '';
-  };
-  services.pgadmin = {
-    enable = true;
-    openFirewall = true;
-    initialEmail = "aaron@verdow.com";
-    initialPasswordFile = "/home/averdow/git/nix/hosts/titanic/selfhosted/pgpass";
-    settings = {
-      DEFAULT_SERVER = "0.0.0.0";
-    };
-  };
-
   environment.systemPackages = with pkgs; [
     docker-compose
     # unstable.cockpit-machines
