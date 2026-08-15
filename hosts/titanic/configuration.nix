@@ -107,6 +107,7 @@
     openFirewall = true;
     port = 11433;
     package = pkgs.unstable.llama-swap;
+    listenAddress = "0.0.0.0";
     settings =
       let
         llama-cpp = pkgs.unstable.llama-cpp.override { 
