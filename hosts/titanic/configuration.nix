@@ -106,30 +106,32 @@
     enable = true;
     openFirewall = true;
     port = 11433;
-    package = pkgs.unstable.llama-swap;
+    package = pkgs.llama-swap;
     listenAddress = "0.0.0.0";
     settings =
       let
-        llama-cpp = pkgs.unstable.llama-cpp.override { 
+        llama-cpp = pkgs.llama-cpp.override { 
 		cudaSupport = true; 
-	        blasSupport = true;
 	};
         llama-server = lib.getExe' llama-cpp "llama-server";
       in
       {
         models = {
           "qwen3-coder-30b" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3-Coder-30B-A3B-Instruct-UD-Q6_K_XL.gguf -c 16384 --no-webui";
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3-Coder-30B-A3B-Instruct-UD-Q6_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 40 -c 16384 --no-webui";
           };
 
           "qwen3.5-9b" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-9B-DeepSeek-V4-Flash-Q8_0.gguf -c 32768 --no-webui";
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-9B-DeepSeek-V4-Flash-Q8_0.gguf -c 32768 --temp 1.0 --top-p 0.95 --top-k 40 --no-webui";
           };
           "qwen3.5-27b" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled.i1-Q4_K_S.gguf -c 16384 --no-webui";
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled.i1-Q4_K_S.gguf --temp 1.0 --top-p 0.95 --top-k 40 -c 16384 --no-webui";
+          };
+          "qwen3.8-27b" = {
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 32768 --no-webui";
           };
           "gemma4-26b" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/gemma-4-26B-A4B.Q8_0.gguf -c 32768 --no-webui";
+            cmd = "${llama-server} --port \${PORT} -m /array/models/gemma-4-26B-A4B.Q8_0.gguf --temp 1.0 --top-p 0.95 --top-k 40 -c 32768 --no-webui";
           };
         };
       };
