@@ -55,6 +55,8 @@
       nix-search-cli
       mdcat
 
+      unstable.herdr
+
       (writeShellScriptBin "my_ping" ''
         gateway=$( ip route | grep default | awk '{ print $3}' )
         sudo ${pkgs.liboping}/bin/noping $gateway modem public
