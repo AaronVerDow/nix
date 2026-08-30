@@ -89,17 +89,6 @@
   hardware.nvidia.open = true; # required for RTX?
   hardware.graphics.enable = true;
   nixpkgs.config.cudaSupport = true;
-  services.ollama = {
-    enable = true;
-    host = "0.0.0.0";
-    port = 11434;
-    package = pkgs.ollama-cuda;
-    openFirewall = true;
-    environmentVariables = {
-      # Recommended for aider
-      "OLLAMA_CONTEXT_LENGTH" = "8192";
-    };
-  };
 
   # manpage
   services.llama-swap = {
@@ -117,21 +106,8 @@
       in
       {
         models = {
-          "qwen3-coder-30b" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3-Coder-30B-A3B-Instruct-UD-Q6_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 40 -c 16384 --no-webui";
-          };
-
-          "qwen3.5-9b" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-9B-DeepSeek-V4-Flash-Q8_0.gguf -c 32768 --temp 1.0 --top-p 0.95 --top-k 40 --no-webui";
-          };
-          "qwen3.5-27b" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled.i1-Q4_K_S.gguf --temp 1.0 --top-p 0.95 --top-k 40 -c 16384 --no-webui";
-          };
           "qwen3.8-27b" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 32768 --no-webui";
-          };
-          "gemma4-26b" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/gemma-4-26B-A4B.Q8_0.gguf --temp 1.0 --top-p 0.95 --top-k 40 -c 32768 --no-webui";
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 262144 --no-webui";
           };
         };
       };
