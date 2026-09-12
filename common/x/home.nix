@@ -99,7 +99,7 @@ in
 
       # Screenshot & Screen Capture
       scrot # Screenshot utility
-      xfce.xfce4-screenshooter
+      xfce4-screenshooter
 
       # Fonts & Themes
       arc-icon-theme # Icon theme
