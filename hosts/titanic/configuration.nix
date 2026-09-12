@@ -16,7 +16,7 @@
     ./x2goserver.nix
   ];
 
-  services.xserver.displayManager.gdm.autoSuspend = false;
+  services.displayManager.gdm.autoSuspend = false;
 
   services.redshift.enable = lib.mkForce false;
   services.tailscale.enable = true;
