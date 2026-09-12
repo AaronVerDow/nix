@@ -101,7 +101,7 @@ let
     }
     trap cleanup EXIT
 
-    ${pkgs.xorg.xvfb}/bin/Xvfb "$DISPLAY" -screen 0 $SCREEN &
+    ${pkgs.xvfb}/bin/Xvfb "$DISPLAY" -screen 0 $SCREEN &
     XVFB_PID=$!
 
     ${pkgs.xterm}/bin/xterm -geometry $TERM_SIZE -fg $FOREGROUND -bg $BACKGROUND -fa $FONT -e ${basicNeovim}/bin/nvim -R -u NONE -c "syntax on" -c "colorscheme $COLORSCHEME" "$FILE" &
@@ -109,14 +109,14 @@ let
 
     WINDOW_ID=""
     for i in {1..10}; do
-        WINDOW_ID=$(${pkgs.xorg.xwininfo}/bin/xwininfo -root -tree | grep -m1 "XTerm" | awk '{print $1}' || true)
+        WINDOW_ID=$(${pkgs.xwininfo}/bin/xwininfo -root -tree | grep -m1 "XTerm" | awk '{print $1}' || true)
         sleep 0.2
         [ -n "$WINDOW_ID" ] && break
     done
 
     sleep 0.5
 
-    ${pkgs.xorg.xwd}/bin/xwd -id "$WINDOW_ID" | ${pkgs.imagemagick}/bin/magick xwd:- -transparent "#232629" -thumbnail "$SIZE" "$OUTPUT"
+    ${pkgs.xwd}/bin/xwd -id "$WINDOW_ID" | ${pkgs.imagemagick}/bin/magick xwd:- -transparent "#232629" -thumbnail "$SIZE" "$OUTPUT"
 
   '';
 
