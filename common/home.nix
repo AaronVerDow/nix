@@ -40,7 +40,7 @@
       usbutils
       gh
       ripgrep
-      nixfmt-rfc-style
+      nixfmt
       # fancy-cat
       aider-chat-full
       opencode
