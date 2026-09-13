@@ -44,7 +44,7 @@ in
       satisfactory-file-parser # TypeScript parser for Satisfactory save/blueprint files
 
       # Creative & Design Applications
-      my_openscad # Programmatic CAD modeling
+      openscad # Programmatic CAD modeling
       openscad-post-processor
       mermaid-cli
 
