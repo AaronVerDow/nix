@@ -71,7 +71,7 @@ in
       mlterm # Alternative terminal
       wavemon # Wireless monitoring
       xclip # Clipboard manager
-      xorg.xkill # X11 window killer
+      xkill # X11 window killer
       xrotate # Custom rotation package
 
       # System Monitoring & Control
@@ -99,7 +99,7 @@ in
 
       # Screenshot & Screen Capture
       scrot # Screenshot utility
-      xfce.xfce4-screenshooter
+      xfce4-screenshooter
 
       # Fonts & Themes
       arc-icon-theme # Icon theme
@@ -124,7 +124,7 @@ in
           ${pkgs.my_numworks}/bin/epsilon &
         fi
         WINDOW_ID=$(${pkgs.xdotool}/bin/xdotool search --name "Epsilon")
-        if ${pkgs.xorg.xwininfo}/bin/xwininfo -id "$WINDOW_ID" | grep -q "Map State: IsViewable"; then
+        if ${pkgs.xwininfo}/bin/xwininfo -id "$WINDOW_ID" | grep -q "Map State: IsViewable"; then
           ${pkgs.xdotool}/bin/xdotool windowminimize "$WINDOW_ID"
         else
           ${pkgs.xdotool}/bin/xdotool windowmap "$WINDOW_ID"

@@ -5,7 +5,7 @@
   libpng,
   libjpeg,
   freetype,
-  xorg,
+  libXext,
   python3,
   imagemagick,
   gcc-arm-embedded,
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     libpng
     libjpeg
     freetype
-    xorg.libXext
+    libXext
     python3
     imagemagick
     gcc-arm-embedded

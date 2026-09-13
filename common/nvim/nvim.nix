@@ -75,7 +75,7 @@
         pkgs.vim-ditto
         pkgs.coc-zig
       ];
-    extraLuaConfig =
+    initLua =
       let
         file = builtins.readFile ./init.lua;
       in

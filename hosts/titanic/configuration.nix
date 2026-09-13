@@ -16,7 +16,7 @@
     ./x2goserver.nix
   ];
 
-  services.xserver.displayManager.gdm.autoSuspend = false;
+  services.displayManager.gdm.autoSuspend = false;
 
   services.redshift.enable = lib.mkForce false;
   services.tailscale.enable = true;
@@ -106,7 +106,19 @@
       in
       {
         models = {
-          "qwen3.8-27b" = {
+          "qwen3.8-27b-8k" = {
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 8192 --no-webui";
+          };
+          "qwen3.8-27b-16k" = {
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 16384 --no-webui";
+          };
+          "qwen3.8-27b-64k" = {
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 65536 --no-webui";
+          };
+          "qwen3.8-27b-128k" = {
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 131072 --no-webui";
+          };
+          "qwen3.8-27b-262k" = {
             cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 262144 --no-webui";
           };
         };

@@ -7,7 +7,7 @@ pkgs.stdenv.mkDerivation {
   src = ./.;
 
   nativeBuildInputs = with pkgs; [ makeWrapper ];
-  buildInputs = with pkgs; [ bash xorg.xrandr xorg.xinput awesome ];
+  buildInputs = with pkgs; [ bash xrandr xinput awesome ];
 
   dontBuild = true;
 
@@ -22,8 +22,8 @@ pkgs.stdenv.mkDerivation {
     wrapProgram $out/bin/xrotate --prefix PATH : ${
       pkgs.lib.makeBinPath [
         pkgs.bash
-        pkgs.xorg.xrandr
-        pkgs.xorg.xinput
+        pkgs.xrandr
+        pkgs.xinput
         pkgs.awesome
       ]
     }

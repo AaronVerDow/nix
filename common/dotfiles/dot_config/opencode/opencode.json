@@ -8,8 +8,20 @@
         "baseURL": "http://titanic-tail:11433/v1"
       },
       "models": {
-        "qwen3.8-27b": {
-          "name": "qwen3.8-27b"
+        "qwen3.8-27b-8k": {
+          "name": "qwen3.8-27b-8k"
+        },
+        "qwen3.8-27b-16k": {
+          "name": "qwen3.8-27b-16k"
+        },
+        "qwen3.8-27b-64k": {
+          "name": "qwen3.8-27b-64k"
+        },
+        "qwen3.8-27b-128k": {
+          "name": "qwen3.8-27b-128k"
+        },
+        "qwen3.8-27b-262k": {
+          "name": "qwen3.8-27b-262k"
         }
       }
     }
