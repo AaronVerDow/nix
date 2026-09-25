@@ -180,10 +180,7 @@
           8088
           50000
         ];
-	networking = {
-          useHostResolvConf = false;
-          nameservers = [ "8.8.8.8" ];
-	};
+        networking.resolvconf.enable = false;
         system.stateVersion = "23.05";
       };
     autoStart = true;
@@ -194,6 +191,10 @@
       "/var/lib/jenkins" = {
         hostPath = "/home/averdow/services/jenkins";
         isReadOnly = false;
+      };
+      "/etc/resolv.conf" = {
+        hostPath = "/etc/resolv.conf";
+        isReadOnly = true;
       };
     };
   };
