@@ -112,6 +112,9 @@
           "qwen3.8-27b-16k" = {
             cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 16384 --no-webui";
           };
+          "qwen3.8-27b-32k" = {
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 32768 --no-webui";
+          };
           "qwen3.8-27b-64k" = {
             cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 65536 --no-webui";
           };
