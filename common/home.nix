@@ -54,6 +54,7 @@
       texlivePackages.plantuml
       nix-search-cli
       mdcat
+      fastfetch
 
       unstable.herdr
 
@@ -97,7 +98,7 @@
     ".dir_colors".source = ./dotfiles/dot_dir_colors.sh;
     ".bashrc".source = ./dotfiles/dot_bashrc.sh;
     ".bash_profile".source = ./dotfiles/dot_bash_profile.sh;
-    ".config/neofetch/config.conf".source = ./dotfiles/dot_config/neofetch/config;
+    ".config/fastfetch/config.jsonc".source = ./dotfiles/dot_config/fastfetch/config.jsonc;
     ".config/nixpkgs/config.nix".text = ''
       { allowUnfree = true; }
     '';
