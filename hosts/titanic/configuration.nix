@@ -70,6 +70,9 @@
   services.xrdp.defaultWindowManager = "${pkgs.awesomeWithWidgets}/bin/awesome";
   services.xrdp.openFirewall = true;
 
+  # Legacy media path to match system.stateVersion 23.05.
+  services.tandoor-recipes.extraConfig.MEDIA_ROOT = "/var/lib/tandoor-recipes";
+
   services.nix-serve = {
     enable = true;
     secretKeyFile = "/var/cache-priv-key.pem";
@@ -181,6 +184,7 @@
           useHostResolvConf = false;
           nameservers = [ "8.8.8.8" ];
 	};
+        system.stateVersion = "23.05";
       };
     autoStart = true;
     restartIfChanged = true;
