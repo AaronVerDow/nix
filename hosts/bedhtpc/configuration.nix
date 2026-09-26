@@ -47,8 +47,7 @@ in
 
   services.xserver = {
     enable = true;
-    layout = "us"; # keyboard layout
-    libinput.enable = true;
+    xkb.layout = "us"; # keyboard layout
 
     # Let lightdm handle autologin
     displayManager.lightdm = {
@@ -60,13 +59,6 @@ in
 
     # Start openbox after autologin
     windowManager.openbox.enable = true;
-    displayManager = {
-      defaultSession = "none+openbox";
-      autoLogin = {
-        inherit user;
-        enable = true;
-      };
-    };
 
     # Disable screensaver and DPMS to prevent display from turning off
     config = ''
@@ -84,10 +76,23 @@ in
     '';
   };
 
-  systemd.services."display-manager".after = [
-    "network-online.target"
-    "systemd-resolved.service"
-  ];
+  services.libinput.enable = true;
+
+  services.displayManager = {
+    defaultSession = "none+openbox";
+    autoLogin = {
+      inherit user;
+      enable = true;
+    };
+  };
+
+  systemd.services."display-manager" = {
+    after = [
+      "network-online.target"
+      "systemd-resolved.service"
+    ];
+    wants = [ "network-online.target" ];
+  };
 
   # Overlay to set custom autostart script for openbox
   nixpkgs.overlays = with pkgs; [

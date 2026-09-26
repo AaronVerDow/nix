@@ -17,6 +17,8 @@ in
   programs = {
     firefox = {
       enable = true;
+      # Keep the legacy profile path to match home.stateVersion 23.05.
+      configPath = ".mozilla/firefox";
       # languagePacks = [ "en-US" ];
 
       profiles = {

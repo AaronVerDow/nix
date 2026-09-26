@@ -137,7 +137,6 @@
         "libvirtd"
       ];
       packages = with pkgs; [
-        #neofetch
         neovim
         btop
         git

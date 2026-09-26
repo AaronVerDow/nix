@@ -296,7 +296,7 @@ in
   programs.xfconf.enable = true;
   programs.dconf.enable = true;
   services.tumbler.enable = true;
-  programs.thunar.plugins = with pkgs.xfce; [
+  programs.thunar.plugins = with pkgs; [
     thunar-archive-plugin
     thunar-volman
   ];

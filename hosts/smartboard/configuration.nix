@@ -12,8 +12,8 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.nvidia.acceptLicense = true;
 
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "averdow";
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "averdow";
 
   # bug?  https://github.com/NixOS/nixpkgs/issues/103746
   systemd.services."getty@tty1".enable = false;
@@ -26,7 +26,7 @@
     hdmiReset = pkgs.writeShellApplication {
       name = "hdmiReset";
       runtimeInputs = with pkgs; [
-        xorg.xrandr
+        xrandr
       ];
       text = ''
         export DISPLAY=:0

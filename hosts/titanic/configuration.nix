@@ -40,10 +40,6 @@
 
   environment.systemPackages = with pkgs; [
     docker-compose
-    # unstable.cockpit-machines
-    # unstable.cockpit-zfs
-    # unstable.cockpit-files
-    # unstable.cockpit-podman
     libvirt
   ];
 
@@ -69,6 +65,9 @@
   services.xrdp.enable = true;
   services.xrdp.defaultWindowManager = "${pkgs.awesomeWithWidgets}/bin/awesome";
   services.xrdp.openFirewall = true;
+
+  # Legacy media path to match system.stateVersion 23.05.
+  services.tandoor-recipes.extraConfig.MEDIA_ROOT = "/var/lib/tandoor-recipes";
 
   services.nix-serve = {
     enable = true;
@@ -111,6 +110,9 @@
           };
           "qwen3.8-27b-16k" = {
             cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 16384 --no-webui";
+          };
+          "qwen3.8-27b-32k" = {
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 32768 --no-webui";
           };
           "qwen3.8-27b-64k" = {
             cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 65536 --no-webui";
@@ -174,10 +176,8 @@
           8088
           50000
         ];
-	networking = {
-          useHostResolvConf = false;
-          nameservers = [ "8.8.8.8" ];
-	};
+        networking.resolvconf.enable = false;
+        system.stateVersion = "23.05";
       };
     autoStart = true;
     restartIfChanged = true;
@@ -187,6 +187,10 @@
       "/var/lib/jenkins" = {
         hostPath = "/home/averdow/services/jenkins";
         isReadOnly = false;
+      };
+      "/etc/resolv.conf" = {
+        hostPath = "/etc/resolv.conf";
+        isReadOnly = true;
       };
     };
   };
