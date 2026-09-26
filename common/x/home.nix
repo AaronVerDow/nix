@@ -14,6 +14,15 @@ let
     url = "https://github.com/adi1090x/rofi.git";
     rev = "3a28753b0a8fb666f4bd0394ac4b0e785577afa2";
   };
+
+  wallpaperSet = ''
+    if command -v neowall >/dev/null 2>&1; then
+      neowall
+    else
+      killall esshader
+      esshader --source ~/.config/wallpaper.glsl
+    fi
+  '';
 in
 {
   imports = [
@@ -87,7 +96,6 @@ in
       picom
       rofi # Application launcher
       esshader
-      unstable.neowall
 
       # Input & Accessibility
       # 25.11
@@ -145,9 +153,7 @@ in
         dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
       '')
 
-      (writeShellScriptBin "wallpaper_set" ''
-        	neowall
-      '')
+      (writeShellScriptBin "wallpaper_set" wallpaperSet)
 
       (writeShellScriptBin "wallpaper_rotate" ''
         # ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper

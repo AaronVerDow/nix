@@ -9,6 +9,7 @@
   home.packages = with pkgs; [
     r2modman
     protonup-qt
+    unstable.neowall
     # huestacean
     (writeShellScriptBin "undock" ''
       xrandr --output DP-0 --mode 3440x1440 --rate 239.98
@@ -21,7 +22,7 @@
       wallpaper_set
     '')
   ];
-  
+
   programs.lutris = {
     enable = true;
     winePackages = [
