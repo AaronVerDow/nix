@@ -40,10 +40,6 @@
 
   environment.systemPackages = with pkgs; [
     docker-compose
-    # unstable.cockpit-machines
-    # unstable.cockpit-zfs
-    # unstable.cockpit-files
-    # unstable.cockpit-podman
     libvirt
   ];
 
