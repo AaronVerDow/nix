@@ -72,6 +72,12 @@ in
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/grammarly-1/latest.xpi";
             installation_mode = "force_installed";
           };
+          # ProtonVPN:
+          "vpn@proton.ch" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/grammarly-1/latest.xpi";
+            installation_mode = "force_installed";
+          };
+
         };
 
         # ---- PREFERENCES ----
