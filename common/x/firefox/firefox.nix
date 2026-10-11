@@ -27,6 +27,12 @@ in
           isDefault = true;
           userChrome = userChrome;
           userContent = userContent;
+
+          search = {
+            force = true;
+            default = "ddg";
+            privateDefault = "ddg";
+          };
         };
       };
 
