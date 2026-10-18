@@ -161,6 +161,22 @@
     },
     "nixpkgs_4": {
       "locked": {
+        "lastModified": 1785692966,
+        "narHash": "sha256-vUfIeBEfpbAfZ5zjgIkYk7eHBeVfCYVjLbWnMkseYnk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "643809054d65fdd466a63e3155b8c498cb483c04",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_5": {
+      "locked": {
         "lastModified": 1789921291,
         "narHash": "sha256-uLLUj+TLUmBc6KrUzx76KZdPi5ZkI1ORR9A6lJUIZlo=",
         "rev": "44a91898084f46797b5fac650c7e8c9ac38c43d4",
@@ -172,6 +188,24 @@
         "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
       }
     },
+    "opendeck-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1785764453,
+        "narHash": "sha256-q2Sjdts8zY+WvpjtnUbnakrgDHzi0DmlDjQMfyu3hWg=",
+        "owner": "Kitt3120",
+        "repo": "opendeck-nix",
+        "rev": "32160fa0ae01bf227a691c54a162809b14b8641b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Kitt3120",
+        "repo": "opendeck-nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
@@ -179,6 +213,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "opendeck-nix": "opendeck-nix",
         "solaar": "solaar",
         "spicetify-nix": "spicetify-nix",
         "templates": "templates"
@@ -206,7 +241,7 @@
     },
     "spicetify-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_5",
         "systems": "systems_2"
       },
       "locked": {

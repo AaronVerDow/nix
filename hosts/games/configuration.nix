@@ -11,7 +11,10 @@
     ../../common/configuration.nix
     ../../common/x/configuration.nix
     ../../common/cache_client.nix
+    inputs.opendeck-nix.nixosModules.default
   ];
+
+  programs.opendeck.enable = true;
 
   # fileSystems."/mnt/windows" = {
     # device = "/dev/nvme1n1p2";

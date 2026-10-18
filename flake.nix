@@ -26,6 +26,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     jovian-nixos.url = "github:jovian-experiments/jovian-nixos";
+
+    opendeck-nix.url = "github:Kitt3120/opendeck-nix";
   };
 
   outputs =
