@@ -70,6 +70,12 @@
     vagrant
   ];
 
+  # Fixes for Overwatch and Nvidia Shaders
+  environment.sessionVariables = {
+  	__GL_SHADER_DISK_CACHE_SIZE = "10737418240";
+	__GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
+  };
+
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
     users = {
