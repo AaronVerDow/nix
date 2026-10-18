@@ -22,15 +22,22 @@
         # vim-sleuth # auto detect tab stop
         coc-nvim
         rainbow-delimiters-nvim
-        nvim-treesitter
+        (nvim-treesitter.withPlugins (
+          p: with p; [
+            c
+            cpp
+            bash
+            java
+            nix
+            python
+            zig
+          ]
+        ))
         gitsigns-nvim
         lualine-nvim
         vim-humanoid-colorscheme
         transparent-nvim
         cinnamon-nvim # smooth scroll
-
-        # nix
-        nvim-treesitter-parsers.nix
 
         # prose
         goyo-vim # minimal interface
@@ -39,7 +46,6 @@
 
         # shell
         coc-sh
-        nvim-treesitter-parsers.bash
         vim-shellcheck
 
         # typescript
@@ -48,11 +54,9 @@
 
         # python
         coc-pyright
-        nvim-treesitter-parsers.python
 
         # lazy java setup
         # coc-java
-        nvim-treesitter-parsers.java
 
         # plantuml
         plantuml-syntax
@@ -61,11 +65,9 @@
 
         # C
         vim-ccls
-        nvim-treesitter-parsers.cpp
 
         # Zig
         zig-vim
-        nvim-treesitter-parsers.zig
         # (coc is a custom package below)
 
         Jenkinsfile-vim-syntax
