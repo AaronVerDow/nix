@@ -159,10 +159,32 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons
     }
 
+    -- Use a plain wibox (not awful.wibar) so it overlays windows instead of
+    -- reserving screen space. This prevents windows from being resized when the
+    -- wibar is shown/hidden by autohidewibox.py.
+    local wibar_height = math.ceil(beautiful.get_font_height() * 1.5)
     if s.geometry.width >= s.geometry.height then
-        s.mywibox = awful.wibox({ position = "bottom", ontop=true, screen = s })
+        s.mywibox = wibox({
+            ontop  = true,
+            visible = true,
+            screen = s,
+            type   = "dock",
+            x      = s.geometry.x,
+            y      = s.geometry.y + s.geometry.height - wibar_height,
+            width  = s.geometry.width,
+            height = wibar_height,
+        })
     else
-        s.mywibox = awful.wibox({ position = "top", ontop=true, screen = s })
+        s.mywibox = wibox({
+            ontop  = true,
+            visible = true,
+            screen = s,
+            type   = "dock",
+            x      = s.geometry.x,
+            y      = s.geometry.y,
+            width  = s.geometry.width,
+            height = wibar_height,
+        })
     end
 
     -- Add widgets to the wibox
