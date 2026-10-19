@@ -177,6 +177,10 @@ in
         copy_icons = false;
       })
       (nix-run-desktop.launcher {
+        nativeBuildInputs = [ kicad ];
+        copy_icons = false;
+      })
+      (nix-run-desktop.launcher {
         nativeBuildInputs = [ obs-studio ];
         copy_icons = false;
       })
