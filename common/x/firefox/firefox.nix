@@ -76,10 +76,10 @@ in
             installation_mode = "force_installed";
           };
           # Grammarly:
-          "87677a2c52b84ad3a151a4a72f5bd3c4@jetpack" = {
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/grammarly-1/latest.xpi";
-            installation_mode = "force_installed";
-          };
+          # "87677a2c52b84ad3a151a4a72f5bd3c4@jetpack" = {
+            # install_url = "https://addons.mozilla.org/firefox/downloads/latest/grammarly-1/latest.xpi";
+            # installation_mode = "force_installed";
+          # };
           # ProtonVPN:
           "vpn@proton.ch" = {
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/grammarly-1/latest.xpi";
