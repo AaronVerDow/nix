@@ -25,8 +25,7 @@
     longitude = -87.6324;
   };
 
-
- boot.loader.limine = {
+  boot.loader.limine = {
     enable = true;
     efiSupport = true;
     extraEntries = ''
@@ -36,9 +35,9 @@
     '';
     # 25.11 upgrade
     # extraConfig = ''
-      # interface_help_hidden: yes
-      # interface_branding:
-      # term_font_scale: 2x2
+    # interface_help_hidden: yes
+    # interface_branding:
+    # term_font_scale: 2x2
     # '';
     enableEditor = true;
     additionalFiles = {
@@ -66,7 +65,7 @@
       outputs.overlays.unstable-packages
 
       # (final: prev: {
-        # apparmor-d = final.callPackage ./apparmor/apparmor-d_package.nix { };
+      # apparmor-d = final.callPackage ./apparmor/apparmor-d_package.nix { };
       # })
     ];
     config = {
@@ -190,8 +189,8 @@
 
   # 25.11 upgrade
   # services.logind.extraConfig = ''
-    # don't shutdown when power button is short-pressed
-    # HandlePowerKey="ignore";
+  # don't shutdown when power button is short-pressed
+  # HandlePowerKey="ignore";
   # '';
 
   environment.sessionVariables = {
@@ -201,11 +200,11 @@
     NIX_SHELL_PRESERVE_PROMPT = 1;
     NIXPKGS_ALLOW_UNFREE = 1;
     EDITOR = "nvim";
-    OPENAI_API_BASE="http://titanic-tail:11433/v1";
-    OPENAI_API_KEY="{{ secrets.openai_key }}";
-    ANTHROPIC_BASE_URL="http://titanic-tail:11433";
-    ANTHROPIC_AUTH_TOKEN="{{ secrets.anthropic_token }}";
-    ANTHROPIC_API_KEY="";
+    OPENAI_API_BASE = "http://titanic-tail:11433/v1";
+    OPENAI_API_KEY = "{{ secrets.openai_key }}";
+    ANTHROPIC_BASE_URL = "http://titanic-tail:11433";
+    ANTHROPIC_AUTH_TOKEN = "{{ secrets.anthropic_token }}";
+    ANTHROPIC_API_KEY = "";
   };
 
   services.udev.packages = with pkgs; [ unstable.via ];
@@ -229,6 +228,13 @@
 
     # Kanata
     KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+
+    # Arduino Nano ESP32 (NORA), including DFU bootloader
+    SUBSYSTEM=="usb", ATTR{idVendor}=="2341", ATTR{idProduct}=="0070", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+
+    # Espressif USB JTAG/serial and DFU bootloader
+    SUBSYSTEM=="usb", ATTR{idVendor}=="303a", ATTR{idProduct}=="1001", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="303a", ATTR{idProduct}=="4001", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
   '';
 
   systemd.services.update-tldr = {
@@ -276,11 +282,11 @@
 
   # add a boot entry with apparmor enabled
   # specialisation = {
-    # with-apparmor = {
-      # configuration = {
-        # security.apparmor.enable = lib.mkForce true;
-      # };
-    # };
+  # with-apparmor = {
+  # configuration = {
+  # security.apparmor.enable = lib.mkForce true;
+  # };
+  # };
   # };
 
   services.dbus.apparmor = "enabled";
@@ -293,13 +299,13 @@
   security.audit.backlogLimit = 8192;
 
   # security.apparmor_d = {
-    # enable = true;
-    # profiles = {
-      # discord = "enforce";
-      # # can't download files in enforce mode
-      # "firefox.apparmor.d" = "complain";
-      # ollama = "enforce";
-    # };
+  # enable = true;
+  # profiles = {
+  # discord = "enforce";
+  # # can't download files in enforce mode
+  # "firefox.apparmor.d" = "complain";
+  # ollama = "enforce";
+  # };
   # };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
