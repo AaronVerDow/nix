@@ -107,6 +107,7 @@ in
         -url "${cfg.controllerUrl}" \
         -name "${cfg.nodeName}" \
         -secret "@${cfg.secretFile}" \
+        -webSocket \
         -workDir "${cfg.workingDir}"
       EOF
 
