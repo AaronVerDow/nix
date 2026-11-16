@@ -51,6 +51,11 @@ in
 
   networking.networkmanager.enable = true;
 
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+  };
+
   time.timeZone = "America/Chicago";
 
   users.users.${user} = {
