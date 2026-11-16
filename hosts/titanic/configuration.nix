@@ -167,6 +167,10 @@
         services.jenkins = {
           enable = true;
           port = 8088;
+          packages = with pkgs; [
+            git
+            openssh
+          ];
           extraJavaOptions = [
             "-Djenkins.model.Jenkins.slaveAgentPort=50000" # For JNLP agents
             "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
