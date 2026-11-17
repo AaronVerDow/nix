@@ -51,6 +51,15 @@ in
 
   networking.networkmanager.enable = true;
 
+  # The typewriter app runs on the console, where terminal input cannot report
+  # Super-key combinations. Remap its Super shortcuts to the equivalent
+  # function keys so they work with any attached keyboard.
+  services.kanata-config = {
+    enable = true;
+    baseConfig = builtins.readFile ./kanata.kbd;
+    externalKeyboardConfig = "";
+  };
+
   services.openssh = {
     enable = true;
     openFirewall = true;

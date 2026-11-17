@@ -1,0 +1,16 @@
+(defsrc
+  lmet rmet q e d a z
+)
+
+(deflayer base
+  @metl @metr q e d a z
+)
+
+(deflayer shortcuts
+  _ _ f3 f1 f2 f4 f5
+)
+
+(defalias
+  metl (tap-hold-press 200 200 lmet (layer-while-held shortcuts))
+  metr (tap-hold-press 200 200 rmet (layer-while-held shortcuts))
+)

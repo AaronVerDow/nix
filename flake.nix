@@ -150,6 +150,7 @@
           specialArgs = { inherit inputs outputs; };
           modules = [
             ./hosts/typewriter/configuration.nix
+            ./modules/nixos/kanata
           ];
         };
       };
