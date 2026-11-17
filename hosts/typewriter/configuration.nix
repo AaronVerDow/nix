@@ -19,6 +19,10 @@ let
       ]
     }:$PATH
 
+    # Serve the curses display mirror on the LAN.
+    export TYPEWRITER_WEB_HOST=0.0.0.0
+    export TYPEWRITER_WEB_PORT=8080
+
     if [ -d "${repo}/.git" ]; then
       ${pkgs.git}/bin/git -C "${repo}" pull --ff-only || true
     else
@@ -50,6 +54,7 @@ in
   };
 
   networking.networkmanager.enable = true;
+  networking.firewall.allowedTCPPorts = [ 8080 ];
 
   # The typewriter app runs on the console, where terminal input cannot report
   # Super-key combinations. Remap its Super shortcuts to the equivalent
