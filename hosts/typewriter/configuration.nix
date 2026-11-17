@@ -49,6 +49,9 @@ in
     max-free = 3 * 1024 * 1024 * 1024;
   };
 
+  # VIA keyboard tooling is useless on this headless appliance and costs ~1.6 GiB.
+  my.udev.via.enable = false;
+
   # Bound kernel/initrd generations and log usage on the small volume.
   boot.loader.systemd-boot.configurationLimit = 3;
   services.journald.extraConfig = "SystemMaxUse=200M";
