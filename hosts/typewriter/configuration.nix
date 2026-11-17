@@ -38,7 +38,21 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../common/configuration.nix
+    ../../common/cache_client.nix
   ];
+
+  # Small disk: collect old store paths aggressively and preemptively before
+  # the disk fills during builds.
+  nix.gc.options = lib.mkForce "--delete-older-than 3d";
+  nix.settings = {
+    min-free = 1024 * 1024 * 1024;
+    max-free = 3 * 1024 * 1024 * 1024;
+  };
+
+  # Bound kernel/initrd generations and log usage on the small volume.
+  boot.loader.systemd-boot.configurationLimit = 3;
+  services.journald.extraConfig = "SystemMaxUse=200M";
+  documentation.nixos.enable = false;
 
   networking.hostName = "typewriter";
 
