@@ -35,23 +35,18 @@ let
   '';
 in
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../common/configuration.nix
+  ];
 
   networking.hostName = "typewriter";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    trusted-users = [
-      "root"
-      user
-    ];
-  };
+  # Keep systemd-boot on this appliance instead of the common limine setup.
+  boot.loader.limine.enable = lib.mkForce false;
 
   networking.networkmanager.enable = true;
   networking.firewall.allowedTCPPorts = [ 8080 ];
@@ -98,6 +93,13 @@ in
     nh
     nix
   ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs outputs; };
+    users = {
+      ${user} = import ./home.nix;
+    };
+  };
 
   system.stateVersion = "23.05";
 }
