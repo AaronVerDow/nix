@@ -12,6 +12,7 @@
   # You can import other NixOS modules here
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    ./via.nix
     # ./apparmor/apparmor_d_module.nix
   ];
 
@@ -207,7 +208,6 @@
     ANTHROPIC_API_KEY = "";
   };
 
-  services.udev.packages = with pkgs; [ unstable.via ];
   # Keychron isn't currenlty included by via
   services.udev.extraRules = ''
 
