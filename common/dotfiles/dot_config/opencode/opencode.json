@@ -15,7 +15,7 @@
       "url": "http://homeassistant.verdow.lan:8123/mcp_server/sse",
       "enabled": true,
       "headers": {
-        "Authorization": "Bearer ${HA_TOKEN}"
+        "Authorization": "Bearer {env:HA_TOKEN}"
       }
     }
   },
