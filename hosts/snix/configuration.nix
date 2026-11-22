@@ -33,6 +33,12 @@
   jovian.steamos.enableZram = true;
   jovian.hardware.has.amd.gpu = true;
 
+  programs = {
+    steam = {
+      enable = true;
+    };
+  };
+
   nix = {
     distributedBuilds = true;
     buildMachines = [
