@@ -30,6 +30,7 @@ except configparser.MissingSectionHeaderError:
 
 awesome_version = config.get("autohidewibox", "awesome_version", fallback=4)
 super_keys = config.get("autohidewibox", "super_keys", fallback="133,134").split(",")
+shift_keys = config.get("autohidewibox", "shift_keys", fallback="50,62").split(",")
 wiboxes = config.get("autohidewibox", "wiboxname", fallback="mywibox").split(",")
 custom_hide = config.get("autohidewibox", "custom_hide", fallback=None)
 custom_show = config.get("autohidewibox", "custom_show", fallback=None)
@@ -46,6 +47,9 @@ wiboxes = [w for w in wiboxes if re.match("^[a-zA-Z_][a-zA-Z0-9_]*$", w)]
 delay = {True: delay_show, False: delay_hide}
 delay_thread = None
 wibox_is_currently_visible = False
+wibox_is_pinned = False
+shift_pressed = False
+super_pressed = False
 waiting_for = False
 non_super_key_was_pressed = False
 cancel = threading.Event()
@@ -117,13 +121,25 @@ def set_wibox_state(state=True, immediate=False):
         )
 
 
+def set_wibox_pinned(state=True):
+    global wibox_is_pinned, wibox_is_currently_visible
+    wibox_is_pinned = state
+    wibox_is_currently_visible = state
+    _debug("pinned:", "on" if state else "off")
+    lua_cmd = "wibox_pin()" if state else "wibox_unpin()"
+    subprocess.call(
+        sh_path + " " + "-c \"echo '" + lua_cmd + "' | awesome-client\"",
+        shell=True,
+    )
+
+
 def wait_delay(state=True):
     if not cancel.wait(delay[state] / 1000):
         set_wibox_state(state=state, immediate=True)
 
 
 try:
-    set_wibox_state(False)
+    set_wibox_pinned(False)
 
     proc = subprocess.Popen(
         ["xinput", "--test-xi2", "--root", "3"], stdout=subprocess.PIPE
@@ -150,15 +166,36 @@ try:
         if (field == "event") and detail_match:
             _debug(detail_match)
             try:
-                if detail_match.group(1) in super_keys:
+                keycode = detail_match.group(1)
+                if keycode in shift_keys:
+                    _debug("is a shift key")
+                    if key_state == "13":  # press
+                        shift_pressed = True
+                        non_super_key_was_pressed = True
+                        # Support pressing Super before Shift.
+                        if super_pressed:
+                            _debug("toggling pinned wibox")
+                            set_wibox_pinned(not wibox_is_pinned)
+                    elif key_state == "14":  # release
+                        shift_pressed = False
+                elif keycode in super_keys:
                     _debug("is a super key")
                     if key_state == "13":  # press
+                        super_pressed = True
                         non_super_key_was_pressed = False
-                        if mode == MODE_TRANSIENT:
-                            _debug("showing wibox")
+                        if shift_pressed:
+                            # Shift+Super toggles a pinned wibar that moves
+                            # windows by reserving screen space.
+                            _debug("toggling pinned wibox")
+                            set_wibox_pinned(not wibox_is_pinned)
+                        elif not wibox_is_pinned and mode == MODE_TRANSIENT:
+                            _debug("showing wibox (overlay)")
                             set_wibox_state(True)
-                    if key_state == "14":  # release
-                        if mode == MODE_TRANSIENT:
+                    elif key_state == "14":  # release
+                        super_pressed = False
+                        if wibox_is_pinned:
+                            pass
+                        elif mode == MODE_TRANSIENT:
                             _debug("hiding wibox")
                             set_wibox_state(False)
                         # Avoid toggling the wibox when a super key is used in
@@ -178,5 +215,5 @@ try:
 except KeyboardInterrupt:
     pass
 finally:
-    set_wibox_state(True, True)
+    set_wibox_pinned(True)
     _debug("Shutting down")

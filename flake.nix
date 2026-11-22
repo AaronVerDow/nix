@@ -26,6 +26,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     jovian-nixos.url = "github:jovian-experiments/jovian-nixos";
+
+    opendeck-nix.url = "github:Kitt3120/opendeck-nix";
   };
 
   outputs =
@@ -113,7 +115,7 @@
             solaar.nixosModules.default
             ./hosts/snix/configuration.nix
             ./modules/nixos/kanata
-	    jovian-nixos.nixosModules.default
+            jovian-nixos.nixosModules.default
           ];
         };
         gonix = nixpkgs.lib.nixosSystem {
@@ -142,6 +144,13 @@
             nixos-hardware.nixosModules.common-cpu-amd
             nixos-hardware.nixosModules.common-cpu-amd-pstate
             nixos-hardware.nixosModules.common-cpu-amd-zenpower
+          ];
+        };
+        typewriter = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/typewriter/configuration.nix
+            ./modules/nixos/kanata
           ];
         };
       };

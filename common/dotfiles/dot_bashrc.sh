@@ -264,6 +264,8 @@ if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integr
 
 eval "$(direnv hook bash)"
 
+[ -f "$HOME/.secrets/ha.env" ] && . "$HOME/.secrets/ha.env"
+
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 if [ -d "$HOME/.nvm" ]; then

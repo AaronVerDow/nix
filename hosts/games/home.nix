@@ -8,7 +8,7 @@
 
   home.packages = with pkgs; [
     r2modman
-    protonup-qt
+    unstable.protonup-qt
     unstable.neowall
     # huestacean
     (writeShellScriptBin "undock" ''

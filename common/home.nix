@@ -42,7 +42,6 @@
       ripgrep
       nixfmt
       # fancy-cat
-      aider-chat-full
       opencode
       qman
       git-my

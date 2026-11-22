@@ -108,8 +108,10 @@
           "qwen3.8-27b-8k" = {
             cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 8192 --no-webui";
           };
+          # 16k is used by Home Assistant Assist. Jinja enables tool/function
+          # calling and thinking is disabled to keep spoken replies fast.
           "qwen3.8-27b-16k" = {
-            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 16384 --no-webui";
+            cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 16384 --no-webui --jinja --reasoning off";
           };
           "qwen3.8-27b-32k" = {
             cmd = "${llama-server} --port \${PORT} -m /array/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --temp 1.0 --top-p 0.95 --top-k 20 -c 32768 --no-webui";
@@ -167,6 +169,10 @@
         services.jenkins = {
           enable = true;
           port = 8088;
+          packages = with pkgs; [
+            git
+            openssh
+          ];
           extraJavaOptions = [
             "-Djenkins.model.Jenkins.slaveAgentPort=50000" # For JNLP agents
             "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"

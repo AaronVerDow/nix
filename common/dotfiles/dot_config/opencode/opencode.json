@@ -1,11 +1,22 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
   "permission": {
     "read": {
       "/nix/store/**": "allow"
     },
     "external_directory": {
       "/nix/store/**": "allow"
+    }
+  },
+  "mcp": {
+    "homeassistant": {
+      "type": "remote",
+      "url": "http://homeassistant.verdow.lan:8123/mcp_server/sse",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:HA_TOKEN}"
+      }
     }
   },
   "provider": {

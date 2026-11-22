@@ -69,7 +69,6 @@ in
       gimp
       evince
       pdfCropMargins
-      pgadmin4-desktopmode
 
       # Terminal & System Utilities
       arandr # Screen layout configuration
@@ -174,6 +173,10 @@ in
       })
       (nix-run-desktop.launcher {
         nativeBuildInputs = [ freecad ];
+        copy_icons = false;
+      })
+      (nix-run-desktop.launcher {
+        nativeBuildInputs = [ kicad ];
         copy_icons = false;
       })
       (nix-run-desktop.launcher {

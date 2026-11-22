@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
     pattern = "*",
     callback = function()
         vim.defer_fn(function()
-            vim.cmd("TSBufEnable highlight")
+            pcall(vim.treesitter.start)
         end, 100) -- Delay by 100 milliseconds
     end,
 })

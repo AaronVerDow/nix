@@ -159,10 +159,33 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons
     }
 
+    -- Use a plain wibox (not awful.wibar) so it overlays windows by default
+    -- instead of reserving screen space. This keeps the transient Super peek
+    -- from resizing windows. Struts are applied manually by wibox_pin() when
+    -- the bar is pinned with Shift+Super (see autohidewibox.py).
+    local wibar_height = math.ceil(beautiful.get_font_height() * 1.5)
     if s.geometry.width >= s.geometry.height then
-        s.mywibox = awful.wibox({ position = "bottom", ontop=true, screen = s })
+        s.mywibox = wibox({
+            ontop  = true,
+            visible = true,
+            screen = s,
+            type   = "dock",
+            x      = s.geometry.x,
+            y      = s.geometry.y + s.geometry.height - wibar_height,
+            width  = s.geometry.width,
+            height = wibar_height,
+        })
     else
-        s.mywibox = awful.wibox({ position = "top", ontop=true, screen = s })
+        s.mywibox = wibox({
+            ontop  = true,
+            visible = true,
+            screen = s,
+            type   = "dock",
+            x      = s.geometry.x,
+            y      = s.geometry.y,
+            width  = s.geometry.width,
+            height = wibar_height,
+        })
     end
 
     -- Add widgets to the wibox
@@ -185,6 +208,37 @@ awful.screen.connect_for_each_screen(function(s)
         },
     }
 end)
+
+-- Helper functions invoked from autohidewibox.py via awesome-client.
+-- Plain Super shows the wibar as an overlay (no workarea change). Shift+Super
+-- toggles a "pinned" wibar that reserves screen space so windows move.
+function wibox_pin()
+    for s in screen do
+        local w = s.mywibox
+        if w then
+            local g = w:geometry()
+            local sg = s.geometry
+            local struts = { left = 0, right = 0, top = 0, bottom = 0 }
+            if (g.y + g.height / 2) < (sg.y + sg.height / 2) then
+                struts.top = g.height
+            else
+                struts.bottom = g.height
+            end
+            w.visible = true
+            w:struts(struts)
+        end
+    end
+end
+
+function wibox_unpin()
+    for s in screen do
+        local w = s.mywibox
+        if w then
+            w:struts { left = 0, right = 0, top = 0, bottom = 0 }
+            w.visible = false
+        end
+    end
+end
 -- >>>
 
 -- <<< Key bindings

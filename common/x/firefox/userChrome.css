@@ -69,9 +69,10 @@ html, html > *, html > * > * {
  /* match awesomewm wibar */
  --tab-min-height:      20px !important; /* adjust */
  --tab-min-width:       60px !important; /* adjust */
- --tab-border-radius: 2px !important;
- /* prevent background color from being offset */
- --tab-block-margin: 0px !important;
+  --tab-border-radius: 2px !important;
+  /* prevent background color from being offset */
+  --tab-block-margin: 0px !important; /* pre-Firefox 156 name */
+  --tab-margin-block: 0px !important; /* Firefox 156+ name */
 }
 #tabbrowser-tabs,
 #tabbrowser-tabs > #tabbrowser-arrowscrollbox,

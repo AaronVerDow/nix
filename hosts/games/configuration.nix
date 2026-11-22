@@ -11,7 +11,10 @@
     ../../common/configuration.nix
     ../../common/x/configuration.nix
     ../../common/cache_client.nix
+    inputs.opendeck-nix.nixosModules.default
   ];
+
+  programs.opendeck.enable = true;
 
   # fileSystems."/mnt/windows" = {
     # device = "/dev/nvme1n1p2";
@@ -69,6 +72,12 @@
   environment.systemPackages = with pkgs; [
     vagrant
   ];
+
+  # Fixes for Overwatch and Nvidia Shaders
+  environment.sessionVariables = {
+  	__GL_SHADER_DISK_CACHE_SIZE = "10737418240";
+	__GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
+  };
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
