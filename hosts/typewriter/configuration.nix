@@ -33,6 +33,7 @@ let
     cd "${repo}"
     exec ${pkgs.nix}/bin/nix develop --command typewriter
   '';
+  typingActivity = pkgs.python3.withPackages (ps: [ ps.evdev ]);
 in
 {
   imports = [
@@ -75,6 +76,24 @@ in
     enable = true;
     baseConfig = builtins.readFile ./kanata.kbd;
     externalKeyboardConfig = "";
+  };
+
+  # Let Home Assistant keep the library lights on while the typewriter is in use.
+  systemd.services.typing-activity = {
+    description = "Report typewriter keyboard activity to Home Assistant";
+    wantedBy = [ "multi-user.target" ];
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+    serviceConfig = {
+      ExecStart = "${typingActivity}/bin/python ${./typing-activity.py}";
+      User = user;
+      SupplementaryGroups = [ "input" ];
+      Environment = [
+        "TYPING_WEBHOOK_URL=http://homeassistant.verdow.lan:8123/api/webhook/typing_activity"
+      ];
+      Restart = "always";
+      RestartSec = 5;
+    };
   };
 
   services.openssh = {
