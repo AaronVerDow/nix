@@ -1,13 +1,13 @@
 (defsrc
-  lmet rmet q e d a z
+  lmet rmet q e d a z w
 )
 
 (deflayer base
-  @metl @metr q e d a z
+  @metl @metr q e d a z w
 )
 
 (deflayer shortcuts
-  _ _ f3 f1 f2 f4 f5
+  _ _ f3 f1 f2 f4 f5 f8
 )
 
 (defalias
