@@ -14,15 +14,6 @@ let
     url = "https://github.com/adi1090x/rofi.git";
     rev = "3a28753b0a8fb666f4bd0394ac4b0e785577afa2";
   };
-
-  wallpaperSet = ''
-    if command -v neowall >/dev/null 2>&1; then
-      neowall
-    else
-      killall esshader
-      esshader --source ~/.config/wallpaper.glsl
-    fi
-  '';
 in
 {
   imports = [
@@ -152,15 +143,48 @@ in
         dbus-send --type=method_call --print-reply --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible
       '')
 
-      (writeShellScriptBin "wallpaper_set" wallpaperSet)
+      # Static wallpapers (default)
+      (writeShellScriptBin "wallpaper_set" ''
+        ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=0
+        ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=1 || true
+        ${pkgs.nitrogen}/bin/nitrogen ~/.config/wallpaper --set-zoom-fill --head=2 || true
+      '')
 
       (writeShellScriptBin "wallpaper_rotate" ''
-        # ln -sf $( find ~/git/wallpapers/pics -type f | shuf -n 1 ) ~/.config/wallpaper
         file="$1"
-        [ -z "$file" ] && file=$( find ~/git/nix/common/x/wallpapers -type f | shuf -n 1 ) 
+        [ -z "$file" ] && file=$( find ~/git/wallpapers/pics -type f | shuf -n 1 )
+        echo "$file"
+        ln -sf "$file" ~/.config/wallpaper
+        wallpaper_set
+      '')
+
+      # Animated wallpapers
+      (writeShellScriptBin "wallpaper_shader_set" ''
+        killall esshader || true
+        nohup esshader --fullscreen --source ~/.config/wallpaper.glsl &>/dev/null &
+      '')
+
+      (writeShellScriptBin "wallpaper_shader_multi_set" ''
+        killall esshader || true
+        xrandr --query | grep connected | while read -r line; do
+          dims=$(echo "$line" | grep -oE '[0-9]+x[0-9]+')
+          width=$(echo "$dims" | awk -F'x' '{print $1}')
+          height=$(echo "$dims" | awk -F'x' '{print $2}')
+          [ -n "$width" ] && nohup esshader --width "$width" --height "$height" --source ~/.config/wallpaper.glsl &>/dev/null &
+        done
+      '')
+
+      (writeShellScriptBin "wallpaper_shader_rotate" ''
+        file="$1"
+        [ -z "$file" ] && file=$( find ~/git/nix/common/x/wallpapers -type f | shuf -n 1 )
         echo "$file"
         ln -sf "$file" ~/.config/wallpaper.glsl
-        wallpaper_set
+        wallpaper_shader_set
+      '')
+
+      (writeShellScriptBin "wallpaper_neowall_set" ''
+        command -v neowall >/dev/null 2>&1 || { echo "neowall is not installed" >&2; exit 1; }
+        neowall
       '')
 
       (nix-run-desktop.launcher {

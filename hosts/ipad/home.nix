@@ -16,13 +16,13 @@
     (writeShellScriptBin "desk" ''
       mon=$(xrandr | grep '\bconnected' | grep -m 1 -v primary | awk '{print $1}')
       xrandr --output eDP --auto --below "$mon" --output "$mon" --mode 3440x1440
-      set_wallpaper
+      wallpaper_set
     '')
 
     (writeShellScriptBin "undock" ''
       mon=$(xrandr | grep '\bconnected' | grep -m 1 -v primary | awk '{print $1}')
       xrandr --output eDP --auto --output "$mon" --off
-      set_wallpaper
+      wallpaper_set
     '')
 
   ];
