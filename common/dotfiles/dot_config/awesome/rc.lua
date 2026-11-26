@@ -766,6 +766,9 @@ else
     awful.spawn.single_instance("nm-applet")
     awful.spawn.with_shell("pgrep -a touchegg | grep client || touchegg --client")
     awful.spawn.with_shell("pgrep onboard || onboard")
+    if hostname == "ipad" then
+        awful.spawn.with_shell("desk")
+    end
 end
 awful.spawn.with_shell("/home/averdow/bin/autohidewibox.py")
 awful.spawn("wallpaper_set")

@@ -14,14 +14,21 @@
     '')
 
     (writeShellScriptBin "desk" ''
-      mon=$(xrandr | grep '\bconnected' | grep -m 1 -v primary | awk '{print $1}')
-      xrandr --output eDP --auto --below "$mon" --output "$mon" --mode 3440x1440
+      set -euo pipefail
+      ext=$(xrandr | grep '^HDMI.* connected' | awk '{print $1}' | head -n1 || true)
+      [ -z "$ext" ] && exit 0
+      xrandr --output "$ext" --mode 3440x1440 --primary --pos 0x0 \
+             --output eDP --mode 1600x1200 --rotate inverted --pos 920x1440
       wallpaper_set
     '')
 
     (writeShellScriptBin "undock" ''
-      mon=$(xrandr | grep '\bconnected' | grep -m 1 -v primary | awk '{print $1}')
-      xrandr --output eDP --auto --output "$mon" --off
+      set -euo pipefail
+      ext=$(xrandr | grep '\bconnected' | grep -v '^eDP' | awk '{print $1}' | head -n1 || true)
+      if [ -n "$ext" ]; then
+        xrandr --output "$ext" --off
+      fi
+      xrandr --output eDP --auto --rotate normal --pos 0x0
       wallpaper_set
     '')
 
