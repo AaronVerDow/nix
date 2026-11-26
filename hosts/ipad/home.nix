@@ -18,7 +18,7 @@
       ext=$(xrandr | grep '^HDMI.* connected' | awk '{print $1}' | head -n1 || true)
       [ -z "$ext" ] && exit 0
       xrandr --output "$ext" --mode 3440x1440 --primary --pos 0x0 \
-             --output eDP --mode 1600x1200 --rotate inverted --pos 920x1440
+             --output eDP --mode 1920x1200 --rotate inverted --pos 760x1440
       wallpaper_set
     '')
 
