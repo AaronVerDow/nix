@@ -129,6 +129,21 @@ local tasklist_buttons = gears.table.join(
         awful.client.focus.byidx(-1)
     end))
 
+local function update_wibar(s)
+    local w = s.mywibox
+    if not w then return end
+    local wibar_height = math.ceil(beautiful.get_font_height() * 1.5)
+    local g = s.geometry
+    local y = g.y
+    if g.width >= g.height then
+        y = g.y + g.height - wibar_height
+    end
+    w.x = g.x
+    w.y = y
+    w.width = g.width
+    w.height = wibar_height
+end
+
 awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
@@ -164,29 +179,15 @@ awful.screen.connect_for_each_screen(function(s)
     -- from resizing windows. Struts are applied manually by wibox_pin() when
     -- the bar is pinned with Shift+Super (see autohidewibox.py).
     local wibar_height = math.ceil(beautiful.get_font_height() * 1.5)
-    if s.geometry.width >= s.geometry.height then
-        s.mywibox = wibox({
-            ontop  = true,
-            visible = true,
-            screen = s,
-            type   = "dock",
-            x      = s.geometry.x,
-            y      = s.geometry.y + s.geometry.height - wibar_height,
-            width  = s.geometry.width,
-            height = wibar_height,
-        })
-    else
-        s.mywibox = wibox({
-            ontop  = true,
-            visible = true,
-            screen = s,
-            type   = "dock",
-            x      = s.geometry.x,
-            y      = s.geometry.y,
-            width  = s.geometry.width,
-            height = wibar_height,
-        })
-    end
+    s.mywibox = wibox({
+        ontop  = true,
+        visible = true,
+        screen = s,
+        type   = "dock",
+        height = wibar_height,
+    })
+    update_wibar(s)
+    s:connect_signal("property::geometry", function() update_wibar(s) end)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
