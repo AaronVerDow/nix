@@ -42,13 +42,31 @@ in
     ../../common/cache_client.nix
   ];
 
-  # Small disk: collect old store paths aggressively and preemptively before
-  # the disk fills during builds.
+  # The Nix store lives on the dedicated USB drive, so keep collecting old
+  # store paths aggressively rather than letting it fill up during builds.
   nix.gc.options = lib.mkForce "--delete-older-than 3d";
   nix.settings = {
     min-free = 1024 * 1024 * 1024;
     max-free = 3 * 1024 * 1024 * 1024;
   };
+
+  # Nix store on the USB drive. It must be mounted in stage 1 before the
+  # activation script and nix-daemon need it.
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/e60c7697-e1cf-4361-8567-1753ce056317";
+    fsType = "ext4";
+    options = [ "noatime" ];
+    neededForBoot = true;
+  };
+
+  # The store disk is a UAS device; without uas in the initrd, stage 1 cannot
+  # see /dev/sda and boot fails before /nix can be mounted.
+  boot.initrd.kernelModules = [
+    "uas"
+    "usb_storage"
+    "sd_mod"
+    "xhci_pci"
+  ];
 
   # VIA keyboard tooling is useless on this headless appliance and costs ~1.6 GiB.
   my.udev.via.enable = false;
